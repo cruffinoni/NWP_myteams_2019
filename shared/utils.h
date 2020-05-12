@@ -9,5 +9,6 @@
 #define SRC_MYTEAMS_UTILS
 
 char **str_to_array_ex(char const *str, const char c);
+void free_char_tab(char **tab);
 
 #endif

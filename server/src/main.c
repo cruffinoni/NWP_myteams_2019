@@ -6,7 +6,8 @@
 */
 
 #include <stdlib.h>
-#include "server.h"
+#include "server/server.h"
+#include "server/connection.h"
 
 int main(const int ac, const char **av)
 {
@@ -17,6 +18,7 @@ int main(const int ac, const char **av)
         free_server(server);
         return (display_error_message(err));
     }
+    err = run_server(server);
     free_server(server);
-    return (0);
+    return (err != ERR_NONE ? (int) display_error_message(err) : ERR_NONE);
 }

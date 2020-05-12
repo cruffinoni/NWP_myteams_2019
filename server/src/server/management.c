@@ -8,7 +8,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#include "server.h"
+#include "server/server.h"
+#include "client/management.h"
 
 static uerror_t get_port(const char *argument, long *port)
 {
@@ -43,9 +44,9 @@ void free_server(server_t *server)
 {
     if (server == NULL)
         return;
-    for (int i = 0; server->client[i] != NULL && i < MAX_CONNECTION; ++i)
-        free(server->client[i]);
-    if (server->socket != INVALID_FD)
+    for (int i = 0; i < MAX_CONNECTION; ++i)
+        free_client(server->client[i]);
+    if (server->socket != INVALID_SOCKET)
         if (close(server->socket))
             _DISPLAY_PERROR("free_server - close");
     free(server);
@@ -62,12 +63,9 @@ uerror_t create_server(server_t **server, const int ac, const char **av)
     if (*server == NULL)
         return (ERR_MALLOC);
     FD_ZERO(&(*server)->active_fd);
-    (*server)->socket = INVALID_FD;
-    for (int i = 0; i < MAX_CONNECTION; ++i) {
-        (*server)->client[i] = malloc(sizeof(client_t));
-        if ((*server)->client[i] == NULL)
-            return (ERR_MALLOC);
-    }
+    (*server)->socket = INVALID_SOCKET;
+    for (int i = 0; i < MAX_CONNECTION; ++i)
+        (*server)->client[i] = NULL;
     if ((err = get_port(av[1], &port)) != ERR_NONE)
         return (err);
     if ((err = create_socket(*server, port)) != ERR_NONE)

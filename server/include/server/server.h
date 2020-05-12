@@ -8,12 +8,13 @@
 #ifndef SRC_MYTEAMS_SERVER
 #define SRC_MYTEAMS_SERVER
 
+#include <stdbool.h>
 #include <stdio.h>
 #include "socket.h"
 #include "client.h"
 #include "error.h"
 
-static const int INVALID_FD = -1;
+bool ACTIVE_SERVER;
 
 typedef struct server_s {
     int socket;
