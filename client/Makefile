@@ -7,11 +7,13 @@
 
 MAIN_FILE		=	./src/main.c
 
-SRC				=
+UTILS			=	../shared/utils/str_to_array_ex.c
 
-ALL_SRC			= $(SRC)
+SRC				=	src/socket.c			\
 
-NAME			=	myteams_client
+ALL_SRC			= $(SRC) $(UTILS)
+
+NAME			=	myteams_cli
 
 SRC_TEST		=	./tests/test.c
 NAME_TEST		=	test_server

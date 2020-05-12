@@ -100,7 +100,7 @@ CMakeLists.txt
 a.out
 .vscode
 myteams_server
-
+myteams_cli
 
 # Given library
 libmyteams.so
