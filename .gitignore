@@ -99,6 +99,8 @@ CMakeLists.txt
 # Generated files
 a.out
 .vscode
+myteams_server
+
 
 # Given library
 libmyteams.so

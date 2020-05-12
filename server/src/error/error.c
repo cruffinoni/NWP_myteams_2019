@@ -24,11 +24,7 @@ static const char *ERROR_DEFINITION[] = {
 
 uerror_t display_perror_internal_(const char *source, const uerror_t code)
 {
-    if (errno > sys_nerr - 1) {
-        printf("Errno is higher than the fixed limit: %i\n", errno);
-        return (code);
-    }
-    printf("%s: %s", source, strerror(errno));
+    printf("%s: %s\n", source, strerror(errno));
     return (code);
 }
 

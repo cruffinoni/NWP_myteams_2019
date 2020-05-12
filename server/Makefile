@@ -7,7 +7,9 @@
 
 MAIN_FILE		=	./src/main.c
 
-SRC				=
+SRC				=	./src/error/error.c			\
+					./src/server/management.c	\
+					./src/server/socket.c
 
 ALL_SRC			= $(SRC)
 

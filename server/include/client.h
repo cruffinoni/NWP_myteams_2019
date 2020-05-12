@@ -8,11 +8,12 @@
 #ifndef SRC_MYTEAMS_CLIENT
 #define SRC_MYTEAMS_CLIENT
 
+#include <stdint.h>
 #include <uuid/uuid.h>
 
-static const unsigned short MAX_NAME_LENGTH         = 32;
-static const unsigned short MAX_DESCRIPTION_LENGTH  = 255;
-static const unsigned short MAX_BODY_LENGTH         = 512;
+#define MAX_NAME_LENGTH         32
+#define MAX_DESCRIPTION_LENGTH  255
+#define MAX_BODY_LENGTH         512
 
 typedef enum client_flag_e {
     CONNECTED = 0b1,
