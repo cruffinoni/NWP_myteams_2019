@@ -11,13 +11,15 @@ INCLUDE_PATH		=	./include/
 INCLUDE_SHARED_PATH	=	../shared
 
 SRC_UTILS		=	$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
-					$(INCLUDE_SHARED_PATH)/utils/tab.c
+					$(INCLUDE_SHARED_PATH)/utils/tab.c				\
+					$(INCLUDE_SHARED_PATH)/communication/codes.c	\
 
 SRC_SERVER		=	./src/server/management.c	\
-					./src/server/socket.c		\
 					./src/server/connection.c
 
-SRC_CLIENT		=	./src/client/management.c	\
+SRC_CLIENT		=	./src/client/management.c		\
+					./src/client/reply.c			\
+					./src/client/commands/misc.c	\
 
 SRC				=	./src/error/error.c			\
 
@@ -28,8 +30,7 @@ NAME			=	myteams_server
 SRC_TEST		=	./tests/test.c
 NAME_TEST		=	test_server
 
-
-CFLAGS			=	-Wall -Wextra -I $(INCLUDE_PATH) -I $(INCLUDE_SHARED_PATH)
+CFLAGS			=	-Wall -Wextra -I $(INCLUDE_PATH) -I $(INCLUDE_SHARED_PATH) -l myteams -D _GNU_SOURCE
 
 OBJ				=	$(ALL_SRC:.c=.o)
 OBJ_MAIN		=	$(MAIN_FILE:.c=.o)

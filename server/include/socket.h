@@ -12,22 +12,13 @@
 #include <limits.h>
 #include <netinet/in.h>
 
-static const ushort MAX_IP_PORT    = 0xFF;
-static const ushort MAX_PORT       = 0xFFFF;
 typedef struct sockaddr_in sockaddrin_t;
 typedef struct sockaddr sockaddr_t;
+
+static const ushort MAX_IP_PORT    = 0xFF;
+static const ushort MAX_PORT       = 0xFFFF;
 static const int INVALID_SOCKET = -1;
 
 #define MAX_CONNECTION      FD_SETSIZE
-
-//typedef enum socket_flag_e {
-//
-//};
-//
-//typedef struct socket_s {
-//    int handle;
-//
-//};
-
 
 #endif

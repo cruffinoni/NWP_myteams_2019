@@ -11,7 +11,7 @@
 #include "error.h"
 #include "client.h"
 
-void free_client(client_t *this);
-uerror_t create_client(client_t *this);
+void free_client(client_t **this);
+uerror_t create_client(const int socket, client_t **this);
 
 #endif

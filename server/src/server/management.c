@@ -45,7 +45,7 @@ void free_server(server_t *server)
     if (server == NULL)
         return;
     for (int i = 0; i < MAX_CONNECTION; ++i)
-        free_client(server->client[i]);
+        free_client(&server->client[i]);
     if (server->socket != INVALID_SOCKET)
         if (close(server->socket))
             _DISPLAY_PERROR("free_server - close");

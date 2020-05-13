@@ -13,6 +13,8 @@
 #include <arpa/inet.h>
 #include "server/server.h"
 #include "server/connection.h"
+#include "client/management.h"
+#include "client/commands.h"
 #include "utils.h"
 
 static uerror_t process_client_input(server_t *this, const int client,
@@ -27,8 +29,8 @@ static uerror_t process_client_input(server_t *this, const int client,
     args = str_to_array_ex(buffer, ' ');
     if (args == NULL)
         return (ERR_MALLOC);
-    for (int i = 0; args[i] != NULL; ++i)
-        _PRINT_SERVER("Arg: '%s'\n", args[i]);
+    //for (int i = 0; args[i] != NULL; ++i)
+    //    _PRINT_SERVER("Arg: '%s'\n", args[i]);
     //err = parse_command(this, client, args);
     free_char_tab(args);
     return (err);
@@ -47,7 +49,7 @@ static uerror_t handle_client_input(server_t *this, const int client_socket)
     else if (rtn == 0 || IS_ERRNO_MANAGEABLE(errno)) {
         if (IS_ERRNO_MANAGEABLE(errno))
             errno = 0;
-        //client_quit(this, client_socket, NULL);
+        disconnect_client(this, client_socket, NULL);
         _PRINT_SERVER("[%i] Disconnected\n", client_socket);
     }
     else
@@ -67,8 +69,7 @@ static uerror_t accept_client(server_t *this)
         client_socket, inet_ntoa(client_data.sin_addr),
         ntohs(client_data.sin_port));
     FD_SET(client_socket, &this->active_fd);
-    //return (send_reply(client_socket, SERVICE_READY, NULL));
-    return (ERR_NONE);
+    return (create_client(client_socket, &this->client[client_socket]));
 }
 
 static uerror_t handle_connection(server_t *this, fd_set *read_fd)
@@ -95,8 +96,10 @@ uerror_t run_server(server_t *this)
     while (ACTIVE_SERVER) {
         read_fd = this->active_fd;
         if (select(MAX_CONNECTION, &read_fd, NULL, NULL,
-            NULL) < 0)
+            NULL) < 0 && errno != EINTR)
             return (_DISPLAY_PERROR("select"));
+        if (errno == EINTR)
+            return (ERR_NONE);
         err = handle_connection(this, &read_fd);
         if (err != ERR_NONE)
             return (err);

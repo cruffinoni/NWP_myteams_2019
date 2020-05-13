@@ -10,9 +10,13 @@
 
 #include <stdbool.h>
 #include <stdio.h>
+#include "communication/codes.h"
 #include "socket.h"
 #include "client.h"
 #include "error.h"
+#include "logging_server.h"
+
+#define _UNUSED_ __attribute__((unused))
 
 bool ACTIVE_SERVER;
 
@@ -25,7 +29,15 @@ typedef struct server_s {
 uerror_t create_server(server_t **server, const int ac, const char **av);
 void free_server(server_t *server);
 
-#define _PRINT_SERVER(...) printf("\x1B[1;31m" __VA_ARGS__); printf("\x1B[0m")
-#define _PRINT_CLIENT(...) printf("\x1B[1;34m" __VA_ARGS__); printf("\x1B[0m")
+#define _PRINT_SERVER(...)  { \
+    printf("\x1B[1;31m");   \
+    printf(__VA_ARGS__);    \
+    printf("\x1B[1;0m");    \
+}
+//#define _PRINT_SERVER(...) printf(__VA_ARGS__)
+#define _PRINT_CLIENT(...) printf("\x1B[1;34m" __VA_ARGS__); printf("\x1B[1;0m")
+
+uerror_t send_reply(const int client, const codes_t code,
+    const char *fmt, ...);
 
 #endif

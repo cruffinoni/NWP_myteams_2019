@@ -5,9 +5,17 @@
 ** TODO: CHANGE DESCRIPTION.
 */
 
-#include <stdlib.h>
+#include <signal.h>
 #include "server/server.h"
 #include "server/connection.h"
+
+void catch_signal(int signal_id)
+{
+    if (signal_id == SIGINT)
+        ACTIVE_SERVER = false;
+    else if (signal_id == SIGPIPE)
+        _PRINT_SERVER("SIGPIPE caught...\n");
+}
 
 int main(const int ac, const char **av)
 {
@@ -18,6 +26,9 @@ int main(const int ac, const char **av)
         free_server(server);
         return (display_error_message(err));
     }
+    if (signal(SIGINT, &catch_signal) == SIG_ERR ||
+        signal(SIGPIPE, &catch_signal) == SIG_ERR)
+        return (_DISPLAY_PERROR("signal"));
     err = run_server(server);
     free_server(server);
     return (err != ERR_NONE ? (int) display_error_message(err) : ERR_NONE);
