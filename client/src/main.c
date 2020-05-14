@@ -12,6 +12,17 @@
 #include "error.h"
 #include "socket.h"
 
+void free_params(socket_t *params)
+{
+    if (params == NULL)
+        return;
+    if (params->ip != NULL)
+        free(params->ip);
+    if (params->sock_fd > 0)
+        close(params->sock_fd);
+    free(params);
+}
+
 static int init_client(char **av)
 {
     socket_t *params = NULL;
@@ -21,16 +32,8 @@ static int init_client(char **av)
         free_params(params);
         return (ERR_INIT);
     }
+    free_params(params);
     return (ERR_NONE);
-}
-
-void free_params(socket_t *params)
-{
-    if (params->ip != NULL)
-        free(params->ip);
-    if (params->sock_fd < 0)
-        close(params->sock_fd);
-    free(params);
 }
 
 int main(int ac, char **av)
@@ -45,6 +48,6 @@ int main(int ac, char **av)
         printf("the server socket listens\n");
         return (ERR_NONE);
     }
-    fprintf(stderr, "Wrong usage. Start with -help to see help.\n");
+    printf("Wrong usage. Start with -help to see help.\n");
     return (ERR_INIT);
 }
