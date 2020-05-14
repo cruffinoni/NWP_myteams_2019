@@ -24,7 +24,8 @@ typedef enum codes_informative_e {
 } codes_informative_t;
 
 typedef enum codes_positive_e {
-    SERVICE_READY = 200,
+    OK = 200,
+    SERVICE_READY,
     LOGIN_SUCCESSFUL,
     DISCONNECTED,
 } codes_positive_t;
@@ -44,6 +45,7 @@ static const codes_data_t CODES_DATA[] = {
     {COMMAND_NOT_FOUND, "Command not found"},
     {INTERNAL_ERROR, "Server internal error"},
 
+    {OK,     "Command OK"},
     {SERVICE_READY,     "Connection established"},
     {LOGIN_SUCCESSFUL,  "Logged successfully <uuid>"},
     {DISCONNECTED,      "Client disconnected from server"},

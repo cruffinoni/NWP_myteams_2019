@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <dirent.h>
 #include "error.h"
 #include "client.h"
 #include "server/database.h"

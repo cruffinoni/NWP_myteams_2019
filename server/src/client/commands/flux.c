@@ -20,7 +20,6 @@ uerror_t disconnect_client(server_t *server,
         GET_CLIENT_NAME(server, client),
         uid_to_string(GET_CLIENT_ID(server, client)));
     server_event_user_logged_out(uid_to_string(GET_CLIENT_ID(server, client)));
-    uuid_clear(GET_CLIENT_ID(server, client));
     server->client[client]->flags &= ~CLIENT_CONNECTED;
     return (send_reply(client, DISCONNECTED, NULL));
 }
@@ -33,6 +32,7 @@ uerror_t login_client(server_t *server, const int client, const char **args)
         return (send_reply(client, ALREADY_LOGGED, NULL));
     strcpy(GET_CLIENT_NAME(server, client), args[1]);
     server->client[client]->flags |= CLIENT_CONNECTED;
+    uuid_clear(GET_CLIENT_ID(server, client));
     uuid_generate_md5(GET_CLIENT_ID(server, client), GET_CLIENT_ID(server, client),
         GET_CLIENT_NAME(server, client), MAX_NAME_LENGTH);
     if (!db_user_exists(server->client[client]))

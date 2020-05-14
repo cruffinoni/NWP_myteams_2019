@@ -18,11 +18,13 @@ SRC_UTILS		=	$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
 SRC_SERVER		=	./src/server/management.c		\
 					./src/server/connection.c		\
 					./src/server/database/users.c	\
+					./src/server/database/info.c	\
 
-SRC_CLIENT		=	./src/client/management.c		\
-					./src/client/reply.c			\
-					./src/client/parsing.c			\
-					./src/client/commands/flux.c	\
+SRC_CLIENT		=	./src/client/management.c				\
+					./src/client/reply.c					\
+					./src/client/parsing.c					\
+					./src/client/commands/flux.c			\
+					./src/client/commands/miscellaneous.c	\
 
 SRC				=	./src/error/error.c			\
 
