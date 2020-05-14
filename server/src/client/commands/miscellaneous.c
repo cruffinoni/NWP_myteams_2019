@@ -30,7 +30,8 @@ uerror_t show_user_info(server_t *server, const int client, const char **args)
         return (send_reply(client, OK, "User <%s:%s>", user.name, args[1]));
 }
 
-uerror_t show_all_users(server_t *server, const int client, const char **args)
+uerror_t show_all_users(server_t *server, const int client,
+    _UNUSED_ const char **args)
 {
     uerror_t err;
     db_user_list_t *list = NULL;

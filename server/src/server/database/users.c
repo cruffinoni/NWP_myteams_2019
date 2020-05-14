@@ -32,6 +32,18 @@ bool db_user_exists(const client_t *client)
     return (acc == 0);
 }
 
+bool db_user_exists_id(const char *id)
+{
+    char *path = NULL;
+    int acc;
+
+    if (asprintf(&path, DB_USER_PATH "%s/", id) < 0)
+        return (_DISPLAY_PERROR("asprintf - db_user_exists", false));
+    acc = access(path, R_OK | W_OK);
+    free(path);
+    return (acc == 0);
+}
+
 static uerror_t create_info_file(const client_t *client)
 {
     char *path = NULL;

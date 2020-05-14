@@ -26,7 +26,7 @@ static uerror_t process_client_input(server_t *this, const int client,
     if (returned_val == MAX_REQUEST_LENGTH)
         return (send_reply(client, LINE_TOO_LONG,
         "The max length of a command line is: %li", MAX_REQUEST_LENGTH));
-    args = str_to_array_ex(buffer, ' ');
+    args = str_to_array(buffer);
     if (args == NULL)
         return (ERR_MALLOC);
     err = parse_command(this, client, args);

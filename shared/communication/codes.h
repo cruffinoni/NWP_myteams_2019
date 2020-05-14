@@ -21,6 +21,8 @@ typedef enum codes_error_e {
 
 typedef enum codes_informative_e {
     SERVICE_CLOSING = 300,
+    USER_DONT_EXIST,
+    INVALID_SYNTAX,
 } codes_informative_t;
 
 typedef enum codes_positive_e {
@@ -44,6 +46,7 @@ static const codes_data_t CODES_DATA[] = {
     {LINE_TOO_LONG,     "Line too long"},
     {COMMAND_NOT_FOUND, "Command not found"},
     {INTERNAL_ERROR, "Server internal error"},
+    {INVALID_SYNTAX, "One of the parameters provided is invalid"},
 
     {OK,     "Command OK"},
     {SERVICE_READY,     "Connection established"},

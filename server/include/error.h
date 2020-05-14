@@ -21,6 +21,7 @@ enum error_e {
     ERR_PORT_NOT_NUMBER,
     ERR_INTERNAL,
     ERR_SOCKET,
+    ERR_LOCAL,
 
     ERR_MAX_ERR,
     ERR_EXIT = 84,

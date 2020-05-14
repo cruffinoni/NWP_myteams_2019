@@ -8,7 +8,7 @@
 #ifndef SRC_MYTEAMS_UTILS
 #define SRC_MYTEAMS_UTILS
 
-char **str_to_array_ex(char const *str, const char c);
+char **str_to_array(char const *str);
 void free_char_tab(char **tab);
 size_t tab_len(char **tab);
 
