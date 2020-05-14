@@ -38,8 +38,9 @@ NAME			=	myteams_server
 SRC_TEST		=	./tests/test.c
 NAME_TEST		=	test_server
 
-INCLUDES_FLAG	= -I $(INCLUDE_PATH) -I $(INCLUDE_SHARED_PATH)
-CFLAGS			=	-Wall -Wextra $(INCLUDES_FLAG) -l uuid -l myteams -D _GNU_SOURCE
+INCLUDES_FLAG	=	-I $(INCLUDE_PATH) -I $(INCLUDE_SHARED_PATH)
+LDFLAGS			+=	-l uuid -L ../libs/myteams -l myteams
+CFLAGS			+=	-Wall -Wextra $(INCLUDES_FLAG) -D _GNU_SOURCE
 
 OBJ				=	$(ALL_SRC:.c=.o)
 OBJ_MAIN		=	$(MAIN_FILE:.c=.o)
@@ -47,13 +48,13 @@ OBJ_MAIN		=	$(MAIN_FILE:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(OBJ_MAIN)
-	gcc -o $(NAME) $(OBJ) $(OBJ_MAIN) $(CFLAGS)
+	gcc -o $(NAME) $(OBJ) $(OBJ_MAIN) $(CFLAGS) $(LDFLAGS)
 
 debug:
-	gcc -o $(NAME) $(ALL_SRC) $(MAIN_FILE) $(CFLAGS) -g
+	gcc -o $(NAME) $(ALL_SRC) $(MAIN_FILE) $(CFLAGS) $(LDFLAGS) -g
 
 tests_run: all
-	gcc $(CFLAGS) $(SRC_TEST) -o $(NAME_TEST)
+	gcc $(CFLAGS) $(LDFLAGS) $(SRC_TEST) -o $(NAME_TEST)
 
 clean:
 	@rm -f $(OBJ) $(OBJ_MAIN)

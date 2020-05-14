@@ -5,17 +5,21 @@
 ## This file is used for compilation of every files to make a binary file.
 ##
 
-CLIENT		=	./client/
+CLIENT			=	./client
+CLIENT_BINARY	=	myteams_cli
 
-SERVER		=	./server/
+SERVER			=	./server
+SERVER_BINARY	=	myteams_server
 
 all: $(CLIENT) $(SERVER)
 
 $(CLIENT):
 	$(MAKE) -C $(CLIENT)
+	cp $(CLIENT)/$(CLIENT_BINARY) .
 
 $(SERVER):
 	$(MAKE) -C $(SERVER)
+	cp $(SERVER)/$(SERVER_BINARY) .
 
 debug:
 	$(MAKE) -C $(SERVER) debug

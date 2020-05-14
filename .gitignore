@@ -19,15 +19,12 @@
 *.pch
 
 # Libraries
-*.lib
 *.a
 *.la
 *.lo
 
 # Shared objects (inc. Windows DLLs)
 *.dll
-*.so
-*.so.*
 *.dylib
 
 # Executables
@@ -65,7 +62,6 @@ dkms.conf
 
 # Precompiled Headers
 *.gch
-*.pch
 
 # Compiled Dynamic libraries
 *.so
@@ -80,7 +76,6 @@ dkms.conf
 *.lai
 *.la
 *.a
-*.lib
 
 # Executables
 *.exe
@@ -102,5 +97,3 @@ a.out
 myteams_server
 myteams_cli
 
-# Given library
-libmyteams.so
