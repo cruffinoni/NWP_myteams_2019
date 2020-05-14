@@ -21,17 +21,15 @@ static uerror_t process_client_input(server_t *this, const int client,
     char *buffer, const int returned_val)
 {
     char **args;
-    uerror_t err = ERR_NONE;
+    uerror_t err;
 
-    //if (returned_val == MAX_REQUEST_LENGTH)
-    //    return (send_reply(client, LINE_TOO_LONG,
-    //    "The max length of a command line is: %li", MAX_REQUEST_LENGTH));
+    if (returned_val == MAX_REQUEST_LENGTH)
+        return (send_reply(client, LINE_TOO_LONG,
+        "The max length of a command line is: %li", MAX_REQUEST_LENGTH));
     args = str_to_array_ex(buffer, ' ');
     if (args == NULL)
         return (ERR_MALLOC);
-    //for (int i = 0; args[i] != NULL; ++i)
-    //    _PRINT_SERVER("Arg: '%s'\n", args[i]);
-    //err = parse_command(this, client, args);
+    err = parse_command(this, client, args);
     free_char_tab(args);
     return (err);
 }
@@ -50,6 +48,8 @@ static uerror_t handle_client_input(server_t *this, const int client_socket)
         if (IS_ERRNO_MANAGEABLE(errno))
             errno = 0;
         disconnect_client(this, client_socket, NULL);
+        free_client(&this->client[client_socket]);
+        FD_CLR(client_socket, &this->active_fd);
         _PRINT_SERVER("[%i] Disconnected\n", client_socket);
     }
     else

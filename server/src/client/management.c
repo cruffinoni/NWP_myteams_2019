@@ -23,9 +23,11 @@ uerror_t create_client(const int socket, client_t **this)
     (*this)->context = malloc(sizeof(client_context_t));
     if ((*this)->context == NULL)
         return (ERR_MALLOC);
+    uuid_clear((*this)->context->id);
     (*this)->context->type = CONTEXT_NONE;
     (*this)->socket = socket;
-    (*this)->flags = NONE;
+    (*this)->flags = CLIENT_NONE;
+    uuid_clear((*this)->id);
     _PRINT_CLIENT("[%i] Connection established\n", socket);
     return (send_reply(socket, SERVICE_READY, NULL));
 }

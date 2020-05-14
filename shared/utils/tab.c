@@ -13,3 +13,12 @@ void free_char_tab(char **tab)
         free(tab[i]);
     free(tab);
 }
+
+size_t tab_len(char **tab)
+{
+    size_t i = 0;
+
+    while (tab[i] != NULL)
+        i++;
+    return (i);
+}

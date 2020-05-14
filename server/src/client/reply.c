@@ -28,7 +28,7 @@ uerror_t send_reply(const int client, const codes_t code,
         va_end(list);
     } else if (asprintf(&message, "%s", get_code_definition(code)) < 0)
         return (_DISPLAY_PERROR("asprintf"));
-    if (asprintf(&reply, "%i: %s" _EOF, code, message) < 0) {
+    if (asprintf(&reply, "%i: %s" _EOL, code, message) < 0) {
         free(message);
         return (_DISPLAY_PERROR("asprintf"));
     }

@@ -8,15 +8,25 @@
 #ifndef SRC_MYTEAMS_CODES
 #define SRC_MYTEAMS_CODES
 
-#define _EOF "\r\n"
+#define _EOL "\r\n"
 
 typedef enum codes_error_e {
     NOT_CONNECTED = 500,
+    ALREADY_LOGGED,
+    INVALID_ARG_COUNT,
+    LINE_TOO_LONG,
+    COMMAND_NOT_FOUND,
 } codes_error_t;
 
-typedef enum codes_legal_e {
+typedef enum codes_informative_e {
+    SERVICE_CLOSING = 300,
+} codes_informative_t;
+
+typedef enum codes_positive_e {
     SERVICE_READY = 200,
-} codes_legal_t;
+    LOGIN_SUCCESSFUL,
+    DISCONNECTED,
+} codes_positive_t;
 
 typedef unsigned short codes_t;
 
@@ -26,8 +36,17 @@ typedef struct codes_data_s {
 } codes_data_t;
 
 static const codes_data_t CODES_DATA[] = {
-    {NOT_CONNECTED, "The client is not connected"},
-    {SERVICE_READY, "Connection established"},
+    {NOT_CONNECTED,     "The client is not connected"},
+    {ALREADY_LOGGED,    "The client is already logged"},
+    {INVALID_ARG_COUNT, "Invalid argument count, got X expected Y"},
+    {LINE_TOO_LONG,     "Line too long"},
+    {COMMAND_NOT_FOUND, "Command not found"},
+
+    {SERVICE_READY,     "Connection established"},
+    {LOGIN_SUCCESSFUL,  "Logged successfully <uuid>"},
+    {DISCONNECTED,      "Client disconnected from server"},
+    {SERVICE_CLOSING,   "Remote service disconnected client"},
+
     {0, NULL}
 };
 

@@ -34,8 +34,11 @@ void free_server(server_t *server);
     printf(__VA_ARGS__);    \
     printf("\x1B[1;0m");    \
 }
-//#define _PRINT_SERVER(...) printf(__VA_ARGS__)
-#define _PRINT_CLIENT(...) printf("\x1B[1;34m" __VA_ARGS__); printf("\x1B[1;0m")
+#define _PRINT_CLIENT(...)  { \
+    printf("\x1B[1;34m");   \
+    printf(__VA_ARGS__);    \
+    printf("\x1B[1;0m");    \
+}
 
 uerror_t send_reply(const int client, const codes_t code,
     const char *fmt, ...);

@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include <uuid/uuid.h>
+#include "uid.h"
 
 #define MAX_NAME_LENGTH         32
 #define MAX_DESCRIPTION_LENGTH  255
@@ -17,8 +18,8 @@
 #define MAX_REQUEST_LENGTH      255
 
 enum client_flag_e {
-    NONE        = 0u,
-    CONNECTED   = 0b1u,
+    CLIENT_NONE        = 0u,
+    CLIENT_CONNECTED   = 0b1u,
 };
 typedef unsigned short client_flag_t;
 
@@ -42,6 +43,6 @@ typedef struct client_s {
     client_context_t *context;
 } client_t;
 
-#define IS_CONNECTED(c) ((c->flags & CONNECTED) == CONNECTED)
+#define IS_CONNECTED(c) ((c->flags & CLIENT_CONNECTED) == CLIENT_CONNECTED)
 
 #endif
