@@ -1,2 +1,7 @@
-# Local ignored files
+
+## Local ignored files
 tests/test.c
+
+# Ignore all files that are used for the database except the .gitkeep files
+database/*/*
+!database/*/*.gitkeep

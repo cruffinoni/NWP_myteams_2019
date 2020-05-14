@@ -15,8 +15,9 @@ SRC_UTILS		=	$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
 					$(INCLUDE_SHARED_PATH)/communication/codes.c	\
 					$(INCLUDE_SHARED_PATH)/uid.c					\
 
-SRC_SERVER		=	./src/server/management.c	\
-					./src/server/connection.c
+SRC_SERVER		=	./src/server/management.c		\
+					./src/server/connection.c		\
+					./src/server/database/users.c	\
 
 SRC_CLIENT		=	./src/client/management.c		\
 					./src/client/reply.c			\

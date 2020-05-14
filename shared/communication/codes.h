@@ -16,6 +16,7 @@ typedef enum codes_error_e {
     INVALID_ARG_COUNT,
     LINE_TOO_LONG,
     COMMAND_NOT_FOUND,
+    INTERNAL_ERROR,
 } codes_error_t;
 
 typedef enum codes_informative_e {
@@ -41,6 +42,7 @@ static const codes_data_t CODES_DATA[] = {
     {INVALID_ARG_COUNT, "Invalid argument count, got X expected Y"},
     {LINE_TOO_LONG,     "Line too long"},
     {COMMAND_NOT_FOUND, "Command not found"},
+    {INTERNAL_ERROR, "Server internal error"},
 
     {SERVICE_READY,     "Connection established"},
     {LOGIN_SUCCESSFUL,  "Logged successfully <uuid>"},

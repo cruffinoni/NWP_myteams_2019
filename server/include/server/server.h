@@ -43,4 +43,7 @@ void free_server(server_t *server);
 uerror_t send_reply(const int client, const codes_t code,
     const char *fmt, ...);
 
+#define GET_CLIENT_ID(s, c) (s->client[c]->id)
+#define GET_CLIENT_NAME(s, c) (s->client[c]->name)
+
 #endif

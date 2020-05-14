@@ -9,7 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "server/server.h"
-#include "client/management.h"
+#include "client/users.h"
 
 static uerror_t get_port(const char *argument, long *port)
 {
