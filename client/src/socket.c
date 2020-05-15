@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2019
 ** NWP_myteams_2019
 ** File description:
-** socket.c
+** socket.c - file used for socket creation
 */
 
 #include <sys/socket.h>
@@ -12,7 +12,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include "error.h"
 #include "socket.h"
 
@@ -76,9 +75,11 @@ socket_t *init_client_connection(char **av)
     params->sock_fd = -1;
     params->port = -1;
     params->ip = NULL;
+    params->client = NULL;
     if (socket_creation(av, params) == ERR_INIT) {
         free_params(params);
         return (NULL);
     }
+    ACTIVE_SERVER = true;
     return (params);
 }

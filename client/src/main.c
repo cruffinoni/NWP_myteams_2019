@@ -5,12 +5,15 @@
 ** main.c - mainfile for client teams
 */
 
+#include <signal.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdbool.h>
 #include "error.h"
 #include "socket.h"
+#include "client/shell.h"
 
 void free_params(socket_t *params)
 {
@@ -18,9 +21,19 @@ void free_params(socket_t *params)
         return;
     if (params->ip != NULL)
         free(params->ip);
+    if (params->client != NULL)
+        free(params->client);
     if (params->sock_fd > 0)
         close(params->sock_fd);
     free(params);
+}
+
+static void catch_signal(int signal_id)
+{
+    if (signal_id == SIGINT)
+        ACTIVE_SERVER = false;
+    else if (signal_id == SIGPIPE)
+        printf("SIGPIPE caught...\n");
 }
 
 static int init_client(char **av)
@@ -32,6 +45,13 @@ static int init_client(char **av)
         free_params(params);
         return (ERR_INIT);
     }
+    if (signal(SIGINT, &catch_signal) == SIG_ERR ||
+        signal(SIGPIPE, &catch_signal) == SIG_ERR) {
+        printf("Signal error\n");
+        free_params(params);
+        return (ERR_INIT);
+    }
+    shell(params);
     free_params(params);
     return (ERR_NONE);
 }

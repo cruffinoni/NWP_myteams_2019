@@ -5,25 +5,29 @@
 ## This file is used for compilation of every files to make a binary file.
 ##
 
-MAIN_FILE		=	./src/main.c
+MAIN_FILE			=	./src/main.c
 
-UTILS			=	../shared/utils/str_to_array_ex.c
+INCLUDE_PATH		=	./include/
+INCLUDE_SHARED_PATH	=	../shared
 
-SRC				=	src/socket.c			\
+UTILS				=	$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
+						$(INCLUDE_SHARED_PATH)/utils/tab.c
 
-ALL_SRC			= $(SRC) $(UTILS)
+SRC					=	src/socket.c						\
+						src/client/parse_user_entry.c		\
+						src/client/shell.c
 
-NAME			=	myteams_cli
+ALL_SRC				=	$(SRC) $(UTILS)
 
-SRC_TEST		=	./tests/test.c
-NAME_TEST		=	test_server
+NAME				=	myteams_cli
 
-INCLUDE_PATH	=	./include/
+SRC_TEST			=	./tests/test.c
+NAME_TEST			=	test_server
 
-CFLAGS			=	-Wall -Wextra -I $(INCLUDE_PATH)
+CFLAGS				=	-Wall -Wextra -I $(INCLUDE_PATH) -I $(INCLUDE_SHARED_PATH)
 
-OBJ				=	$(ALL_SRC:.c=.o)
-OBJ_MAIN		=	$(MAIN_FILE:.c=.o)
+OBJ					=	$(ALL_SRC:.c=.o)
+OBJ_MAIN			=	$(MAIN_FILE:.c=.o)
 
 all: $(NAME)
 
