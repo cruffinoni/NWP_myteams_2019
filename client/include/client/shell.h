@@ -10,8 +10,9 @@
 
 #include "socket.h"
 
-void shell(socket_t *params);
+int shell(socket_t *params);
 char **get_user_entry();
-void process_command(socket_t *socket, char **args);
+int process_command(socket_t *socket, char **args);
+char *get_server_response(int sock_fd);
 
 #endif

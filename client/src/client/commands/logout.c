@@ -5,9 +5,12 @@
 ** logout.c
 */
 
+#include "error.h"
 #include "socket.h"
 
-void logout(socket_t *socket, char **args)
+int logout(socket_t *socket, char **args)
 {
-
+    (void) socket;
+    (void) args;
+    return (ERR_NONE);
 }

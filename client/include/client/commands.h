@@ -12,9 +12,9 @@
 
 #define NBR_FUNCTIONS   3
 
-void help(socket_t *socket, char **args);
-void login(socket_t *socket, char **args);
-void logout(socket_t *socket, char **args);
+int help(socket_t *socket, char **args);
+int login(socket_t *socket, char **args);
+int logout(socket_t *socket, char **args);
 
 char *commands[NBR_FUNCTIONS] = {
     "help",
@@ -22,7 +22,7 @@ char *commands[NBR_FUNCTIONS] = {
     "logout"
 };
 
-void (*command_functions[NBR_FUNCTIONS])(socket_t *, char **) = {
+int (*command_functions[NBR_FUNCTIONS])(socket_t *, char **) = {
     help,
     login,
     logout

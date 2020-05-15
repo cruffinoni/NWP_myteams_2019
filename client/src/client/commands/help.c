@@ -5,11 +5,12 @@
 ** help.c
 */
 
+#include "error.h"
 #include "socket.h"
 
-void help(socket_t *socket, char **args)
+int help(socket_t *socket, char **args)
 {
     (void) socket;
     (void) args;
-
+    return (ERR_NONE);
 }

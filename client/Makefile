@@ -21,6 +21,7 @@ SRC					=	src/socket.c						\
 						src/client/commands/help.c			\
 						src/client/commands/login.c			\
 						src/client/commands/logout.c		\
+						src/client/get_server_response.c	\
 
 ALL_SRC				=	$(SRC) $(UTILS)
 

@@ -51,7 +51,10 @@ static int init_client(char **av)
         free_params(params);
         return (ERR_INIT);
     }
-    shell(params);
+    if (shell(params) == ERR_INIT) {
+        free_params(params);
+        return (ERR_INIT);
+    }
     free_params(params);
     return (ERR_NONE);
 }
