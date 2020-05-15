@@ -11,6 +11,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+long get_status_code(char *server_response)
+{
+    return (strtol(server_response, NULL, 10));
+}
+
 char *get_server_response(int sock_fd)
 {
     char *buffer = malloc(sizeof(char) * MAX_BODY_LENGTH);

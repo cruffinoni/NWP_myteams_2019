@@ -13,6 +13,10 @@
 
 int process_command(socket_t *socket, char **args)
 {
+    char *commands[NBR_FUNCTIONS] = {"help", "login", "logout"};
+    int (*command_functions[NBR_FUNCTIONS])(socket_t *, char **) =
+        {help, login, logout};
+
     str_to_lower_case(args[0]);
     for (int i = 0; i < NBR_FUNCTIONS; ++i) {
         if (strcmp(commands[i], args[0]) == 0) {

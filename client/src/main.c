@@ -14,6 +14,7 @@
 #include "error.h"
 #include "socket.h"
 #include "client/shell.h"
+#include "client/utils.h"
 
 void free_params(socket_t *params)
 {
@@ -21,10 +22,9 @@ void free_params(socket_t *params)
         return;
     if (params->ip != NULL)
         free(params->ip);
-    if (params->client != NULL)
-        free(params->client);
     if (params->sock_fd > 0)
         close(params->sock_fd);
+    free_user(params);
     free(params);
 }
 

@@ -5,15 +5,18 @@
 ** shell.c - file used to handle commands
 */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include "socket.h"
-#include "client/shell.h"
 #include "utils.h"
 #include "error.h"
+#include "client/shell.h"
+#include "client/utils.h"
+#include "communication/codes.h"
 
 static void print_client_prompt(socket_t *params)
 {
-    printf("\033[1;31m[%s:%d] ", params->ip, params->port);
+    printf("\033[1;31m[%s:%ld] ", params->ip, params->port);
     if (params->client != NULL)
         printf("\033[1;34m%s ", params->client->name);
     printf("\033[1;33m➜ \033[1;37m");
@@ -26,6 +29,11 @@ static int check_connection_to_server(socket_t *socket)
 
     if (server_response == NULL)
         return (ERR_INIT);
+    if (get_status_code(server_response) != SERVICE_READY) {
+        free(server_response);
+        return (ERR_INIT);
+    }
+    free(server_response);
     return (ERR_NONE);
 }
 

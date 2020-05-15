@@ -14,14 +14,16 @@ UTILS				=	$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
 						$(INCLUDE_SHARED_PATH)/utils/tab.c				\
 						$(INCLUDE_SHARED_PATH)/utils/string.c			\
 
-SRC					=	src/socket.c						\
-						src/client/parse_user_entry.c		\
-						src/client/shell.c					\
-						src/client/process_commands.c		\
-						src/client/commands/help.c			\
-						src/client/commands/login.c			\
-						src/client/commands/logout.c		\
-						src/client/get_server_response.c	\
+SRC					=	src/socket.c									\
+						src/client/parse_user_entry.c					\
+						src/client/shell.c								\
+						src/client/process_commands.c					\
+						src/client/commands/help.c						\
+						src/client/commands/login.c						\
+						src/client/commands/logout.c					\
+						src/client/utils/get_server_response.c			\
+						src/client/utils/user_gestion.c					\
+						src/client/utils/send_server_message.c			\
 
 ALL_SRC				=	$(SRC) $(UTILS)
 
@@ -30,7 +32,8 @@ NAME				=	myteams_cli
 SRC_TEST			=	./tests/test.c
 NAME_TEST			=	test_server
 
-CFLAGS				=	-Wall -Wextra -I $(INCLUDE_PATH) -I $(INCLUDE_SHARED_PATH)
+LDFLAGS				+=	-l uuid -L ../libs/myteams -l myteams
+CFLAGS				+=	-Wall -Wextra -I $(INCLUDE_PATH) -I $(INCLUDE_SHARED_PATH)
 
 OBJ					=	$(ALL_SRC:.c=.o)
 OBJ_MAIN			=	$(MAIN_FILE:.c=.o)
@@ -38,10 +41,10 @@ OBJ_MAIN			=	$(MAIN_FILE:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(OBJ_MAIN)
-	gcc -o $(NAME) $(OBJ) $(OBJ_MAIN) $(CFLAGS)
+	gcc -o $(NAME) $(OBJ) $(OBJ_MAIN) $(CFLAGS) $(LDFLAGS)
 
 debug:
-	gcc -o $(NAME) $(ALL_SRC) $(MAIN_FILE) $(CFLAGS) -g
+	gcc -o $(NAME) $(ALL_SRC) $(MAIN_FILE) $(CFLAGS) $(LDFLAGS) -g
 
 tests_run: all
 	gcc $(CFLAGS) $(SRC_TEST) -o test_nm

@@ -56,12 +56,12 @@ static int socket_creation(char **av, socket_t *params)
         free_params(params);
         return (ERR_INIT);
     }
-    params->port = atoi(av[2]);
+    params->port = strtol(av[2], NULL, 10);
     params->sock_fd = create_socket(params);
     if (params->sock_fd < 0) {
         return (ERR_INIT);
     }
-    printf("Client connected to server: %s:%d\n", params->ip,
+    printf("Trying to connect server: %s:%ld\n", params->ip,
         params->port);
     return (ERR_NONE);
 }

@@ -20,7 +20,7 @@ static char *get_buffer()
     if (buffer == NULL)
         return (NULL);
     memset(buffer, 0, MAX_REQUEST_LENGTH);
-    rtn = read(0, buffer, MAX_REQUEST_LENGTH);
+    rtn = read(STDIN_FILENO, buffer, MAX_REQUEST_LENGTH);
     if (rtn < 0) {
         printf("Error read\n");
         return (NULL);

@@ -5,12 +5,23 @@
 ** logout.c
 */
 
+#include <stdlib.h>
 #include "error.h"
 #include "socket.h"
+#include "client/utils.h"
+#include "communication/codes.h"
 
 int logout(socket_t *socket, char **args)
 {
-    (void) socket;
-    (void) args;
+    char *server_response;
+
+    if (send_server_message(socket->sock_fd, args) == ERR_INIT)
+        return (ERR_INIT);
+    server_response = get_server_response(socket->sock_fd);
+    if (server_response == NULL)
+        return (ERR_INIT);
+    if (get_status_code(server_response) == DISCONNECTED)
+        free_user(socket);
+    free(server_response);
     return (ERR_NONE);
 }

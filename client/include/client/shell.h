@@ -13,6 +13,5 @@
 int shell(socket_t *params);
 char **get_user_entry();
 int process_command(socket_t *socket, char **args);
-char *get_server_response(int sock_fd);
 
 #endif

@@ -17,7 +17,7 @@ bool ACTIVE_SERVER;
 typedef struct socket_s
 {
     int sock_fd;
-    int port;
+    long port;
     char *ip;
     client_t *client;
 } socket_t;
