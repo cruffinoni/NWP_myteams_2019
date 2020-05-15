@@ -11,11 +11,16 @@ INCLUDE_PATH		=	./include/
 INCLUDE_SHARED_PATH	=	../shared
 
 UTILS				=	$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
-						$(INCLUDE_SHARED_PATH)/utils/tab.c
+						$(INCLUDE_SHARED_PATH)/utils/tab.c				\
+						$(INCLUDE_SHARED_PATH)/utils/string.c			\
 
 SRC					=	src/socket.c						\
 						src/client/parse_user_entry.c		\
-						src/client/shell.c
+						src/client/shell.c					\
+						src/client/process_commands.c		\
+						src/client/commands/help.c			\
+						src/client/commands/login.c			\
+						src/client/commands/logout.c		\
 
 ALL_SRC				=	$(SRC) $(UTILS)
 

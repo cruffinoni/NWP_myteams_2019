@@ -12,5 +12,6 @@
 
 void shell(socket_t *params);
 char **get_user_entry();
+void process_command(socket_t *socket, char **args);
 
 #endif

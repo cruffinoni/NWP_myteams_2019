@@ -28,6 +28,8 @@ void shell(socket_t *params)
         user_entry = get_user_entry();
         if (user_entry == NULL)
             return;
+        if (tab_len(user_entry) > 0)
+            process_command(params, user_entry);
         free_char_tab(user_entry);
     }
 }
