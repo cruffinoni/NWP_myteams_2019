@@ -47,7 +47,8 @@ int init_user(socket_t *socket, char *server_response, char const *username)
         return (ERR_INIT);
     socket->client->socket = socket->sock_fd;
     socket->client->flags = CLIENT_CONNECTED;
-    socket->client->context = NULL;
+    for (client_context_type_t t = 0; t < CONTEXT_MAX; ++t)
+        uuid_clear(socket->client->context[t]);
     return (ERR_NONE);
 }
 
@@ -55,8 +56,6 @@ void free_user(socket_t *socket)
 {
     if (socket == NULL || socket->client == NULL)
         return;
-    if (socket->client->context != NULL)
-        free(socket->client->context);
     free(socket->client);
     socket->client = NULL;
 }
