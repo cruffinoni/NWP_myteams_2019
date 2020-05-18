@@ -10,11 +10,6 @@
 #include "client/commands.h"
 #include "utils.h"
 
-static bool is_in_range(const int val, const int min, const int max)
-{
-    return (val >= min && val <= max);
-}
-
 static bool has_enough_args(const short idx, const int client, char **input,
     uerror_t *err)
 {
@@ -26,8 +21,7 @@ static bool has_enough_args(const short idx, const int client, char **input,
             "Invalid argument count, excepted %i but got %i",
             CLIENT_COMMANDS[idx].params, tab_size);
         return (false);
-    } else if (CLIENT_COMMANDS[idx].params < 0 &&
-        !is_in_range(tab_size, 1, params_abs)) {
+    } else if (CLIENT_COMMANDS[idx].params < 0 && tab_size > params_abs) {
         *err = send_reply(client, INVALID_ARG_COUNT,
             "Invalid argument count, excepted %i optional arg but got %i",
             params_abs, tab_size);

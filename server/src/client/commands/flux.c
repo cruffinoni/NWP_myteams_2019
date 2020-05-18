@@ -46,7 +46,8 @@ uerror_t login_client(server_t *server, const int client, const char **args)
     strcpy(GET_CLIENT_NAME(server, client), args[1]);
     server->client[client]->flags |= CLIENT_CONNECTED;
     uuid_clear(GET_CLIENT_ID(server, client));
-    uuid_generate_md5(GET_CLIENT_ID(server, client), GET_CLIENT_ID(server, client),
+    uuid_generate_md5(GET_CLIENT_ID(server, client),
+        GET_CLIENT_ID(server, client),
         GET_CLIENT_NAME(server, client), MAX_NAME_LENGTH);
     if (!db_user_exists(server->client[client]))
         if ((err = db_create_user(server->client[client])) != ERR_NONE) {

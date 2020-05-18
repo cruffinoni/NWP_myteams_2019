@@ -26,6 +26,7 @@ typedef enum codes_informative_e {
     ID_ALREADY_EXISTS,
     INVALID_SYNTAX,
     INVALID_ID_PROVIDED,
+    TEAM_ALREADY_EXISTS,
 } codes_informative_t;
 
 typedef enum codes_positive_e {
@@ -53,8 +54,9 @@ static const codes_data_t CODES_DATA[] = {
     {INVALID_ID_PROVIDED, "Invalid id provided"},
     {ID_DOESNT_EXISTS,    "The provided unique ID is invalid"},
     {ID_ALREADY_EXISTS,   "The provided unique ID already exists"},
-    {ARGUMENT_TOO_LONG,   "The provided argument's"
+    {ARGUMENT_TOO_LONG,   "One of the provided arguments'"
                           "length is too long"},
+    {TEAM_ALREADY_EXISTS, "The given team's name is already taken"},
 
     {OK,                  "Command OK"},
     {SERVICE_READY,       "Connection established"},

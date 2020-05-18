@@ -36,6 +36,20 @@ static uerror_t write_infos(const int fd, const char *team,
     return (err);
 }
 
+static uerror_t create_channel_directory(const char *path)
+{
+    char *channel_path = NULL;
+
+    if (asprintf(&channel_path, "%schannel/", path) < 0)
+        return (_DISPLAY_PERROR("asprintf - db_create_team"));
+    if (mkdir(channel_path, S_IRWXU | S_IRWXG | S_IRWXO) != 0) {
+        free(channel_path);
+        return (_DISPLAY_PERROR("mkdir - create_channel_directory"));
+    }
+    free(channel_path);
+    return (ERR_NONE);
+}
+
 static uerror_t create_info_file(char *team, char *real_name,
     const char description[MAX_DESCRIPTION_LENGTH])
 {
@@ -58,6 +72,13 @@ static uerror_t create_info_file(char *team, char *real_name,
     return (err);
 }
 
+static uerror_t created_directories(const char *path)
+{
+    if (mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO) != 0)
+        return (_DISPLAY_PERROR("mkdir - db_create_team"));
+    return (create_channel_directory(path));
+}
+
 uerror_t db_create_team(const char team[MAX_NAME_LENGTH],
     const char description[MAX_DESCRIPTION_LENGTH])
 {
@@ -68,16 +89,14 @@ uerror_t db_create_team(const char team[MAX_NAME_LENGTH],
     if (new_name == NULL)
         return (_DISPLAY_PERROR("remove_quotes - malloc", ERR_MALLOC));
     uuid_clear(local);
+    printf("New name is: '%s'\n", new_name);
     uuid_generate_md5(local, local, new_name, strlen(new_name));
-    if (asprintf(&path, DB_TEAM_PATH, uid_to_string(local)) < 0) {
+    if (asprintf(&path, DB_TEAM_PATH, uid_to_string(local)) < 0 ||
+        created_directories(path) != ERR_NONE) {
         free(new_name);
+        free(path);
         return (_DISPLAY_PERROR("asprintf - db_create_team"));
     }
-    if (mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO) != 0) {
-        free(new_name);
-        return (_DISPLAY_PERROR("mkdir - db_create_team"));
-    }
-    printf("team '%s' created\n", path);
     free(path);
     return (create_info_file(uid_to_string(local), new_name, description));
 }

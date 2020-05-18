@@ -11,6 +11,7 @@
 #include "client/users.h"
 #include "server/server.h"
 #include "server/database.h"
+#include "utils.h"
 
 static bool check_existing_params(const client_context_type_t type,
     const client_t *client)
@@ -36,11 +37,16 @@ uerror_t use_context(server_t *server, const int client, const char **args)
 {
     if (!IS_CONNECTED(server->client[client]))
         return (send_reply(client, NOT_CONNECTED, NULL));
-    for (ushort i = 0; args[i] != NULL; ++i) {
-        if (uuid_parse(args[i], server->client[client]->context[i]) < 0)
+    if (tab_len((char **) args) == 0) {
+        reset_client_context(server->client[client]);
+        return (send_reply(client, OK, NULL));
+    }
+    for (ushort i = 1, k = 0; args[i] != NULL; ++i, ++k) {
+        if (uuid_parse(args[i], server->client[client]->context[k]) < 0)
             return (send_reply(client, INVALID_ID_PROVIDED, NULL));
-        _PRINT_CLIENT("For context %i using id '%s'\n", i, args[i]);
-        if (!check_existing_params(i, server->client[client])) {
+        _PRINT_CLIENT("For context %i using id '%s' -> '%s'\n", i, args[i],
+            uid_to_string(server->client[client]->context[k]));
+        if (!check_existing_params(k, server->client[client])) {
             reset_client_context(server->client[client]);
             return (send_reply(client, ID_DOESNT_EXISTS,
                 "ID '%s' is invalid nor doesn't exists", args[i]));
@@ -48,3 +54,5 @@ uerror_t use_context(server_t *server, const int client, const char **args)
     }
     return (send_reply(client, OK, NULL));
 }
+
+// use db7ec69b-eb29-37ef-876d-2e2ef553e92e
