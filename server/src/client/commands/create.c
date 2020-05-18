@@ -16,7 +16,7 @@ static uerror_t create_team(const int client, const char **args)
             "The team's name is too long. The max' is %i", MAX_NAME_LENGTH));
     if (strlen(args[2]) > MAX_DESCRIPTION_LENGTH)
         return (send_reply(client, ARGUMENT_TOO_LONG,
-            "The team's name is too long. The max' is %i",
+            "The team's description is too long. The max' is %i",
             MAX_DESCRIPTION_LENGTH));
     if (db_team_exists_str(args[1]))
         return (send_reply(client, ID_ALREADY_EXISTS,

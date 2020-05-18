@@ -14,7 +14,7 @@
 #include "socket.h"
 #include "client.h"
 #include "error.h"
-#include "logging_server.h"
+#include "../../../libs/myteams/logging_server.h"
 
 #define _UNUSED_ __attribute__((unused))
 
