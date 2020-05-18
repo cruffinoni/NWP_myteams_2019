@@ -16,5 +16,15 @@ int help(socket_t *socket, char **args);
 int login(socket_t *socket, char **args);
 int logout(socket_t *socket, char **args);
 int users(socket_t *socket, char **args);
+int user(socket_t *socket, char **args);
+int send(socket_t *socket, char **args);
+int messages(socket_t *socket, char **args);
+int subscribe(socket_t *socket, char **args);
+int subscribed(socket_t *socket, char **args);
+int unsubscribe(socket_t *socket, char **args);
+int use(socket_t *socket, char **args);
+int create(socket_t *socket, char **args);
+int list(socket_t *socket, char **args);
+int info(socket_t *socket, char **args);
 
 #endif

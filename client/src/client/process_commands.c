@@ -13,9 +13,12 @@
 
 int process_command(socket_t *socket, char **args)
 {
-    char *commands[] = {"help", "login", "logout", "users", NULL};
-    int (*command_functions[])(socket_t *, char **) =
-        {help, login, logout, users, NULL};
+    char *commands[] = {"help", "login", "logout", "users", "user", "send",
+        "messages", "subscribe", "subscribed", "unsubscribe", "use",
+        "create", "list", "info", NULL};
+    int (*command_functions[])(socket_t *, char **) = {help, login, logout,
+        users, user, send, messages, subscribe, subscribed, unsubscribe,
+        use, create, list, info, NULL};
 
     str_to_lower_case(args[0]);
     for (int i = 0; commands[i]; ++i) {
