@@ -20,28 +20,12 @@
 
 bool db_user_exists(const client_t *client)
 {
-    char *path = NULL;
-    int acc;
-
-    if (uuid_is_null(client->id))
-        return (0);
-    if (asprintf(&path, DB_USER_PATH "%s/", uid_to_string(client->id)) < 0)
-        return (_DISPLAY_PERROR("asprintf - db_user_exists", false));
-    acc = access(path, R_OK | W_OK);
-    free(path);
-    return (acc == 0);
+    return (db_path_exists(DB_USER_PATH, uid_to_string(client->id)));
 }
 
-bool db_user_exists_id(const char *id)
+bool db_user_exists_str(const char *id)
 {
-    char *path = NULL;
-    int acc;
-
-    if (asprintf(&path, DB_USER_PATH "%s/", id) < 0)
-        return (_DISPLAY_PERROR("asprintf - db_user_exists", false));
-    acc = access(path, R_OK | W_OK);
-    free(path);
-    return (acc == 0);
+    return (db_path_exists(DB_USER_PATH, id));
 }
 
 static uerror_t create_info_file(const client_t *client)
@@ -50,7 +34,8 @@ static uerror_t create_info_file(const client_t *client)
     int fd;
     uerror_t err = ERR_NONE;
 
-    if (asprintf(&path, DB_USER_INFO_FILE_PATH, uid_to_string(client->id)) < 0)
+    if (asprintf(&path, DB_USER_PATH DB_INFO_FILE,
+        uid_to_string(client->id)) < 0)
         return (_DISPLAY_PERROR("asprintf - db_create_user"));
     if ((fd = open(path, O_CREAT | O_RDWR, 0666)) < 0)
         return (_DISPLAY_PERROR("open - db_create_user"));
@@ -70,11 +55,10 @@ uerror_t db_create_user(const client_t *client)
         printf("db_create_user - client %p has a null uuid\n", client);
         return (ERR_NONE);
     }
-    if (asprintf(&path, DB_USER_PATH "%s/", uid_to_string(client->id)) < 0)
+    if (asprintf(&path, DB_USER_PATH, uid_to_string(client->id)) < 0)
         return (_DISPLAY_PERROR("asprintf - db_create_user"));
     if (mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO) != 0)
         return (_DISPLAY_PERROR("mkdir - db_create_user"));
-    printf("New user w/ path '%s' created\n", path);
     free(path);
     return (create_info_file(client));
 }

@@ -12,5 +12,6 @@ char **str_to_array(char const *str);
 void free_char_tab(char **tab);
 void str_to_lower_case(char *str);
 size_t tab_len(char **tab);
+char *remove_quotes(const char *original);
 
 #endif

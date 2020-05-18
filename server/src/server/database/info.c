@@ -20,7 +20,7 @@ uerror_t db_get_user_infos(const char *id, client_t *dest)
     int acc;
     uerror_t err;
 
-    if (asprintf(&path, DB_USER_PATH "%s/", id) < 0)
+    if (asprintf(&path, DB_USER_PATH, id) < 0)
         return (_DISPLAY_PERROR("asprintf - db_user_exists", false));
     acc = access(path, R_OK | W_OK);
     memset(dest->name, 0, MAX_NAME_LENGTH);
@@ -64,7 +64,7 @@ void db_destroy_user_list(db_user_list_t *header)
 uerror_t db_get_all_users(db_user_list_t **dest)
 {
     struct dirent *dirent;
-    DIR *dir = opendir(DB_USER_PATH);
+    DIR *dir = opendir(DB_USER_FOLDER);
     uerror_t err;
     client_t local;
 

@@ -24,12 +24,25 @@ uerror_t disconnect_client(server_t *server,
     return (send_reply(client, DISCONNECTED, NULL));
 }
 
+static uerror_t release_event(server_t *server, const int client)
+{
+    server_event_user_logged_in(uid_to_string(GET_CLIENT_ID(server, client)));
+    _PRINT_SERVER("[%i] User <%s:%s> logged in\n", client,
+        GET_CLIENT_NAME(server, client),
+        uid_to_string(GET_CLIENT_ID(server, client)));
+    return (send_reply(client, LOGIN_SUCCESSFUL, "Logged successfully: <%s>",
+        uid_to_string(GET_CLIENT_ID(server, client))));
+}
+
 uerror_t login_client(server_t *server, const int client, const char **args)
 {
     uerror_t err;
 
     if (IS_CONNECTED(server->client[client]))
         return (send_reply(client, ALREADY_LOGGED, NULL));
+    if (strlen(args[1]) > MAX_NAME_LENGTH)
+        return (send_reply(client, ARGUMENT_TOO_LONG,
+            "The user's name is too long. The max' is %i", MAX_NAME_LENGTH));
     strcpy(GET_CLIENT_NAME(server, client), args[1]);
     server->client[client]->flags |= CLIENT_CONNECTED;
     uuid_clear(GET_CLIENT_ID(server, client));
@@ -40,10 +53,5 @@ uerror_t login_client(server_t *server, const int client, const char **args)
             send_reply(client, INTERNAL_ERROR, NULL);
             return (err);
         }
-    server_event_user_logged_in(uid_to_string(GET_CLIENT_ID(server, client)));
-    _PRINT_SERVER("[%i] User <%s:%s> logged in\n", client,
-        GET_CLIENT_NAME(server, client),
-        uid_to_string(GET_CLIENT_ID(server, client)));
-    return (send_reply(client, LOGIN_SUCCESSFUL, "Logged successfully: <%s>",
-        uid_to_string(GET_CLIENT_ID(server, client))));
+    return (release_event(server, client));
 }

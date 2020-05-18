@@ -24,23 +24,19 @@ enum client_flag_e {
 typedef unsigned short client_flag_t;
 
 typedef enum client_context_type_e {
-    CONTEXT_NONE,
     CONTEXT_TEAM,
     CONTEXT_CHANNEL,
     CONTEXT_THREAD,
+    CONTEXT_INVALID,
+    CONTEXT_MAX = CONTEXT_INVALID,
 } client_context_type_t;
-
-typedef struct client_context_s {
-    client_context_type_t type;
-    uuid_t id;
-} client_context_t;
 
 typedef struct client_s {
     char name[MAX_NAME_LENGTH];
     uuid_t id;
     int socket;
     client_flag_t flags;
-    client_context_t *context;
+    uuid_t context[CONTEXT_MAX];
 } client_t;
 
 #define IS_CONNECTED(c) ((c->flags & CLIENT_CONNECTED) == CLIENT_CONNECTED)

@@ -17,12 +17,15 @@ typedef enum codes_error_e {
     LINE_TOO_LONG,
     COMMAND_NOT_FOUND,
     INTERNAL_ERROR,
+    ARGUMENT_TOO_LONG,
 } codes_error_t;
 
 typedef enum codes_informative_e {
     SERVICE_CLOSING = 300,
-    USER_DONT_EXIST,
+    ID_DOESNT_EXISTS,
+    ID_ALREADY_EXISTS,
     INVALID_SYNTAX,
+    INVALID_ID_PROVIDED,
 } codes_informative_t;
 
 typedef enum codes_positive_e {
@@ -40,19 +43,24 @@ typedef struct codes_data_s {
 } codes_data_t;
 
 static const codes_data_t CODES_DATA[] = {
-    {NOT_CONNECTED,     "The client is not connected"},
-    {ALREADY_LOGGED,    "The client is already logged"},
-    {INVALID_ARG_COUNT, "Invalid argument count, got X expected Y"},
-    {LINE_TOO_LONG,     "Line too long"},
-    {COMMAND_NOT_FOUND, "Command not found"},
-    {INTERNAL_ERROR, "Server internal error"},
-    {INVALID_SYNTAX, "One of the parameters provided is invalid"},
+    {NOT_CONNECTED,       "The client is not connected"},
+    {ALREADY_LOGGED,      "The client is already logged"},
+    {INVALID_ARG_COUNT,   "Invalid argument count, got X expected Y"},
+    {LINE_TOO_LONG,       "Line too long"},
+    {COMMAND_NOT_FOUND,   "Command not found"},
+    {INTERNAL_ERROR,      "Server internal error"},
+    {INVALID_SYNTAX,      "One of the parameters provided is invalid"},
+    {INVALID_ID_PROVIDED, "Invalid id provided"},
+    {ID_DOESNT_EXISTS,    "The provided unique ID is invalid"},
+    {ID_ALREADY_EXISTS,   "The provided unique ID already exists"},
+    {ARGUMENT_TOO_LONG,   "The provided argument's"
+                          "length is too long"},
 
-    {OK,     "Command OK"},
-    {SERVICE_READY,     "Connection established"},
-    {LOGIN_SUCCESSFUL,  "Logged successfully <uuid>"},
-    {DISCONNECTED,      "Client disconnected from server"},
-    {SERVICE_CLOSING,   "Remote service disconnected client"},
+    {OK,                  "Command OK"},
+    {SERVICE_READY,       "Connection established"},
+    {LOGIN_SUCCESSFUL,    "Logged successfully <uuid>"},
+    {DISCONNECTED,        "Client disconnected from server"},
+    {SERVICE_CLOSING,     "Remote service disconnected client"},
 
     {0, NULL}
 };

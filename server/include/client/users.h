@@ -13,5 +13,6 @@
 
 void free_client(client_t **this);
 uerror_t create_client(const int socket, client_t **this);
+void reset_client_context(client_t *client);
 
 #endif

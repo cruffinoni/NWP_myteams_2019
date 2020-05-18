@@ -22,8 +22,8 @@ static uerror_t check_local_uid(server_t *s, const int c, const char **av)
     }
     if (!uuid_compare(local, s->client[c]->id))
         return (send_reply(c, INVALID_SYNTAX, NULL));
-    if (!db_user_exists_id(av[1])) {
-        send_reply(c, USER_DONT_EXIST, "User <%s> doesn't exists", av[1]);
+    if (!db_user_exists_str(av[1])) {
+        send_reply(c, ID_DOESNT_EXISTS, "User <%s> doesn't exists", av[1]);
         return (true);
     }
     return (false);

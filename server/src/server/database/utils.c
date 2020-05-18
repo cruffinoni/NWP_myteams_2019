@@ -5,6 +5,7 @@
 ** TODO: CHANGE DESCRIPTION.
 */
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -32,7 +33,7 @@ uerror_t read_user_info_file(const char *folder_name, client_t *dest)
     size_t size = 0;
     ssize_t rtn;
 
-    if (asprintf(&path, DB_USER_PATH "%s/.info", folder_name) < 0)
+    if (asprintf(&path, DB_USER_PATH ".info", folder_name) < 0)
         return (_DISPLAY_PERROR("asprintf - read_user_info_file"));
     if ((file = fopen(path, "r")) == NULL) {
         free(path);
@@ -48,4 +49,19 @@ uerror_t read_user_info_file(const char *folder_name, client_t *dest)
     free(path);
     fclose(file);
     return (0);
+}
+
+bool db_path_exists(const char *path, ...)
+{
+    char *path_fmt = NULL;
+    int acc;
+    va_list list;
+
+    va_start(list, path);
+    if (vasprintf(&path_fmt, path, list) < 0)
+        return (_DISPLAY_PERROR("asprintf - db_user_exists", false));
+    acc = access(path_fmt, R_OK | W_OK);
+    free(path_fmt);
+    va_end(list);
+    return (acc == 0);
 }
