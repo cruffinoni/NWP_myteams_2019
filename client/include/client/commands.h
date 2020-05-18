@@ -10,10 +10,11 @@
 
 #include "socket.h"
 
-#define NBR_FUNCTIONS   3
+#define _UNUSED_ __attribute__((unused))
 
 int help(socket_t *socket, char **args);
 int login(socket_t *socket, char **args);
 int logout(socket_t *socket, char **args);
+int users(socket_t *socket, char **args);
 
 #endif

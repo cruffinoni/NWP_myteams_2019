@@ -8,8 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 #include "error.h"
-#include "utils.h"
 
 static int get_len_string_with_tab(char **tab)
 {
@@ -44,13 +44,13 @@ static char *format_send_data(char **args)
 int send_server_message(int sock_fd, char **args)
 {
     char *to_send = format_send_data(args);
-    int message_length;
+    size_t message_length;
 
     if (to_send == NULL) {
         printf("Error malloc\n");
         return (ERR_INIT);
     }
-    message_length = get_strlen(to_send);
+    message_length = strlen(to_send);
     if (write(sock_fd, to_send, message_length) < 0) {
         free(to_send);
         printf("Error write\n");

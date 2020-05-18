@@ -7,10 +7,9 @@
 
 #include "error.h"
 #include "socket.h"
+#include "client/commands.h"
 
-int help(socket_t *socket, char **args)
+int help(_UNUSED_ socket_t *socket, _UNUSED_ char **args)
 {
-    (void) socket;
-    (void) args;
     return (ERR_NONE);
 }

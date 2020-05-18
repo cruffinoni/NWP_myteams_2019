@@ -21,8 +21,10 @@ static char *get_buffer()
         return (NULL);
     memset(buffer, 0, MAX_REQUEST_LENGTH);
     rtn = read(STDIN_FILENO, buffer, MAX_REQUEST_LENGTH);
-    if (rtn < 0) {
-        printf("Error read\n");
+    if (rtn <= 0) {
+        if (rtn == -1)
+            printf("Error read\n");
+        free(buffer);
         return (NULL);
     }
     return (buffer);

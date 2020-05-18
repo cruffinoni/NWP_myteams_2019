@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
 #include "socket.h"
 #include "utils.h"
 #include "error.h"
@@ -47,7 +48,7 @@ int shell(socket_t *params)
         print_client_prompt(params);
         user_entry = get_user_entry();
         if (user_entry == NULL)
-            return (ERR_INIT);
+            return (errno == 0 ? ERR_NONE : ERR_INIT);
         if (tab_len(user_entry) > 0)
             if (process_command(params, user_entry))
                 return (ERR_INIT);

@@ -18,7 +18,7 @@ long get_status_code(char *server_response)
 
 char *get_server_response(int sock_fd)
 {
-    char *buffer = malloc(sizeof(char) * MAX_BODY_LENGTH);
+    char *buffer = malloc(sizeof(char) * MAX_REQUEST_LENGTH);
     ssize_t rtn;
 
     if (buffer == NULL)
