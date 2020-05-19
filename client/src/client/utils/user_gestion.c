@@ -47,7 +47,7 @@ int init_user(socket_t *socket, char *server_response, char const *username)
         return (ERR_INIT);
     socket->client->socket = socket->sock_fd;
     socket->client->flags = CLIENT_CONNECTED;
-    for (client_context_type_t t = 0; t < CONTEXT_MAX; ++t)
+    for (client_context_type_t t = 0; t < MAX; ++t)
         uuid_clear(socket->client->context[t]);
     return (ERR_NONE);
 }

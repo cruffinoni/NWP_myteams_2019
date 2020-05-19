@@ -8,9 +8,11 @@
 MAIN_FILE			=	./src/main.c
 
 INCLUDE_PATH		=	./include/
+INCLUDE_LIB_PATH	=	../libs/
 INCLUDE_SHARED_PATH	=	../shared
 
-UTILS				=	$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
+UTILS				=	$(INCLUDE_SHARED_PATH)/uid.c					\
+						$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
 						$(INCLUDE_SHARED_PATH)/utils/tab.c				\
 						$(INCLUDE_SHARED_PATH)/utils/string.c			\
 
@@ -44,7 +46,7 @@ SRC_TEST			=	./tests/test.c
 NAME_TEST			=	test_server
 
 LDFLAGS				+=	-l uuid -L ../libs/myteams -l myteams
-CFLAGS				+=	-Wall -Wextra -I $(INCLUDE_PATH) -I $(INCLUDE_SHARED_PATH)
+CFLAGS				+=	-Wall -Wextra -I $(INCLUDE_PATH) -I $(INCLUDE_SHARED_PATH) -I $(INCLUDE_LIB_PATH)
 
 OBJ					=	$(ALL_SRC:.c=.o)
 OBJ_MAIN			=	$(MAIN_FILE:.c=.o)
