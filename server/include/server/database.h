@@ -20,7 +20,7 @@
 #define DB_TEAM_PATH DB_PATH            "teams/%s/"
 #define DB_CHANNEL_FOLDER DB_TEAM_PATH    "channel/"
 #define DB_CHANNEL_PATH DB_TEAM_PATH    "channel/%s/"
-#define DB_THREAD_PATH DB_CHANNEL_PATH  "thread/%s/"
+#define DB_THREAD_PATH DB_CHANNEL_PATH  "%s.thread"
 
 typedef struct db_user_list_s {
     client_t client;
@@ -37,6 +37,8 @@ bool db_team_exists(const uuid_t team);
 bool db_team_exists_str(const char *team);
 bool db_channel_exists(const uuid_t team, const uuid_t channel);
 bool db_channel_exists_str(const uuid_t team, const char *channel);
+bool db_thread_exists_str(const uuid_t team, const uuid_t channel,
+    const char *thread);
 bool db_thread_exists(const uuid_t team, const uuid_t channel,
     const uuid_t thread);
 
@@ -47,6 +49,7 @@ void db_destroy_user_list(db_user_list_t *header);
 // Internal DB function
 uerror_t read_user_info_file(const char *folder_name, client_t *dest);
 bool db_path_exists(const char *path, ...);
+char *db_get_uuid_str(const char *str);
 
 // Private message functions
 uerror_t db_send_pm(const client_t *src, const char *dest_id, const char *msg);
@@ -57,6 +60,9 @@ uerror_t db_get_all_message(const uuid_t author, const char *dest,
 uerror_t db_create_team(const char team[MAX_NAME_LENGTH],
     const char description[MAX_DESCRIPTION_LENGTH]);
 uerror_t db_create_channel(const uuid_t team,
+    const char channel[MAX_NAME_LENGTH],
+    const char description[MAX_DESCRIPTION_LENGTH]);
+uerror_t db_create_thread(const client_t *client,
     const char channel[MAX_NAME_LENGTH],
     const char description[MAX_DESCRIPTION_LENGTH]);
 

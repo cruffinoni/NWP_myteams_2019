@@ -15,7 +15,7 @@
 
 void reset_client_context(client_t *client)
 {
-    for (client_context_type_t i = 0; i < CONTEXT_MAX; ++i)
+    for (client_context_type_t i = 0; i < MAX; ++i)
         uuid_clear(client->context[i]);
 }
 

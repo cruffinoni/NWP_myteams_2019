@@ -25,6 +25,7 @@ SRC_SERVER		=	./src/server/management.c			\
 					./src/server/database/existence.c	\
 					./src/server/database/team.c		\
 					./src/server/database/channel.c		\
+					./src/server/database/thread.c		\
 
 SRC_CLIENT		=	./src/client/management.c				\
 					./src/client/reply.c					\

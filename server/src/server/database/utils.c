@@ -14,6 +14,15 @@
 #include "client.h"
 #include "server/database.h"
 
+char *db_get_uuid_str(const char *id)
+{
+    uuid_t local;
+
+    uuid_clear(local);
+    uuid_generate_md5(local, local, id, strlen(id));
+    return (uid_to_string(local));
+}
+
 static void extract_user_name(const char *buffer, client_t *dest)
 {
     char *idx = index(buffer, '=');

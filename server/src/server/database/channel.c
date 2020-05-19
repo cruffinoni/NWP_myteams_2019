@@ -19,7 +19,6 @@
 #include "client.h"
 #include "server/database.h"
 
-
 static uerror_t write_infos(const int fd, const char *name,
     const char description[MAX_DESCRIPTION_LENGTH])
 {
@@ -71,7 +70,6 @@ uerror_t db_create_channel(const uuid_t team,
 
     if (new_name == NULL)
         return (_DISPLAY_PERROR("remove_quotes - malloc", ERR_MALLOC));
-    printf("Channel: '%s' & new name: '%s'\n", channel, new_name);
     uuid_clear(local);
     uuid_generate_md5(local, local, new_name, strlen(new_name));
     if (asprintf(&path, DB_CHANNEL_PATH,
