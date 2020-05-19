@@ -32,6 +32,8 @@ clean:
 fclean:
 	$(MAKE) -C $(SERVER) fclean
 	$(MAKE) -C $(CLIENT) fclean
+	rm -f $(CLIENT_BINARY)
+	rm -f $(SERVER_BINARY)
 
 re:	fclean all
 
