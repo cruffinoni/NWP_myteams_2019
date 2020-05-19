@@ -30,6 +30,7 @@ typedef enum client_context_type_e {
     INVALID,
     MAX = INVALID,
 } client_context_type_t;
+typedef uuid_t client_contexts_t[MAX];
 
 typedef struct client_s {
     char name[MAX_NAME_LENGTH];

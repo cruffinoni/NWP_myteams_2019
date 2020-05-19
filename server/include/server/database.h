@@ -65,5 +65,7 @@ uerror_t db_create_channel(const uuid_t team,
 uerror_t db_create_thread(const client_t *client,
     const char channel[MAX_NAME_LENGTH],
     const char description[MAX_DESCRIPTION_LENGTH]);
+uerror_t db_create_comment(uuid_t client, client_contexts_t ctx,
+    const char body[MAX_BODY_LENGTH]);
 
 #endif

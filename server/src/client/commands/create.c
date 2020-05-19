@@ -78,8 +78,8 @@ static uerror_t create_thread(const client_t *this, const char **args)
     if (db_create_thread(this, args[1], args[2]) != ERR_NONE)
         err = send_reply(this->socket, INTERNAL_ERROR, NULL);
     else
-        err = send_reply(this->socket, OK, "Thread created <%s>",
-            real_name);
+        err = send_reply(this->socket, OK, "Thread created <%s:%s>",
+            real_name, db_get_uuid_str(real_name));
     free(real_name);
     return (err);
 }
@@ -94,5 +94,11 @@ uerror_t create_command(server_t *server, const int client, const char **args)
         return (create_channel(server->client[client], args));
     if (uuid_is_null(server->client[client]->context[THREAD]))
         return (create_thread(server->client[client], args));
-    return (send_reply(client, OK, NULL));
+    if (strlen(args[1]) > MAX_BODY_LENGTH)
+        return (send_reply(client, ARGUMENT_TOO_LONG, NULL));
+    if (db_create_comment(server->client[client]->id,
+        server->client[client]->context, args[1]) != ERR_NONE)
+        return (send_reply(client, INTERNAL_ERROR, NULL));
+    else
+        return (send_reply(client, OK, NULL));
 }

@@ -33,6 +33,7 @@ typedef enum codes_informative_e {
 
 typedef enum codes_positive_e {
     OK = 200,
+    CLIENT_CONTEXT_RESET,
     SERVICE_READY,
     LOGIN_SUCCESSFUL,
     DISCONNECTED,
@@ -63,6 +64,7 @@ static const codes_data_t CODES_DATA[] = {
     {THREAD_ALREADY_EXISTS, "The given thread's name is already taken"},
 
     {OK,                  "Command OK"},
+    {CLIENT_CONTEXT_RESET, "Client contexts' has been reset"},
     {SERVICE_READY,       "Connection established"},
     {LOGIN_SUCCESSFUL,    "Logged successfully <uuid>"},
     {DISCONNECTED,        "Client disconnected from server"},

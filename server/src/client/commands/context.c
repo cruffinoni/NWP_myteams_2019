@@ -36,9 +36,9 @@ uerror_t use_context(server_t *server, const int client, const char **args)
 {
     if (!IS_CONNECTED(server->client[client]))
         return (send_reply(client, NOT_CONNECTED, NULL));
-    if (tab_len((char **) args) == 0) {
+    if (tab_len((char **) args) == 1) {
         reset_client_context(server->client[client]);
-        return (send_reply(client, OK, NULL));
+        return (send_reply(client, CLIENT_CONTEXT_RESET, NULL));
     }
     for (ushort i = 1, k = 0; args[i] != NULL; ++i, ++k) {
         if (uuid_parse(args[i], server->client[client]->context[k]) < 0)
