@@ -41,6 +41,11 @@ static const struct commands_data_s CLIENT_COMMANDS[] = {
     {NULL, 0, NULL},
 };
 
+uerror_t release_event_team(const client_t *client, const char **arg);
+uerror_t release_event_channel(const client_t *client, const char **arg);
+uerror_t release_event_thread(const client_t *client, const char **arg);
+uerror_t release_event_comment(const client_t *client, const char **arg);
+
 uerror_t parse_command(server_t *server, const int client, char **input);
 
 #endif

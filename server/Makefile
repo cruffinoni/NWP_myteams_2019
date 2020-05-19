@@ -35,7 +35,8 @@ SRC_CLIENT		=	./src/client/management.c				\
 					./src/client/commands/miscellaneous.c	\
 					./src/client/commands/pm.c				\
 					./src/client/commands/context.c			\
-					./src/client/commands/create.c			\
+					./src/client/commands/create/create.c	\
+					./src/client/commands/create/event.c	\
 
 SRC				=	./src/error/error.c			\
 
