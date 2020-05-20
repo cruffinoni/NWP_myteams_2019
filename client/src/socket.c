@@ -37,7 +37,7 @@ static int create_socket(socket_t *params)
     sockaddr.sin_port = htons(params->port);
     inet_aton(params->ip, (struct in_addr *) &sockaddr.sin_addr.s_addr);
     if (connect(sock_fd, (const struct sockaddr *) &sockaddr,
-             sizeof(struct sockaddr_un)) < 0) {
+        sizeof(struct sockaddr_un)) < 0) {
         printf("Connect error\n");
         return (-1);
     }

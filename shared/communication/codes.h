@@ -58,7 +58,7 @@ static const codes_data_t CODES_DATA[] = {
     {ID_DOESNT_EXISTS,    "The provided unique ID is invalid"},
     {ID_ALREADY_EXISTS,   "The provided unique ID already exists"},
     {ARGUMENT_TOO_LONG,   "One of the provided arguments'"
-                          "length is too long"},
+        "length is too long"},
     {TEAM_ALREADY_EXISTS, "The given team's name is already taken"},
     {CHANNEL_ALREADY_EXISTS, "The given channel's name is already taken"},
     {THREAD_ALREADY_EXISTS, "The given thread's name is already taken"},

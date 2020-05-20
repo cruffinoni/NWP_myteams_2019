@@ -23,6 +23,24 @@ static int log_lib(socket_t *socket)
     return (ERR_NONE);
 }
 
+static int compute_result(socket_t *socket, char **args, char *server_response)
+{
+    long status_code;
+
+    status_code = get_status_code(server_response);
+    if (status_code == LOGIN_SUCCESSFUL) {
+        if (init_user(socket, server_response, args[1]) == ERR_INIT) {
+            free(server_response);
+            return (ERR_INIT);
+        }
+    }
+    if (log_lib(socket) == ERR_INIT) {
+        free(server_response);
+        return (ERR_INIT);
+    }
+    return (ERR_NONE);
+}
+
 int login(socket_t *socket, char **args)
 {
     char *server_response;
@@ -30,17 +48,9 @@ int login(socket_t *socket, char **args)
     if (send_server_message(socket->sock_fd, args) == ERR_INIT)
         return (ERR_INIT);
     server_response = get_server_response(socket->sock_fd);
-    if (server_response == NULL)
+    if (server_response == NULL ||
+    compute_result(socket, args, server_response) == ERR_INIT)
         return (ERR_INIT);
-    if (get_status_code(server_response) == LOGIN_SUCCESSFUL &&
-    init_user(socket, server_response, args[1]) == ERR_INIT) {
-        free(server_response);
-        return (ERR_INIT);
-    }
-    if (log_lib(socket) == ERR_INIT) {
-        free(server_response);
-        return (ERR_INIT);
-    }
     free(server_response);
     return (ERR_NONE);
 }

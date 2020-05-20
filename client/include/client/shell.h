@@ -11,7 +11,7 @@
 #include "socket.h"
 
 int shell(socket_t *params);
-char **get_user_entry();
+char **get_user_entry(void);
 int process_command(socket_t *socket, char **args);
 
 #endif

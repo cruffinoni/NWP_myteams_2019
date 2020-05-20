@@ -10,7 +10,7 @@
 
 #include "socket.h"
 
-#define LENGTH_UUID 36
+#define LENGTH_UUID     36
 
 int init_user(socket_t *socket, char *server_response, char const *username);
 void free_user(socket_t *socket);

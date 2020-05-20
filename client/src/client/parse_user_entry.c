@@ -12,7 +12,7 @@
 #include "client/shell.h"
 #include "utils.h"
 
-static char *get_buffer()
+static char *get_buffer(void)
 {
     char *buffer = malloc(sizeof(char) * MAX_REQUEST_LENGTH);
     ssize_t rtn;
@@ -30,7 +30,7 @@ static char *get_buffer()
     return (buffer);
 }
 
-char **get_user_entry()
+char **get_user_entry(void)
 {
     char **args = NULL;
     char *buff = get_buffer();
