@@ -25,7 +25,7 @@
 typedef struct db_user_list_s {
     client_t client;
     struct db_user_list_s *next;
-} db_user_list_t;
+} db_listing_t;
 
 
 // Core functions
@@ -43,13 +43,14 @@ bool db_thread_exists(const uuid_t team, const uuid_t channel,
     const uuid_t thread);
 
 // Users functions
-uerror_t db_get_all_users(db_user_list_t **dest);
-void db_destroy_user_list(db_user_list_t *header);
+uerror_t db_get_all_users(db_listing_t **dest);
 
 // Internal DB function
 uerror_t read_user_info_file(const char *folder_name, client_t *dest);
 bool db_path_exists(const char *path, ...);
 char *db_get_uuid_str(const char *str);
+uerror_t add_node(db_listing_t **list, client_t *buffer);
+void db_destroy_listing(db_listing_t *header);
 
 // Private message functions
 uerror_t db_send_pm(const client_t *src, const char *dest_id, const char *msg);

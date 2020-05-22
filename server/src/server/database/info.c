@@ -32,9 +32,9 @@ uerror_t db_get_user_infos(const char *id, client_t *dest)
     return (ERR_NONE);
 }
 
-static uerror_t add_node(db_user_list_t **list, client_t *buffer)
+uerror_t add_node(db_listing_t **list, client_t *buffer)
 {
-    db_user_list_t *node = malloc(sizeof(db_user_list_t));
+    db_listing_t *node = malloc(sizeof(db_listing_t));
 
     if (node == NULL)
         return (_DISPLAY_PERROR("malloc", ERR_MALLOC));
@@ -47,10 +47,10 @@ static uerror_t add_node(db_user_list_t **list, client_t *buffer)
     return (ERR_NONE);
 }
 
-void db_destroy_user_list(db_user_list_t *header)
+void db_destroy_listing(db_listing_t *header)
 {
-    db_user_list_t *curr = header;
-    db_user_list_t *next;
+    db_listing_t *curr = header;
+    db_listing_t *next;
 
     if (header == NULL)
         return;
@@ -61,7 +61,7 @@ void db_destroy_user_list(db_user_list_t *header)
     }
 }
 
-uerror_t db_get_all_users(db_user_list_t **dest)
+uerror_t db_get_all_users(db_listing_t **dest)
 {
     struct dirent *dirent;
     DIR *dir = opendir(DB_USER_FOLDER);
@@ -76,7 +76,7 @@ uerror_t db_get_all_users(db_user_list_t **dest)
         if ((err = read_user_info_file(dirent->d_name, &local)) != ERR_NONE ||
             (err = add_node(dest, &local)) != ERR_NONE) {
             closedir(dir);
-            db_destroy_user_list(*dest);
+            db_destroy_listing(*dest);
             return (err);
         }
     }

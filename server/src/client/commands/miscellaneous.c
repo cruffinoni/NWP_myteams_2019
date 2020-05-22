@@ -33,8 +33,8 @@ uerror_t show_all_users(server_t *server, const int client,
     _UNUSED_ const char **args)
 {
     uerror_t err;
-    db_user_list_t *list = NULL;
-    db_user_list_t *tmp = NULL;
+    db_listing_t *list = NULL;
+    db_listing_t *tmp = NULL;
 
     if (!IS_CONNECTED(server->client[client]))
         return (send_reply(client, NOT_CONNECTED, NULL));
@@ -45,9 +45,10 @@ uerror_t show_all_users(server_t *server, const int client,
     tmp = list;
     // Determine the format of the returned data
     while (tmp != NULL) {
-        send_reply(client, OK, "User <%s:%s>", tmp->client.name, uid_to_string(tmp->client.id));
+        send_reply(client, OK, "User <%s:%s>", tmp->client.name,
+            uid_to_string(tmp->client.id));
         tmp = tmp->next;
     }
-    db_destroy_user_list(list);
+    db_destroy_listing(list);
     return (ERR_NONE);
 }
