@@ -26,7 +26,7 @@ static void print_client_prompt(socket_t *params)
 
 static int check_connection_to_server(socket_t *socket)
 {
-    char *server_response = get_server_response(socket->sock_fd);
+    char *server_response = get_server_response(socket);
 
     if (server_response == NULL)
         return (ERR_INIT);

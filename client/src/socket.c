@@ -76,10 +76,12 @@ socket_t *init_client_connection(char **av)
     params->port = -1;
     params->ip = NULL;
     params->client = NULL;
+    FD_ZERO(&params->server_set);
     if (socket_creation(av, params) == ERR_INIT) {
         free_params(params);
         return (NULL);
     }
+    FD_SET(params->sock_fd, &params->server_set);
     ACTIVE_SERVER = true;
     return (params);
 }

@@ -17,6 +17,6 @@ void free_user(socket_t *socket);
 
 int send_server_message(int sock_fd, char **args);
 long get_status_code(char *server_response);
-char *get_server_response(int sock_fd);
+char *get_server_response(socket_t *params);
 
 #endif

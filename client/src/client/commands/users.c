@@ -5,15 +5,20 @@
 ** users.c
 */
 
+#include <stdlib.h>
 #include "client/commands.h"
 #include "client/utils.h"
 #include "error.h"
 
 int users(socket_t *socket, char **args)
 {
+    char *server_response = NULL;
+
     if (send_server_message(socket->sock_fd, args) == ERR_INIT)
         return (ERR_INIT);
-    if (get_server_response(socket->sock_fd) == NULL)
+    server_response = get_server_response(socket);
+    if (server_response == NULL)
         return (ERR_INIT);
+    free(server_response);
     return (ERR_NONE);
 }

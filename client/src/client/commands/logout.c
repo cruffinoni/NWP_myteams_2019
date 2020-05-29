@@ -27,7 +27,7 @@ int logout(socket_t *socket, char **args)
 
     if (send_server_message(socket->sock_fd, args) == ERR_INIT)
         return (ERR_INIT);
-    server_response = get_server_response(socket->sock_fd);
+    server_response = get_server_response(socket);
     if (server_response == NULL)
         return (ERR_INIT);
     if (get_status_code(server_response) == DISCONNECTED) {

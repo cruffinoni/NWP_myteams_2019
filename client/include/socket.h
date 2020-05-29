@@ -12,6 +12,8 @@
 #include "client.h"
 #include "socket.h"
 
+#define MAX_CONNECTION      FD_SETSIZE
+
 bool ACTIVE_SERVER;
 
 typedef struct socket_s
@@ -20,6 +22,7 @@ typedef struct socket_s
     long port;
     char *ip;
     client_t *client;
+    fd_set server_set;
 } socket_t;
 
 socket_t *init_client_connection(char **av);
