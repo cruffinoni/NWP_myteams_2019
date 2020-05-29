@@ -20,6 +20,7 @@ static const char *ERROR_DEFINITION[] = {
     "The port entered is not a number",
     "Woops! An error occurred...",
     "Internal error occurred during socket creation",
+    "Corrupted file found, please delete all file related to the database",
 };
 
 uerror_t display_perror_internal_(const char *source, const uerror_t code)

@@ -90,8 +90,7 @@ static uerror_t create_comment(const client_t *this, const char **args)
 
     if (strlen(args[1]) > MAX_BODY_LENGTH)
         return (send_reply(this->socket, ARGUMENT_TOO_LONG, NULL));
-    if (db_create_comment(this->id,
-        this->context, args[1]) != ERR_NONE)
+    if (db_create_comment(this, args[1]) != ERR_NONE)
         err = send_reply(this->socket, INTERNAL_ERROR, NULL);
     else
         err = send_reply(this->socket, OK, NULL);

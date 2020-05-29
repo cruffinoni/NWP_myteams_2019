@@ -52,7 +52,6 @@ static uerror_t extract_comments(db_listing_t **dest, FILE *file)
     char description[MAX_DESCRIPTION_LENGTH];
 
     while ((rtn = getline(&buffer, &size, file)) > 0) {
-        //printf("Line: '%s'\n", buffer);
         if (++i <= 2)
             continue;
         if ((err = extract_name(buffer, name, description)) != ERR_NONE ||
