@@ -18,7 +18,7 @@ static uerror_t list_teams(const int client)
     DIR *dir = opendir(DB_USER_FOLDER);
 
     if (dir == NULL) {
-        _DISPLAY_PERROR("opendir - db_get_all_users");
+        _DISPLAY_PERROR("opendir - db_list_users");
         return (send_reply(client, INTERNAL_ERROR, NULL));
     }
 }

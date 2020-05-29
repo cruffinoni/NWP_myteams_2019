@@ -27,54 +27,37 @@ uerror_t db_get_user_infos(const char *id, client_t *dest)
     free(path);
     if (acc != 0)
         return (ERR_NONE);
-    if ((err = read_user_info_file(id, dest)) != ERR_NONE)
+    if ((err = read_info_file(id, dest->name, NULL)) != ERR_NONE)
         return (err);
     return (ERR_NONE);
 }
 
-uerror_t add_node(db_listing_t **list, client_t *buffer)
+static uerror_t use_folder_name(db_listing_t **dest, const char d_name[256])
 {
-    db_listing_t *node = malloc(sizeof(db_listing_t));
+    char *path = NULL;
+    uerror_t err;
+    char name[MAX_NAME_LENGTH] = {0};
 
-    if (node == NULL)
-        return (_DISPLAY_PERROR("malloc", ERR_MALLOC));
-    uuid_clear(node->client.id);
-    uuid_generate_md5(node->client.id, node->client.id, buffer->name,
-        MAX_NAME_LENGTH);
-    strcpy(node->client.name, buffer->name);
-    node->next = *list;
-    *list = node;
-    return (ERR_NONE);
+    if (asprintf(&path, DB_USER_PATH, d_name) < 0)
+        return (_DISPLAY_PERROR("asprintf - use_folder_name"));
+    if ((err = read_info_file(path, name, NULL)) == ERR_NONE)
+        err = add_node(dest, name, NULL);
+    free(path);
+    return (err);
 }
 
-void db_destroy_listing(db_listing_t *header)
-{
-    db_listing_t *curr = header;
-    db_listing_t *next;
-
-    if (header == NULL)
-        return;
-    while (curr != NULL) {
-        next = curr->next;
-        free(curr);
-        curr = next;
-    }
-}
-
-uerror_t db_get_all_users(db_listing_t **dest)
+uerror_t db_list_users(db_listing_t **dest)
 {
     struct dirent *dirent;
     DIR *dir = opendir(DB_USER_FOLDER);
     uerror_t err;
-    client_t local;
 
     if (dir == NULL)
-        return (_DISPLAY_PERROR("opendir - db_get_all_users"));
+        return (_DISPLAY_PERROR("opendir - db_list_users"));
     while ((dirent = readdir(dir)) != NULL) {
         if (index(dirent->d_name, '.') != NULL)
             continue;
-        if ((err = read_user_info_file(dirent->d_name, &local)) != ERR_NONE ||
-            (err = add_node(dest, &local)) != ERR_NONE) {
+        if ((err = use_folder_name(dest, dirent->d_name)) != ERR_NONE) {
             closedir(dir);
             db_destroy_listing(*dest);
             return (err);

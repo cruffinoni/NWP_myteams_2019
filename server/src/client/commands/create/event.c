@@ -40,11 +40,14 @@ static uerror_t release_event_thread(const client_t *client, const char **arg)
     uerror_t err = ERR_NONE;
     uuid_name_t thread_name = {0};
     uuid_name_t channel_name = {0};
+    uuid_name_t user_id = {0};
 
+    _PRINT_SERVER("release event thread");
     uuid_unparse_lower(client->context[CHANNEL], channel_name);
     uuid_unparse_lower(client->context[THREAD], thread_name);
+    uuid_unparse_lower(client->id, user_id);
     if (server_event_thread_created(channel_name, thread_name,
-        uid_to_string(client->id), input) < 0)
+        user_id, input) < 0)
         err = _DISPLAY_PERROR("api - release_event_thread");
     free(input);
     return (err);

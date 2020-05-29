@@ -22,6 +22,7 @@ enum error_e {
     ERR_INTERNAL,
     ERR_SOCKET,
     ERR_LOCAL,
+    ERR_CORRUPTED_FILE,
 
     ERR_MAX_ERR,
     ERR_EXIT = 84,

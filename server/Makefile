@@ -19,9 +19,15 @@ SRC_UTILS		=	$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
 
 SRC_SERVER		=	./src/server/management.c			\
 					./src/server/connection.c			\
-					./src/server/database/utils.c		\
+					./src/server/database/utils/utils.c		\
+					./src/server/database/utils/info_file.c		\
 					./src/server/database/users.c		\
-					./src/server/database/info.c		\
+					./src/server/database/listing/node.c		\
+					./src/server/database/listing/user.c		\
+					./src/server/database/listing/team.c		\
+					./src/server/database/listing/thread.c		\
+					./src/server/database/listing/channel.c		\
+					./src/server/database/listing/comment.c		\
 					./src/server/database/pm.c			\
 					./src/server/database/existence.c	\
 					./src/server/database/team.c		\
@@ -38,6 +44,7 @@ SRC_CLIENT		=	./src/client/management.c				\
 					./src/client/commands/context.c			\
 					./src/client/commands/create/create.c	\
 					./src/client/commands/create/event.c	\
+					./src/client/commands/list/list.c	\
 
 SRC				=	./src/error/error.c			\
 

@@ -67,11 +67,8 @@ uerror_t db_create_channel(const uuid_t team,
     uuid_name_t team_name = {0};
 
     uuid_unparse_lower(team, team_name);
-    printf("Team name: '%s'\n", team_name);
-    if (asprintf(&path, DB_CHANNEL_PATH, team_name, channel_name) < 0) {
+    if (asprintf(&path, DB_CHANNEL_PATH, team_name, channel_name) < 0)
         return (_DISPLAY_PERROR("asprintf - db_create_channel"));
-    }
-    printf("Path for creating a new channel: '%s'\n", path);
     if (mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO) != 0) {
         free(path);
         return (_DISPLAY_PERROR("mkdir - db_create_channel"));

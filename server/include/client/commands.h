@@ -28,6 +28,8 @@ uerror_t send_private_message(server_t *s, const int c,
 uerror_t list_private_message(server_t *s, const int c, const char **av);
 uerror_t use_context(server_t *server, const int client, const char **args);
 uerror_t create_command(server_t *server, const int client, const char **args);
+uerror_t list_cmd(server_t *server, const int client,
+    _UNUSED_ const char **args);
 
 static const struct commands_data_s CLIENT_COMMANDS[] = {
     {"logout", 0, &disconnect_client},
@@ -38,6 +40,7 @@ static const struct commands_data_s CLIENT_COMMANDS[] = {
     {"messages", 1, &list_private_message},
     {"use", -3, &use_context},
     {"create", -2, &create_command},
+    {"list", 0, &list_cmd},
     {NULL, 0, NULL},
 };
 

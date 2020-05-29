@@ -15,7 +15,7 @@
 #define MAX_NAME_LENGTH         32
 #define MAX_DESCRIPTION_LENGTH  255
 #define MAX_BODY_LENGTH         512
-#define MAX_REQUEST_LENGTH      255
+#define MAX_REQUEST_LENGTH      (512 * 2)
 
 enum client_flag_e {
     CLIENT_NONE        = 0u,
