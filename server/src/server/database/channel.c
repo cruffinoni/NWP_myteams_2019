@@ -36,8 +36,8 @@ static uerror_t write_infos(const int fd, const char *name,
     return (err);
 }
 
-static uerror_t create_info_file(const uuid_t team,
-    char *channel, char *real_name,
+static uerror_t create_info_file(const char *team_name,
+    const char *original_name, const char *channel,
     const char description[MAX_DESCRIPTION_LENGTH])
 {
     char *path = NULL;
@@ -45,45 +45,35 @@ static uerror_t create_info_file(const uuid_t team,
     uerror_t err = ERR_NONE;
 
     if (asprintf(&path, DB_CHANNEL_PATH DB_INFO_FILE,
-        uid_to_string(team), channel) < 0) {
-        free(real_name);
+        team_name, channel) < 0) {
         return (_DISPLAY_PERROR("asprintf - db_create_channel"));
     }
     if ((fd = open(path, O_CREAT | O_RDWR, 0666)) < 0) {
-        free(real_name);
+        free(path);
         return (_DISPLAY_PERROR("open - db_create_channel"));
     }
-    err = write_infos(fd, real_name, description);
+    err = write_infos(fd, original_name, description);
     close(fd);
     free(path);
-    free(real_name);
     return (err);
 }
 
 uerror_t db_create_channel(const uuid_t team,
-    const char channel[MAX_NAME_LENGTH],
+    const char *channel,
     const char description[MAX_DESCRIPTION_LENGTH])
 {
     char *path = NULL;
-    uuid_t local;
-    char *new_name = remove_quotes(channel);
+    char *channel_name = db_get_uuid_str(channel);
+    uuid_name_t team_name = {0};
 
-    if (new_name == NULL)
-        return (_DISPLAY_PERROR("remove_quotes - malloc", ERR_MALLOC));
-    uuid_clear(local);
-    uuid_generate_md5(local, local, new_name, strlen(new_name));
-    if (asprintf(&path, DB_CHANNEL_PATH,
-        uid_to_string(team), uid_to_string(local)) < 0) {
-        free(new_name);
+    uuid_unparse_lower(team, team_name);
+    if (asprintf(&path, DB_CHANNEL_PATH, team_name, channel_name) < 0)
         return (_DISPLAY_PERROR("asprintf - db_create_channel"));
-    }
-    printf("Path for creating a new channel: '%s'\n", path);
     if (mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO) != 0) {
-        free(new_name);
         free(path);
         return (_DISPLAY_PERROR("mkdir - db_create_channel"));
     }
     free(path);
-    return (create_info_file(team,
-        uid_to_string(local), new_name, description));
+    return (create_info_file(team_name, channel, channel_name, description));
 }
+

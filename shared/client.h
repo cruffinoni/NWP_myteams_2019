@@ -15,7 +15,7 @@
 #define MAX_NAME_LENGTH         32
 #define MAX_DESCRIPTION_LENGTH  255
 #define MAX_BODY_LENGTH         512
-#define MAX_REQUEST_LENGTH      255
+#define MAX_REQUEST_LENGTH      (512 * 2)
 
 enum client_flag_e {
     CLIENT_NONE        = 0u,
@@ -37,7 +37,7 @@ typedef struct client_s {
     uuid_t id;
     int socket;
     client_flag_t flags;
-    uuid_t context[MAX];
+    client_contexts_t context;
 } client_t;
 
 #define IS_CONNECTED(c) ((c->flags & CLIENT_CONNECTED) == CLIENT_CONNECTED)

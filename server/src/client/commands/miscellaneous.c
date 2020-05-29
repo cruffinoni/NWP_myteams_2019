@@ -33,21 +33,21 @@ uerror_t show_all_users(server_t *server, const int client,
     _UNUSED_ const char **args)
 {
     uerror_t err;
-    db_user_list_t *list = NULL;
-    db_user_list_t *tmp = NULL;
+    db_listing_t *list = NULL;
+    db_listing_t *tmp = NULL;
 
     if (!IS_CONNECTED(server->client[client]))
         return (send_reply(client, NOT_CONNECTED, NULL));
-    if ((err = db_get_all_users(&list)) != ERR_NONE) {
+    if ((err = db_list_users(&list)) != ERR_NONE) {
         send_reply(client, INTERNAL_ERROR, NULL);
         return (err);
     }
     tmp = list;
     // Determine the format of the returned data
     while (tmp != NULL) {
-        send_reply(client, OK, "User <%s:%s>", tmp->client.name, uid_to_string(tmp->client.id));
+        send_reply(client, OK, "User <%s:%s>", tmp->name, tmp->id);
         tmp = tmp->next;
     }
-    db_destroy_user_list(list);
+    db_destroy_listing(list);
     return (ERR_NONE);
 }

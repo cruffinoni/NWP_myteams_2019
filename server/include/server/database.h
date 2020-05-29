@@ -13,19 +13,33 @@
 #include "error.h"
 #include "client.h"
 
-#define DB_PATH                         "./database/"
-#define DB_USER_FOLDER DB_PATH "users/"
-#define DB_USER_PATH DB_USER_FOLDER            "%s/"
-#define DB_INFO_FILE                    ".info"
-#define DB_TEAM_PATH DB_PATH            "teams/%s/"
-#define DB_CHANNEL_FOLDER DB_TEAM_PATH    "channel/"
-#define DB_CHANNEL_PATH DB_TEAM_PATH    "channel/%s/"
-#define DB_THREAD_PATH DB_CHANNEL_PATH  "%s.thread"
+#define DB_PATH                                 "./database/"
+//#define DB_PATH                         "./server/database/"
+#define DB_USER_FOLDER      DB_PATH             "users/"
+#define DB_USER_PATH        DB_USER_FOLDER      "%s/"
+#define DB_INFO_FILE                            ".info"
+#define DB_TEAM_FOLDER      DB_PATH             "teams/"
+#define DB_TEAM_PATH        DB_TEAM_FOLDER      "%s/"
+#define DB_CHANNEL_FOLDER   DB_TEAM_PATH        "channel/"
+#define DB_CHANNEL_PATH     DB_CHANNEL_FOLDER   "%s/"
+#define DB_THREAD_PATH      DB_CHANNEL_PATH     "%s.thread"
 
+
+// Listing
 typedef struct db_user_list_s {
-    client_t client;
+    uuid_name_t id;
+    char name[MAX_NAME_LENGTH];
+    char description[MAX_DESCRIPTION_LENGTH];
     struct db_user_list_s *next;
-} db_user_list_t;
+} db_listing_t;
+uerror_t add_node(db_listing_t **list, const char name[MAX_NAME_LENGTH],
+    const char description[MAX_DESCRIPTION_LENGTH]);
+void db_destroy_listing(db_listing_t *header);
+uerror_t db_list_teams(db_listing_t **dest);
+uerror_t db_list_users(db_listing_t **dest);
+uerror_t db_list_channel(db_listing_t **dest, const char *team);
+uerror_t db_list_thread(db_listing_t **dest, const client_contexts_t ctx);
+uerror_t db_list_comment(db_listing_t **dest, const client_contexts_t ctx);
 
 
 // Core functions
@@ -42,12 +56,11 @@ bool db_thread_exists_str(const uuid_t team, const uuid_t channel,
 bool db_thread_exists(const uuid_t team, const uuid_t channel,
     const uuid_t thread);
 
-// Users functions
-uerror_t db_get_all_users(db_user_list_t **dest);
-void db_destroy_user_list(db_user_list_t *header);
-
 // Internal DB function
-uerror_t read_user_info_file(const char *folder_name, client_t *dest);
+uerror_t read_info_file(const char *folder_name, char name[MAX_NAME_LENGTH],
+    char description[MAX_DESCRIPTION_LENGTH]);
+uerror_t read_info_thread_file(const char *full_path, char name[MAX_NAME_LENGTH],
+    char description[MAX_DESCRIPTION_LENGTH]);
 bool db_path_exists(const char *path, ...);
 char *db_get_uuid_str(const char *str);
 
@@ -63,9 +76,9 @@ uerror_t db_create_channel(const uuid_t team,
     const char channel[MAX_NAME_LENGTH],
     const char description[MAX_DESCRIPTION_LENGTH]);
 uerror_t db_create_thread(const client_t *client,
-    const char channel[MAX_NAME_LENGTH],
+    const char thread[MAX_NAME_LENGTH],
     const char description[MAX_DESCRIPTION_LENGTH]);
-uerror_t db_create_comment(uuid_t client, client_contexts_t ctx,
+uerror_t db_create_comment(const client_t *client,
     const char body[MAX_BODY_LENGTH]);
 
 #endif

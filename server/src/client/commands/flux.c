@@ -26,6 +26,8 @@ uerror_t disconnect_client(server_t *server,
 
 static uerror_t release_event(server_t *server, const int client)
 {
+    server_event_user_loaded(uid_to_string(GET_CLIENT_ID(server, client)),
+        server->client[client]->name);
     server_event_user_logged_in(uid_to_string(GET_CLIENT_ID(server, client)));
     _PRINT_SERVER("[%i] User <%s:%s> logged in\n", client,
         GET_CLIENT_NAME(server, client),

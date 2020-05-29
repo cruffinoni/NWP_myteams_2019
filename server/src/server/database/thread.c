@@ -19,19 +19,28 @@
 bool db_thread_exists(const uuid_t team, const uuid_t channel,
     const uuid_t thread)
 {
-    return (db_path_exists(DB_THREAD_PATH, uid_to_string(team),
-        uid_to_string(channel), uid_to_string(thread)));
+    uuid_name_t team_name = {0};
+    uuid_name_t channel_name = {0};
+
+    uuid_unparse_lower(team, team_name);
+    uuid_unparse_lower(channel, channel_name);
+    return (db_path_exists(DB_THREAD_PATH, team_name, channel_name,
+        uid_to_string(thread)));
 }
 
 bool db_thread_exists_str(const uuid_t team, const uuid_t channel,
     const char *thread)
 {
     uuid_t local;
+    uuid_name_t team_name = {0};
+    uuid_name_t channel_name = {0};
 
+    uuid_unparse_lower(team, team_name);
+    uuid_unparse_lower(channel, channel_name);
     uuid_clear(local);
     uuid_generate_md5(local, local, thread, strlen(thread));
-    return (db_path_exists(DB_THREAD_PATH, uid_to_string(team),
-        uid_to_string(channel), uid_to_string(local)));
+    return (db_path_exists(DB_THREAD_PATH, team_name, channel_name,
+        uid_to_string(local)));
 }
 
 static uerror_t create_thread_file(char *path,
@@ -55,18 +64,22 @@ static uerror_t create_thread_file(char *path,
 }
 
 uerror_t db_create_thread(const client_t *client,
-    const char *channel,
+    const char *thread,
     const char description[MAX_DESCRIPTION_LENGTH])
 {
     char *path = NULL;
     uuid_t local;
+    uuid_name_t team_name = {0};
+    uuid_name_t channel_name = {0};
 
+    uuid_unparse_lower(client->context[TEAM], team_name);
+    uuid_unparse_lower(client->context[CHANNEL], channel_name);
     uuid_clear(local);
-    uuid_generate_md5(local, local, channel, strlen(channel));
-    if (asprintf(&path, DB_THREAD_PATH, uid_to_string(client->context[TEAM]),
-        uid_to_string(client->context[CHANNEL]), uid_to_string(local)) < 0) {
+    uuid_generate_md5(local, local, thread, strlen(thread));
+    if (asprintf(&path, DB_THREAD_PATH, team_name, channel_name,
+        uid_to_string(local)) < 0) {
         return (_DISPLAY_PERROR("asprintf - db_create_thread"));
     }
     printf("Path for creating a new thread: '%s'\n", path);
-    return (create_thread_file(path, channel, description));
+    return (create_thread_file(path, thread, description));
 }

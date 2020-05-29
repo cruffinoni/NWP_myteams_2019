@@ -9,6 +9,7 @@ MAIN_FILE		=	./src/main.c
 
 INCLUDE_PATH		=	./include/
 INCLUDE_SHARED_PATH	=	../shared
+INCLUDE_LIBS		=	../libs
 
 SRC_UTILS		=	$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
 					$(INCLUDE_SHARED_PATH)/utils/tab.c				\
@@ -18,9 +19,15 @@ SRC_UTILS		=	$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
 
 SRC_SERVER		=	./src/server/management.c			\
 					./src/server/connection.c			\
-					./src/server/database/utils.c		\
+					./src/server/database/utils/utils.c		\
+					./src/server/database/utils/info_file.c		\
 					./src/server/database/users.c		\
-					./src/server/database/info.c		\
+					./src/server/database/listing/node.c		\
+					./src/server/database/listing/user.c		\
+					./src/server/database/listing/team.c		\
+					./src/server/database/listing/thread.c		\
+					./src/server/database/listing/channel.c		\
+					./src/server/database/listing/comment.c		\
 					./src/server/database/pm.c			\
 					./src/server/database/existence.c	\
 					./src/server/database/team.c		\
@@ -37,6 +44,7 @@ SRC_CLIENT		=	./src/client/management.c				\
 					./src/client/commands/context.c			\
 					./src/client/commands/create/create.c	\
 					./src/client/commands/create/event.c	\
+					./src/client/commands/list/list.c	\
 
 SRC				=	./src/error/error.c			\
 
@@ -47,7 +55,7 @@ NAME			=	myteams_server
 SRC_TEST		=	./tests/test.c
 NAME_TEST		=	test_server
 
-INCLUDES_FLAG	=	-I $(INCLUDE_PATH) -I $(INCLUDE_SHARED_PATH)
+INCLUDES_FLAG	=	-I $(INCLUDE_PATH) -I $(INCLUDE_SHARED_PATH) -I $(INCLUDE_LIBS)
 LDFLAGS			+=	-l uuid -L ../libs/myteams -l myteams
 CFLAGS			+=	-Wall -Wextra $(INCLUDES_FLAG) -D _GNU_SOURCE
 
