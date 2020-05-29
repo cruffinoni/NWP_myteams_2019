@@ -8,7 +8,7 @@
 #ifndef SRC_MYTEAMS_SHARED_UID
 #define SRC_MYTEAMS_SHARED_UID
 
-typedef char uuid_name_t[32];
+typedef char uuid_name_t[33];
 char *uid_to_string(const uuid_t id);
 
 #endif

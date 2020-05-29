@@ -38,7 +38,6 @@ typedef enum codes_positive_e {
     LOGIN_SUCCESSFUL,
     DISCONNECTED,
 } codes_positive_t;
-
 typedef unsigned short codes_t;
 
 typedef struct codes_data_s {

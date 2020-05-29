@@ -30,15 +30,21 @@ static uerror_t write_comment(const char *path, const char *comment)
     return (err);
 }
 
-uerror_t db_create_comment(uuid_t client, client_contexts_t ctx,
+uerror_t db_create_comment(const uuid_t client, const client_contexts_t ctx,
     const char body[MAX_BODY_LENGTH])
 {
     char *path = NULL;
     char *comment = NULL;
     uerror_t err;
+    uuid_name_t team_name = {0};
+    uuid_name_t channel_name = {0};
+    uuid_name_t thread_name = {0};
 
-    if (asprintf(&path, DB_THREAD_PATH, uid_to_string(ctx[TEAM]),
-        uid_to_string(ctx[CHANNEL]), uid_to_string(ctx[THREAD])) < 0) {
+    uuid_unparse_lower(ctx[TEAM], team_name);
+    uuid_unparse_lower(ctx[CHANNEL], channel_name);
+    uuid_unparse_lower(ctx[THREAD], thread_name);
+    if (asprintf(&path, DB_THREAD_PATH, team_name, channel_name,
+        thread_name) < 0) {
         return (_DISPLAY_PERROR("asprintf - db_create_comment"));
     }
     if (asprintf(&comment, "\n<%s>:<%s>", uid_to_string(client), body) < 0) {

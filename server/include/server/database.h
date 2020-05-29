@@ -14,6 +14,7 @@
 #include "client.h"
 
 #define DB_PATH                         "./database/"
+//#define DB_PATH                         "./server/database/"
 #define DB_USER_FOLDER DB_PATH "users/"
 #define DB_USER_PATH DB_USER_FOLDER            "%s/"
 #define DB_INFO_FILE                    ".info"
@@ -49,6 +50,7 @@ uerror_t db_get_all_users(db_listing_t **dest);
 uerror_t read_user_info_file(const char *folder_name, client_t *dest);
 bool db_path_exists(const char *path, ...);
 char *db_get_uuid_str(const char *str);
+char *db_generate_uuid(const char *str);
 uerror_t add_node(db_listing_t **list, client_t *buffer);
 void db_destroy_listing(db_listing_t *header);
 
@@ -64,9 +66,9 @@ uerror_t db_create_channel(const uuid_t team,
     const char channel[MAX_NAME_LENGTH],
     const char description[MAX_DESCRIPTION_LENGTH]);
 uerror_t db_create_thread(const client_t *client,
-    const char channel[MAX_NAME_LENGTH],
+    const char thread[MAX_NAME_LENGTH],
     const char description[MAX_DESCRIPTION_LENGTH]);
-uerror_t db_create_comment(uuid_t client, client_contexts_t ctx,
+uerror_t db_create_comment(const uuid_t client, const client_contexts_t ctx,
     const char body[MAX_BODY_LENGTH]);
 
 #endif

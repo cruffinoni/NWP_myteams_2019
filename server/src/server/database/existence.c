@@ -11,7 +11,10 @@
 
 bool db_team_exists(const uuid_t team)
 {
-    return (db_path_exists(DB_TEAM_PATH, uid_to_string(team)));
+    uuid_name_t team_name = {0};
+
+    uuid_unparse_lower(team, team_name);
+    return (db_path_exists(DB_TEAM_PATH, team_name));
 }
 
 bool db_team_exists_str(const char *team)
@@ -25,11 +28,19 @@ bool db_team_exists_str(const char *team)
 
 bool db_channel_exists(const uuid_t team, const uuid_t channel)
 {
-    return (db_path_exists(DB_CHANNEL_PATH, uid_to_string(team),
-        uid_to_string(channel)));
+    uuid_name_t team_name = {0};
+    uuid_name_t channel_name = {0};
+
+    uuid_unparse_lower(channel, channel_name);
+    uuid_unparse_lower(team, team_name);
+    return (db_path_exists(DB_CHANNEL_PATH, team_name, channel_name));
 }
 
 bool db_channel_exists_str(const uuid_t team, const char *channel)
 {
-    return (db_path_exists(DB_CHANNEL_PATH, uid_to_string(team), channel));
+    uuid_name_t team_name = {0};
+
+    uuid_unparse_lower(team, team_name);
+    return (db_path_exists(DB_CHANNEL_PATH, team_name,
+        db_get_uuid_str(channel)));
 }

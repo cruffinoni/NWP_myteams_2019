@@ -14,6 +14,15 @@
 #include "client.h"
 #include "server/database.h"
 
+//char *db_generate_uuid(const char *str)
+//{
+//    static uuid_t local;
+//
+//    uuid_clear(local);
+//    uuid_generate_md5(local, local, str, strlen(str));
+//    return (local);
+//}
+
 char *db_get_uuid_str(const char *id)
 {
     uuid_t local;

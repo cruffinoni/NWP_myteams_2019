@@ -9,6 +9,7 @@ MAIN_FILE		=	./src/main.c
 
 INCLUDE_PATH		=	./include/
 INCLUDE_SHARED_PATH	=	../shared
+INCLUDE_LIBS		=	../libs
 
 SRC_UTILS		=	$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
 					$(INCLUDE_SHARED_PATH)/utils/tab.c				\
@@ -47,7 +48,7 @@ NAME			=	myteams_server
 SRC_TEST		=	./tests/test.c
 NAME_TEST		=	test_server
 
-INCLUDES_FLAG	=	-I $(INCLUDE_PATH) -I $(INCLUDE_SHARED_PATH)
+INCLUDES_FLAG	=	-I $(INCLUDE_PATH) -I $(INCLUDE_SHARED_PATH) -I $(INCLUDE_LIBS)
 LDFLAGS			+=	-l uuid -L ../libs/myteams -l myteams
 CFLAGS			+=	-Wall -Wextra $(INCLUDES_FLAG) -D _GNU_SOURCE
 

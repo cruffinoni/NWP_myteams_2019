@@ -37,7 +37,7 @@ typedef struct client_s {
     uuid_t id;
     int socket;
     client_flag_t flags;
-    uuid_t context[MAX];
+    client_contexts_t context;
 } client_t;
 
 #define IS_CONNECTED(c) ((c->flags & CLIENT_CONNECTED) == CLIENT_CONNECTED)

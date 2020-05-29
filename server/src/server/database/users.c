@@ -17,6 +17,7 @@
 #include "error.h"
 #include "client.h"
 #include "server/database.h"
+#include "myteams/logging_server.h"
 
 bool db_user_exists(const client_t *client)
 {
@@ -44,6 +45,7 @@ static uerror_t create_info_file(const client_t *client)
         err = _DISPLAY_PERROR("write - db_create_user");
     close(fd);
     free(path);
+    server_event_user_created(uid_to_string(client->id), client->name);
     return (err);
 }
 
@@ -57,8 +59,10 @@ uerror_t db_create_user(const client_t *client)
     }
     if (asprintf(&path, DB_USER_PATH, uid_to_string(client->id)) < 0)
         return (_DISPLAY_PERROR("asprintf - db_create_user"));
-    if (mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO) != 0)
+    if (mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO) != 0) {
+        free(path);
         return (_DISPLAY_PERROR("mkdir - db_create_user"));
+    }
     free(path);
     return (create_info_file(client));
 }
