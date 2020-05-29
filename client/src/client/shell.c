@@ -50,8 +50,10 @@ int shell(socket_t *params)
         if (user_entry == NULL)
             return (errno == 0 ? ERR_NONE : ERR_INIT);
         if (tab_len(user_entry) > 0)
-            if (process_command(params, user_entry))
+            if (process_command(params, user_entry)) {
+                free_char_tab(user_entry);
                 return (ERR_INIT);
+            }
         free_char_tab(user_entry);
     }
     return (ERR_NONE);

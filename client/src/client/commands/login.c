@@ -44,13 +44,17 @@ static int compute_result(socket_t *socket, char **args, char *server_response)
 int login(socket_t *socket, char **args)
 {
     char *server_response;
+    long status_code;
 
     if (send_server_message(socket->sock_fd, args) == ERR_INIT)
         return (ERR_INIT);
     server_response = get_server_response(socket);
-    if (server_response == NULL ||
-    compute_result(socket, args, server_response) == ERR_INIT)
+    status_code = get_status_code(server_response);
+    if (server_response == NULL || status_code != LOGIN_SUCCESSFUL ||
+    compute_result(socket, args, server_response) == ERR_INIT) {
+        free(server_response);
         return (ERR_INIT);
+    }
     free(server_response);
     return (ERR_NONE);
 }
