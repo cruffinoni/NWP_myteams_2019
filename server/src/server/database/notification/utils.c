@@ -29,14 +29,12 @@ static bool check_teams(const int fd, const uuid_name_t team_name)
     return (false);
 }
 
-bool db_user_is_subscribed(const client_t *client, const uuid_t team)
+bool db_user_is_subscribed_ss(uuid_name_t id, uuid_name_t team_name)
 {
     int fd;
     char *path = NULL;
-    uuid_name_t team_name;
 
-    uuid_unparse_lower(team, team_name);
-    if (asprintf(&path, DB_USER_PATH DB_SUB_FILE, uid_to_string(client->id))
+    if (asprintf(&path, DB_USER_PATH DB_SUB_FILE, id)
         < 0)
         return (_DISPLAY_PERROR("asprintf - db_user_add_sub"));
     if (!db_path_exists(path)) {
@@ -49,4 +47,14 @@ bool db_user_is_subscribed(const client_t *client, const uuid_t team)
     }
     free(path);
     return (check_teams(fd, team_name));
+}
+
+bool db_user_is_subscribed(const client_t *client, const uuid_t team)
+{
+    uuid_name_t client_id;
+    uuid_name_t team_name;
+
+    uuid_unparse_lower(team, team_name);
+    uuid_unparse_lower(client->id, client_id);
+    return (db_user_is_subscribed_ss(client_id, team_name));
 }

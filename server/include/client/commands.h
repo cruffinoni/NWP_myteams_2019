@@ -32,6 +32,7 @@ uerror_t list_cmd(server_t *server, const int client,
     _UNUSED_ const char **args);
 uerror_t subscribe(server_t *s, const int c, const char **av);
 uerror_t unsubscribe(server_t *s, const int c, const char **av);
+uerror_t subscription(server_t *s, const int c, const char **av);
 
 static const struct commands_data_s CLIENT_COMMANDS[] = {
     {"logout", 0, &disconnect_client},
@@ -45,6 +46,7 @@ static const struct commands_data_s CLIENT_COMMANDS[] = {
     {"list", 0, &list_cmd},
     {"subscribe", 1, &subscribe},
     {"unsubscribe", 1, &unsubscribe},
+    {"subscribed", -1, &subscription},
     {NULL, 0, NULL},
 };
 

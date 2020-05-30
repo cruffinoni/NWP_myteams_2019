@@ -44,6 +44,8 @@ uerror_t db_list_thread(db_listing_t **dest, const client_contexts_t ctx);
 uerror_t db_list_comment(db_listing_t **dest, const client_contexts_t ctx);
 uerror_t db_display_list(const int client, const char *title,
     const db_listing_t *list);
+uerror_t db_list_user_subscription(const client_t *user);
+uerror_t db_list_team_subscriber(const int client, const uuid_name_t team_id);
 
 
 // Core functions
@@ -52,6 +54,7 @@ uerror_t db_user_add_sub(const client_t *client, const char *team);
 uerror_t db_get_user_infos(const char *id, client_t *dest);
 uerror_t db_user_remove_sub(const client_t *client, const char *team);
 bool db_user_is_subscribed(const client_t *client, const uuid_t team);
+bool db_user_is_subscribed_ss(uuid_name_t id, uuid_name_t team_name);
 
 bool db_user_exists(const client_t *client);
 bool db_user_exists_str(const char *id);
