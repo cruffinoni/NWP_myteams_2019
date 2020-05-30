@@ -32,7 +32,7 @@ static bool check_existing_params(const client_context_type_t type,
     }
 }
 
-uerror_t use_context(server_t *server, const int client, const char **args)
+uerror_t set_context(server_t *server, const int client, const char **args)
 {
     if (!IS_CONNECTED(server->client[client]))
         return (send_reply(client, NOT_CONNECTED, NULL));

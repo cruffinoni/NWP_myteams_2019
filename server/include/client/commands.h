@@ -26,7 +26,7 @@ uerror_t show_all_users(server_t *server, const int client, const char **args);
 uerror_t send_private_message(server_t *s, const int c,
     const char **av);
 uerror_t list_private_message(server_t *s, const int c, const char **av);
-uerror_t use_context(server_t *server, const int client, const char **args);
+uerror_t set_context(server_t *server, const int client, const char **args);
 uerror_t create_command(server_t *server, const int client, const char **args);
 uerror_t list_cmd(server_t *server, const int client,
     _UNUSED_ const char **args);
@@ -38,7 +38,7 @@ static const struct commands_data_s CLIENT_COMMANDS[] = {
     {"users", 0, &show_all_users},
     {"send", 2, &send_private_message},
     {"messages", 1, &list_private_message},
-    {"use", -3, &use_context},
+    {"use", -3, &set_context},
     {"create", -2, &create_command},
     {"list", 0, &list_cmd},
     {NULL, 0, NULL},
