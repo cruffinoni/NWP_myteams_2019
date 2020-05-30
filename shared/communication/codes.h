@@ -29,6 +29,8 @@ typedef enum codes_informative_e {
     TEAM_ALREADY_EXISTS,
     CHANNEL_ALREADY_EXISTS,
     THREAD_ALREADY_EXISTS,
+    START_LISTING,
+    END_LISTING,
 } codes_informative_t;
 
 typedef enum codes_positive_e {
@@ -68,6 +70,8 @@ static const codes_data_t CODES_DATA[] = {
     {LOGIN_SUCCESSFUL,       "Logged successfully <uuid>"},
     {DISCONNECTED,           "Client disconnected from server"},
     {SERVICE_CLOSING,        "Remote service disconnected client"},
+    {START_LISTING,                   "The server is about to start a listing"},
+    {END_LISTING,                   "End of the listing"},
 
     {0, NULL}
 };

@@ -43,11 +43,12 @@ uerror_t show_all_users(server_t *server, const int client,
         return (err);
     }
     tmp = list;
-    // Determine the format of the returned data
+    if ((err = send_reply(client, START_LISTING, NULL)) != ERR_NONE)
+        return (err);
     while (tmp != NULL) {
         send_reply(client, OK, "User <%s:%s>", tmp->name, tmp->id);
         tmp = tmp->next;
     }
     db_destroy_listing(list);
-    return (ERR_NONE);
+    return (send_reply(client, END_LISTING, NULL));
 }

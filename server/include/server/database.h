@@ -41,6 +41,8 @@ uerror_t db_list_users(db_listing_t **dest);
 uerror_t db_list_channel(db_listing_t **dest, const char *team);
 uerror_t db_list_thread(db_listing_t **dest, const client_contexts_t ctx);
 uerror_t db_list_comment(db_listing_t **dest, const client_contexts_t ctx);
+uerror_t db_display_list(const int client, const char *title,
+    const db_listing_t *list);
 
 
 // Core functions

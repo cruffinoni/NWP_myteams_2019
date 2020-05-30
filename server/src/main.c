@@ -22,6 +22,10 @@ int main(const int ac, const char **av)
     server_t *server = NULL;
     uerror_t err = create_server(&server, ac, av);
 
+    if (setvbuf(stdout, NULL, _IONBF, 0) != 0) {
+        free_server(server);
+        return (_DISPLAY_PERROR("setvbuf"));
+    }
     if (err != ERR_NONE) {
         free_server(server);
         return (display_error_message(err));

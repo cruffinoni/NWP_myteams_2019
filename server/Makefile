@@ -17,23 +17,24 @@ SRC_UTILS		=	$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
 					$(INCLUDE_SHARED_PATH)/communication/codes.c	\
 					$(INCLUDE_SHARED_PATH)/uid.c					\
 
-SRC_SERVER		=	./src/server/management.c			\
-					./src/server/connection.c			\
-					./src/server/database/utils/utils.c		\
+SRC_SERVER		=	./src/server/management.c					\
+					./src/server/connection.c					\
+					./src/server/database/utils/utils.c			\
 					./src/server/database/utils/info_file.c		\
-					./src/server/database/users.c		\
+					./src/server/database/users.c				\
 					./src/server/database/listing/node.c		\
 					./src/server/database/listing/user.c		\
 					./src/server/database/listing/team.c		\
 					./src/server/database/listing/thread.c		\
 					./src/server/database/listing/channel.c		\
 					./src/server/database/listing/comment.c		\
-					./src/server/database/pm.c			\
-					./src/server/database/existence.c	\
-					./src/server/database/team.c		\
-					./src/server/database/channel.c		\
-					./src/server/database/thread.c		\
-					./src/server/database/commentary.c	\
+					./src/server/database/listing/display.c		\
+					./src/server/database/pm.c					\
+					./src/server/database/existence.c			\
+					./src/server/database/team.c				\
+					./src/server/database/channel.c				\
+					./src/server/database/thread.c				\
+					./src/server/database/commentary.c			\
 
 SRC_CLIENT		=	./src/client/management.c				\
 					./src/client/reply.c					\
@@ -44,9 +45,9 @@ SRC_CLIENT		=	./src/client/management.c				\
 					./src/client/commands/context.c			\
 					./src/client/commands/create/create.c	\
 					./src/client/commands/create/event.c	\
-					./src/client/commands/list/list.c	\
+					./src/client/commands/list/list.c		\
 
-SRC				=	./src/error/error.c			\
+SRC				=	./src/error/error.c		\
 
 ALL_SRC			=	$(SRC) $(SRC_SERVER) $(SRC_CLIENT) $(SRC_UTILS)
 
