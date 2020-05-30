@@ -57,7 +57,6 @@ uerror_t read_info_file(const char *full_path, char name[MAX_NAME_LENGTH],
 
     if (asprintf(&path, "%s.info", full_path) < 0)
         return (_DISPLAY_PERROR("asprintf - read_info_file"));
-    printf("Reading info file from: '%s'\n", path);
     if ((file = fopen(path, "r")) == NULL) {
         free(path);
         return (_DISPLAY_PERROR("fopen - read_info_file"));
@@ -75,7 +74,6 @@ uerror_t read_info_thread_file(const char *full_path,
     FILE *file;
     uerror_t err;
 
-    printf("Reading info file from: '%s'\n", full_path);
     if ((file = fopen(full_path, "r")) == NULL)
         return (_DISPLAY_PERROR("fopen - read_info_thread_file"));
     err = gather_data(file, name, description);

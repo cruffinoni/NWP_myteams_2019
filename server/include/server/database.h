@@ -26,12 +26,13 @@
 
 
 // Listing
-typedef struct db_user_list_s {
+typedef struct db_listing_s {
     uuid_name_t id;
     char name[MAX_NAME_LENGTH];
     char description[MAX_DESCRIPTION_LENGTH];
-    struct db_user_list_s *next;
+    struct db_listing_s *next;
 } db_listing_t;
+
 uerror_t add_node(db_listing_t **list, const char name[MAX_NAME_LENGTH],
     const char description[MAX_DESCRIPTION_LENGTH]);
 void db_destroy_listing(db_listing_t *header);

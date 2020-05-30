@@ -14,9 +14,11 @@ static uerror_t release_event_team(const client_t *client, const char **arg)
 {
     char *real_name = remove_quotes(arg[1]);
     uerror_t err = ERR_NONE;
+    uuid_name_t user_id = {0};
 
+    uuid_unparse_lower(client->id, user_id);
     if (server_event_team_created(db_get_uuid_str(real_name), real_name,
-        uid_to_string(client->id)) < 0)
+        user_id) < 0)
         err = _DISPLAY_PERROR("api - release_event_team");
     free(real_name);
     return (err);
@@ -26,8 +28,10 @@ static uerror_t release_event_channel(const client_t *client, const char **arg)
 {
     char *real_name = remove_quotes(arg[1]);
     uerror_t err = ERR_NONE;
+    uuid_name_t team_id = {0};
 
-    if (server_event_channel_created(uid_to_string(client->context[TEAM]),
+    uuid_unparse_lower(client->context[TEAM], team_id);
+    if (server_event_channel_created(team_id,
         db_get_uuid_str(real_name), real_name) < 0)
         err = _DISPLAY_PERROR("api - release_event_channel");
     free(real_name);
@@ -36,17 +40,14 @@ static uerror_t release_event_channel(const client_t *client, const char **arg)
 
 static uerror_t release_event_thread(const client_t *client, const char **arg)
 {
-    char *input = remove_quotes(arg[1]);
+    char *input = remove_quotes(arg[2]);
     uerror_t err = ERR_NONE;
-    uuid_name_t thread_name = {0};
     uuid_name_t channel_name = {0};
     uuid_name_t user_id = {0};
 
-    _PRINT_SERVER("release event thread");
     uuid_unparse_lower(client->context[CHANNEL], channel_name);
-    uuid_unparse_lower(client->context[THREAD], thread_name);
     uuid_unparse_lower(client->id, user_id);
-    if (server_event_thread_created(channel_name, thread_name,
+    if (server_event_thread_created(channel_name, db_get_uuid_str(arg[1]),
         user_id, input) < 0)
         err = _DISPLAY_PERROR("api - release_event_thread");
     free(input);

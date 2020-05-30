@@ -41,6 +41,8 @@ uerror_t send_private_message(server_t *s, const int c, const char **av)
         send_reply(c, INTERNAL_ERROR, NULL);
         return (err);
     }
+    server_event_private_message_sended(uid_to_string(s->client[c]->id),
+        av[1], av[2]);
     return (send_reply(c, OK, NULL));
 }
 
@@ -55,7 +57,7 @@ uerror_t list_private_message(server_t *s, const int c, const char **av)
         return (err != 0);
     if ((err = db_get_all_message(s->client[c]->id, av[1], &str)) != ERR_NONE) {
         send_reply(c, INTERNAL_ERROR, NULL);
-        return (_DISPLAY_PERROR("db_get_all_message - cmds/pm.c", err));
+        return (err);
     }
     err = send_reply(c, OK, "List: \"%s\"", str);
     free(str);

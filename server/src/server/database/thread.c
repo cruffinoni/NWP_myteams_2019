@@ -80,6 +80,5 @@ uerror_t db_create_thread(const client_t *client,
         uid_to_string(local)) < 0) {
         return (_DISPLAY_PERROR("asprintf - db_create_thread"));
     }
-    printf("Path for creating a new thread: '%s'\n", path);
     return (create_thread_file(path, thread, description));
 }
