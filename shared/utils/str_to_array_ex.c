@@ -11,7 +11,7 @@
 
 static int valid_char(char c)
 {
-    return ((c >= 32 && c <= 126) && c != ' ');
+    return ((c >= 32 && c <= 126) && c != ' ' && c != '\n');
 }
 
 static int count_words(char const *str)

@@ -18,6 +18,7 @@ typedef enum codes_error_e {
     COMMAND_NOT_FOUND,
     INTERNAL_ERROR,
     ARGUMENT_TOO_LONG,
+    NOT_IMPLEMENTED,
 } codes_error_t;
 
 typedef enum codes_informative_e {
@@ -72,6 +73,7 @@ static const codes_data_t CODES_DATA[] = {
     {SERVICE_CLOSING,        "Remote service disconnected client"},
     {START_LISTING,                   "The server is about to start a listing"},
     {END_LISTING,                   "End of the listing"},
+    {NOT_IMPLEMENTED,                   "Command not implemented or partially"},
 
     {0, NULL}
 };

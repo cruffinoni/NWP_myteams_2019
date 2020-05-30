@@ -18,6 +18,7 @@
 #define DB_USER_FOLDER      DB_PATH             "users/"
 #define DB_USER_PATH        DB_USER_FOLDER      "%s/"
 #define DB_INFO_FILE                            ".info"
+#define DB_SUB_FILE                             ".subscribe"
 #define DB_TEAM_FOLDER      DB_PATH             "teams/"
 #define DB_TEAM_PATH        DB_TEAM_FOLDER      "%s/"
 #define DB_CHANNEL_FOLDER   DB_TEAM_PATH        "channel/"
@@ -47,7 +48,11 @@ uerror_t db_display_list(const int client, const char *title,
 
 // Core functions
 uerror_t db_create_user(const client_t *client);
+uerror_t db_user_add_sub(const client_t *client, const char *team);
 uerror_t db_get_user_infos(const char *id, client_t *dest);
+uerror_t db_user_remove_sub(const client_t *client, const char *team);
+bool db_user_is_subscribed(const client_t *client, const uuid_t team);
+
 bool db_user_exists(const client_t *client);
 bool db_user_exists_str(const char *id);
 bool db_team_exists(const uuid_t team);
@@ -66,6 +71,7 @@ uerror_t read_info_thread_file(const char *full_path, char name[MAX_NAME_LENGTH]
     char description[MAX_DESCRIPTION_LENGTH]);
 bool db_path_exists(const char *path, ...);
 char *db_get_uuid_str(const char *str);
+uerror_t get_file_content(const int fd, char ***output);
 
 // Private message functions
 uerror_t db_send_pm(const client_t *src, const char *dest_id, const char *msg);

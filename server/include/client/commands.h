@@ -30,6 +30,8 @@ uerror_t set_context(server_t *server, const int client, const char **args);
 uerror_t create_command(server_t *server, const int client, const char **args);
 uerror_t list_cmd(server_t *server, const int client,
     _UNUSED_ const char **args);
+uerror_t subscribe(server_t *s, const int c, const char **av);
+uerror_t unsubscribe(server_t *s, const int c, const char **av);
 
 static const struct commands_data_s CLIENT_COMMANDS[] = {
     {"logout", 0, &disconnect_client},
@@ -41,6 +43,8 @@ static const struct commands_data_s CLIENT_COMMANDS[] = {
     {"use", -3, &set_context},
     {"create", -2, &create_command},
     {"list", 0, &list_cmd},
+    {"subscribe", 1, &subscribe},
+    {"unsubscribe", 1, &unsubscribe},
     {NULL, 0, NULL},
 };
 

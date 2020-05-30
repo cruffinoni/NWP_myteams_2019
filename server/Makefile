@@ -30,22 +30,25 @@ SRC_SERVER		=	./src/server/management.c					\
 					./src/server/database/listing/comment.c		\
 					./src/server/database/listing/display.c		\
 					./src/server/database/pm.c					\
-					./src/server/database/existence.c			\
+					./src/server/database/exists/general.c		\
+					./src/server/database/exists/user.c			\
 					./src/server/database/team.c				\
 					./src/server/database/channel.c				\
 					./src/server/database/thread.c				\
 					./src/server/database/commentary.c			\
+					./src/server/database/notification/utils.c	\
 
-SRC_CLIENT		=	./src/client/management.c				\
-					./src/client/reply.c					\
-					./src/client/parsing.c					\
-					./src/client/commands/flux.c			\
-					./src/client/commands/miscellaneous.c	\
-					./src/client/commands/pm.c				\
-					./src/client/commands/context.c			\
-					./src/client/commands/create/create.c	\
-					./src/client/commands/create/event.c	\
-					./src/client/commands/list/list.c		\
+SRC_CLIENT		=	./src/client/management.c						\
+					./src/client/reply.c							\
+					./src/client/parsing.c							\
+					./src/client/commands/flux.c					\
+					./src/client/commands/miscellaneous.c			\
+					./src/client/commands/pm.c						\
+					./src/client/commands/context.c					\
+					./src/client/commands/create/create.c			\
+					./src/client/commands/create/event.c			\
+					./src/client/commands/list.c					\
+					./src/client/commands/subscription/subscribe.c	\
 
 SRC				=	./src/error/error.c		\
 

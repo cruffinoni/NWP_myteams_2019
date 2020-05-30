@@ -10,6 +10,40 @@
 #include <stdlib.h>
 #include <string.h>
 #include "server/database.h"
+#include "utils.h"
+
+static off_t get_file_size(const int fd)
+{
+    off_t size;
+
+    if ((size = lseek(fd, 0, SEEK_END)) < 0 || lseek(fd, 0, SEEK_SET) < 0)
+        return (_DISPLAY_PERROR("lseek - get_file_size", -1));
+    return (size);
+}
+
+uerror_t get_file_content(const int fd, char ***output)
+{
+    off_t size = get_file_size(fd);
+    char *buffer = malloc(sizeof(char) * size + 1);
+
+    if (buffer == NULL)
+        return (_DISPLAY_PERROR("malloc - get_file_content", ERR_MALLOC));
+    if (read(fd, buffer, size) < 0) {
+        free(buffer);
+        return (_DISPLAY_PERROR("read - get_file_content"));
+    }
+    buffer[size] = '\0';
+    if ((*output = str_to_array(buffer)) == NULL) {
+        free(buffer);
+        return (_DISPLAY_PERROR("str_to_array - get_file_content", ERR_MALLOC));
+    }
+    free(buffer);
+    if (lseek(fd, 0, SEEK_SET) < 0) {
+        free_char_tab(*output);
+        return (_DISPLAY_PERROR("lseek - get_file_content"));
+    }
+    return (ERR_NONE);
+}
 
 char *db_get_uuid_str(const char *id)
 {
