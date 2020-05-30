@@ -9,7 +9,6 @@
 #include "client/commands.h"
 #include "utils.h"
 
-
 static uerror_t release_local_event(const uuid_t client, const char *team,
     const bool join, const uerror_t err)
 {
