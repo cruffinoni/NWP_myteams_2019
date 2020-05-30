@@ -17,10 +17,10 @@ uerror_t db_display_list(const int client, const char *title,
 
     while (tmp != NULL) {
         if (strlen(tmp->description)) {
-            err = send_reply(client, OK, "%s <%s:%s><%s>", title, tmp->name,
-                tmp->id, tmp->description);
+            err = send_reply(client, LISTING, "%s <%s:%s><%s>", title,
+                tmp->name, tmp->id, tmp->description);
         } else {
-            err = send_reply(client, OK, "%s <%s:%s>", title, tmp->name,
+            err = send_reply(client, LISTING, "%s <%s:%s>", title, tmp->name,
                 tmp->id);
         }
         if (err != ERR_NONE)

@@ -5,12 +5,12 @@
 ** TODO: CHANGE DESCRIPTION.
 */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
 #include "error.h"
 #include "server/database.h"
-#include <stdio.h>
 
 static uerror_t use_folder_name(db_listing_t **dest, const char *src,
     const char d_name[256])

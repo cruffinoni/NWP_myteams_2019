@@ -25,11 +25,10 @@ uerror_t db_send_pm(const client_t *src, const char *dest_id, const char *msg)
 
     if (asprintf(&path, DB_USER_PATH "%s", src_id, dest_id) < 0)
         return (_DISPLAY_PERROR("asprintf - db_send_pm"));
-    if ((fd = open(path, O_CREAT | O_RDWR, 0666)) < 0)
+    if ((fd = open(path, O_CREAT | O_RDWR | O_APPEND, 0666)) < 0)
         return (_DISPLAY_PERROR("open - db_send_pm"));
     free(path);
     path = NULL;
-    lseek(fd, 0, SEEK_END);
     if (asprintf(&path, "%s=%s\n", src_id, msg) < 0) {
         close(fd);
         return (_DISPLAY_PERROR("asprintf - db_send_pm"));

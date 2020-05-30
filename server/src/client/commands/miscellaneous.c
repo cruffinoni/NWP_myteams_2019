@@ -46,7 +46,7 @@ uerror_t show_all_users(server_t *server, const int client,
     if ((err = send_reply(client, START_LISTING, NULL)) != ERR_NONE)
         return (err);
     while (tmp != NULL) {
-        send_reply(client, OK, "User <%s:%s>", tmp->name, tmp->id);
+        send_reply(client, LISTING, "User <%s:%s>", tmp->name, tmp->id);
         tmp = tmp->next;
     }
     db_destroy_listing(list);

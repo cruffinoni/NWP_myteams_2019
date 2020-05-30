@@ -14,7 +14,7 @@
 #include "client.h"
 
 //#define DB_PATH                                 "./database/"
-#define DB_PATH                         "./server/database/"
+#define DB_PATH                                 "./server/database/"
 #define DB_USER_FOLDER      DB_PATH             "users/"
 #define DB_USER_PATH        DB_USER_FOLDER      "%s/"
 #define DB_INFO_FILE                            ".info"

@@ -23,7 +23,7 @@ static uerror_t display_sub(const client_t *user, FILE *file)
 
     while ((rtn = getline(&line, &size, file)) > 0) {
         line[rtn - 1] = '\0';
-        err = send_reply(user->socket, OK, "Team <%s>", line);
+        err = send_reply(user->socket, LISTING, "Team <%s>", line);
         free(line);
         if (err != ERR_NONE)
             return (err);
@@ -72,14 +72,14 @@ uerror_t db_list_team_subscriber(const int client, const uuid_name_t team_id)
         if (index(dirent->d_name, '.') != NULL)
             continue;
         if (db_user_is_subscribed_ss(dirent->d_name, (char *) team_id))
-            err = send_reply(client, OK, "User <%s>", dirent->d_name);
+            err = send_reply(client, LISTING, "User <%s>", dirent->d_name);
         if (err != ERR_NONE) {
             closedir(dir);
             return (err);
         }
     }
+    closedir(dir);
     if ((err = send_reply(client, END_LISTING, NULL)))
         return (err);
-    closedir(dir);
     return (ERR_NONE);
 }

@@ -31,6 +31,7 @@ typedef enum codes_informative_e {
     CHANNEL_ALREADY_EXISTS,
     THREAD_ALREADY_EXISTS,
     START_LISTING,
+    LISTING,
     END_LISTING,
 } codes_informative_t;
 
@@ -71,9 +72,9 @@ static const codes_data_t CODES_DATA[] = {
     {LOGIN_SUCCESSFUL,       "Logged successfully <uuid>"},
     {DISCONNECTED,           "Client disconnected from server"},
     {SERVICE_CLOSING,        "Remote service disconnected client"},
-    {START_LISTING,                   "The server is about to start a listing"},
-    {END_LISTING,                   "End of the listing"},
-    {NOT_IMPLEMENTED,                   "Command not implemented or partially"},
+    {START_LISTING,          "The server is about to start a listing"},
+    {END_LISTING,            "End of the listing"},
+    {NOT_IMPLEMENTED,        "Command not implemented or partially"},
 
     {0, NULL}
 };
