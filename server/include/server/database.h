@@ -13,8 +13,8 @@
 #include "error.h"
 #include "client.h"
 
-//#define DB_PATH                                 "./database/"
-#define DB_PATH                                 "./server/database/"
+#define DB_PATH                                 "./database/"
+//#define DB_PATH                                 "./server/database/"
 #define DB_USER_FOLDER      DB_PATH             "users/"
 #define DB_USER_PATH        DB_USER_FOLDER      "%s/"
 #define DB_INFO_FILE                            ".info"
@@ -51,7 +51,7 @@ uerror_t db_list_team_subscriber(const int client, const uuid_name_t team_id);
 // Core functions
 uerror_t db_create_user(const client_t *client);
 uerror_t db_user_add_sub(const client_t *client, const char *team);
-uerror_t db_get_user_infos(const char *id, client_t *dest);
+uerror_t db_get_user_infos(const char *id, char dest[MAX_NAME_LENGTH]);
 uerror_t db_user_remove_sub(const client_t *client, const char *team);
 bool db_user_is_subscribed(const client_t *client, const uuid_t team);
 bool db_user_is_subscribed_ss(uuid_name_t id, uuid_name_t team_name);

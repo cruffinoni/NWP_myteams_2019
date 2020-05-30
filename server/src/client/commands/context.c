@@ -32,22 +32,25 @@ static bool check_existing_params(const client_context_type_t type,
     }
 }
 
-uerror_t set_context(server_t *server, const int client, const char **args)
+uerror_t set_context(server_t *s, const int c, const char **args)
 {
-    if (!IS_CONNECTED(server->client[client]))
-        return (send_reply(client, NOT_CONNECTED, NULL));
+    if (!IS_CONNECTED(s->client[c]))
+        return (send_reply(c, NOT_CONNECTED, NULL));
     if (tab_len((char **) args) == 1) {
-        reset_client_context(server->client[client]);
-        return (send_reply(client, CLIENT_CONTEXT_RESET, NULL));
+        reset_client_context(s->client[c]);
+        return (send_reply(c, CLIENT_CONTEXT_RESET, NULL));
     }
     for (ushort i = 1, k = 0; args[i] != NULL; ++i, ++k) {
-        if (uuid_parse(args[i], server->client[client]->context[k]) < 0)
-            return (send_reply(client, INVALID_ID_PROVIDED, NULL));
-        if (!check_existing_params(k, server->client[client])) {
-            reset_client_context(server->client[client]);
-            return (send_reply(client, ID_DOESNT_EXISTS,
+        if (uuid_parse(args[i], s->client[c]->context[k]) < 0)
+            return (send_reply(c, INVALID_ID_PROVIDED, NULL));
+        if (k > TEAM && !db_user_is_subscribed(s->client[c],
+            s->client[c]->context[TEAM]))
+            return (send_reply(c, FORBIDDEN, NULL));
+        if (!check_existing_params(k, s->client[c])) {
+            reset_client_context(s->client[c]);
+            return (send_reply(c, ID_DOESNT_EXISTS,
                 "ID '%s' is invalid nor doesn't exists", args[i]));
         }
     }
-    return (send_reply(client, OK, NULL));
+    return (send_reply(c, OK, NULL));
 }

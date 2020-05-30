@@ -14,22 +14,24 @@
 #include "client.h"
 #include "server/database.h"
 
-uerror_t db_get_user_infos(const char *id, client_t *dest)
+uerror_t db_get_user_infos(const char *id, char dest[MAX_NAME_LENGTH])
 {
     char *path = NULL;
     int acc;
     uerror_t err;
 
     if (asprintf(&path, DB_USER_PATH, id) < 0)
-        return (_DISPLAY_PERROR("asprintf - db_user_exists", false));
+        return (_DISPLAY_PERROR("asprintf - db_user_exists"));
+    printf("Path: '%s'\n", path);
     acc = access(path, R_OK | W_OK);
-    memset(dest->name, 0, MAX_NAME_LENGTH);
-    free(path);
-    if (acc != 0)
+    memset(dest, 0, MAX_NAME_LENGTH);
+    if (acc != 0) {
+        free(path);
         return (ERR_NONE);
-    if ((err = read_info_file(id, dest->name, NULL)) != ERR_NONE)
-        return (err);
-    return (ERR_NONE);
+    }
+    err = read_info_file(path, dest, NULL);
+    free(path);
+    return (err);
 }
 
 static uerror_t use_folder_name(db_listing_t **dest, const char d_name[256])

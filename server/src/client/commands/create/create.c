@@ -11,10 +11,10 @@
 #include "client/commands.h"
 #include "utils.h"
 
-static uerror_t create_team(const client_t *client, const char **args)
+static uerror_t create_team(const client_t *client, const server_t *server,
+    const char **args)
 {
     char *team;
-    uerror_t err;
 
     if (strlen(args[1]) > MAX_NAME_LENGTH)
         return (send_reply(client->socket, ARGUMENT_TOO_LONG, NULL));
@@ -27,18 +27,18 @@ static uerror_t create_team(const client_t *client, const char **args)
         return (send_reply(client->socket, TEAM_ALREADY_EXISTS, NULL));
     }
     if (db_create_team(args[1], args[2]) != ERR_NONE)
-        err = send_reply(client->socket, INTERNAL_ERROR, NULL);
+        send_reply(client->socket, INTERNAL_ERROR, NULL);
     else
-        err = send_reply(client->socket, OK, "Team created <%s:%s>",
+        send_reply(client->socket, OK, "Team created <%s:%s>",
             team, db_get_uuid_str(team));
     free(team);
-    return (release_event(client, TEAM, args, err));
+    return (release_event(client, server, TEAM, args));
 }
 
-static uerror_t create_channel(const client_t *this, const char **args)
+static uerror_t create_channel(const client_t *this, const server_t *server,
+    const char **args)
 {
     char *channel;
-    uerror_t err;
 
     if (strlen(args[1]) > MAX_NAME_LENGTH)
         return (send_reply(this->socket, ARGUMENT_TOO_LONG, NULL));
@@ -51,18 +51,18 @@ static uerror_t create_channel(const client_t *this, const char **args)
         return (send_reply(this->socket, CHANNEL_ALREADY_EXISTS, NULL));
     }
     if (db_create_channel(this->context[TEAM], channel, args[2]) != ERR_NONE)
-        err = send_reply(this->socket, INTERNAL_ERROR, NULL);
+        send_reply(this->socket, INTERNAL_ERROR, NULL);
     else
-        err = send_reply(this->socket, OK, "Channel created <%s:%s>",
+        send_reply(this->socket, OK, "Channel created <%s:%s>",
             channel, db_get_uuid_str(channel));
     free(channel);
-    return (release_event(this, CHANNEL, args, err));
+    return (release_event(this, server, CHANNEL, args));
 }
 
-static uerror_t create_thread(const client_t *this, const char **args)
+static uerror_t create_thread(const client_t *this, const server_t *server,
+    const char **args)
 {
     char *thread;
-    uerror_t err;
 
     if (strlen(args[1]) > MAX_NAME_LENGTH)
         return (send_reply(this->socket, ARGUMENT_TOO_LONG, NULL));
@@ -76,30 +76,30 @@ static uerror_t create_thread(const client_t *this, const char **args)
         return (send_reply(this->socket, THREAD_ALREADY_EXISTS, NULL));
     }
     if (db_create_thread(this, thread, args[2]) != ERR_NONE)
-        err = send_reply(this->socket, INTERNAL_ERROR, NULL);
+        send_reply(this->socket, INTERNAL_ERROR, NULL);
     else
-        err = send_reply(this->socket, OK, "Thread created <%s:%s>",
+        send_reply(this->socket, OK, "Thread created <%s:%s>",
             thread, db_get_uuid_str(thread));
     free(thread);
-    return (release_event(this, THREAD, args, err));
+    return (release_event(this, server, THREAD, args));
 }
 
-static uerror_t create_comment(const client_t *this, const char **args)
+static uerror_t create_comment(const client_t *this, const server_t *server,
+    const char **args)
 {
-    uerror_t err;
-
     if (strlen(args[1]) > MAX_BODY_LENGTH)
         return (send_reply(this->socket, ARGUMENT_TOO_LONG, NULL));
     if (db_create_comment(this, args[1]) != ERR_NONE)
-        err = send_reply(this->socket, INTERNAL_ERROR, NULL);
+        send_reply(this->socket, INTERNAL_ERROR, NULL);
     else
-        err = send_reply(this->socket, OK, NULL);
-    return (release_event(this, INVALID, args, err));
+        send_reply(this->socket, OK, NULL);
+    return (release_event(this, server, INVALID, args));
 }
 
 uerror_t create_command(server_t *server, const int client, const char **args)
 {
-    static uerror_t (*ptr_func[])(const client_t *, const char **) = {
+    static uerror_t (*ptr_func[])(const client_t *, const server_t *,
+        const char **) = {
         &create_team, &create_channel, &create_thread
     };
 
@@ -110,6 +110,6 @@ uerror_t create_command(server_t *server, const int client, const char **args)
         return (send_reply(client, INVALID_ARG_COUNT, "2 arguments required"));
     for (int i = 0; i < INVALID; ++i)
         if (uuid_is_null(server->client[client]->context[i]))
-            return (ptr_func[i](server->client[client], args));
-    return (create_comment(server->client[client], args));
+            return (ptr_func[i](server->client[client], server, args));
+    return (create_comment(server->client[client], server, args));
 }

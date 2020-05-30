@@ -13,20 +13,20 @@
 
 uerror_t show_user_info(server_t *server, const int client, const char **args)
 {
-    client_t user;
+    char name[MAX_NAME_LENGTH];
     uerror_t err;
 
     if (!IS_CONNECTED(server->client[client]))
         return (send_reply(client, NOT_CONNECTED, NULL));
-    memset(user.name, 0, MAX_NAME_LENGTH);
-    if ((err = db_get_user_infos(args[1], &user)) != ERR_NONE) {
+    memset(name, 0, MAX_NAME_LENGTH);
+    if ((err = db_get_user_infos(args[1], name)) != ERR_NONE) {
         send_reply(client, INTERNAL_ERROR, NULL);
         return (err);
     }
-    if (strlen(user.name) == 0)
+    if (strlen(name) == 0)
         return (send_reply(client, OK, "User <%s> not found", args[1]));
     else
-        return (send_reply(client, OK, "User <%s:%s>", user.name, args[1]));
+        return (send_reply(client, OK, "User <%s:%s>", name, args[1]));
 }
 
 uerror_t show_all_users(server_t *server, const int client,

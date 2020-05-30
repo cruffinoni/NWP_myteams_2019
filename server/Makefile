@@ -38,6 +38,7 @@ SRC_SERVER		=	./src/server/management.c						\
 					./src/server/database/thread.c					\
 					./src/server/database/commentary.c				\
 					./src/server/database/notification/utils.c		\
+					./src/server/database/notification/notify.c		\
 
 SRC_CLIENT		=	./src/client/management.c						\
 					./src/client/reply.c							\

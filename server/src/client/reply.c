@@ -23,14 +23,14 @@ uerror_t send_reply(const int client, const codes_t code,
         va_start(list, fmt);
         if (vasprintf(&message, fmt, list) < 0) {
             va_end(list);
-            return (_DISPLAY_PERROR("vasprintf"));
+            return (_DISPLAY_PERROR("vasprintf - send_reply"));
         }
         va_end(list);
     } else if (asprintf(&message, "%s", get_code_definition(code)) < 0)
-        return (_DISPLAY_PERROR("asprintf"));
+        return (_DISPLAY_PERROR("asprintf - send_reply"));
     if (asprintf(&reply, "%i: %s" _EOL, code, message) < 0) {
         free(message);
-        return (_DISPLAY_PERROR("asprintf"));
+        return (_DISPLAY_PERROR("asprintf - send_reply"));
     }
     write(client, reply, strlen(reply));
     free(reply);
