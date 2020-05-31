@@ -16,12 +16,12 @@
 static int fetch_by_category(char const *line, char *category,
     int len_category)
 {
-    char *list_categories[] = {"User", NULL};
-    int (*list_f[])(char const *, int) = {list_users, NULL};
+    char *list_categories[] = {"User", "Teams", NULL};
+    int (*list_f[])(char const *, int) = {list_users, list_teams, NULL};
 
     for (int i = 0; list_categories[i]; ++i) {
         if (strcmp(category, list_categories[i]) == 0 &&
-            list_f[i](line, 2 + len_category) == ERR_INIT) {
+            list_f[i](line, len_category + 7) == ERR_INIT) {
             free(category);
             return (ERR_INIT);
         }
@@ -36,8 +36,7 @@ static int handle_list_elem(char const *line)
     int len_category = 0;
     int k = 5;
 
-    while (line[k + len_category] != ' ')
-        ++len_category;
+    for (int i = k; line[i] != ' '; ++i, ++len_category);
     category = malloc(sizeof(char) * (len_category + 1));
     if (category == NULL)
         return (ERR_INIT);

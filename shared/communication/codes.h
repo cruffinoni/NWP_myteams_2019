@@ -11,8 +11,7 @@
 #define _EOL "\r\n"
 
 typedef enum codes_error_e {
-    NOT_CONNECTED = 500,
-    ALREADY_LOGGED,
+    ALREADY_LOGGED = 500,
     INVALID_ARG_COUNT,
     LINE_TOO_LONG,
     COMMAND_NOT_FOUND,
@@ -53,7 +52,6 @@ typedef struct codes_data_s {
 } codes_data_t;
 
 static const codes_data_t CODES_DATA[] = {
-    {NOT_CONNECTED,          "The client is not connected"},
     {ALREADY_LOGGED,         "The client is already logged"},
     {INVALID_ARG_COUNT,      "Invalid argument count, got X expected Y"},
     {LINE_TOO_LONG,          "Line too long"},

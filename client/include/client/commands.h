@@ -19,5 +19,6 @@ int login(socket_t *socket, char **args);
 int get_list_data(socket_t *params, char *server_response);
 int login_success(socket_t *socket, char *server_response);
 int logout_success(socket_t *socket, char *server_resonse);
+int forbidden(socket_t _UNUSED_ *params, char _UNUSED_ *server_response);
 
 #endif

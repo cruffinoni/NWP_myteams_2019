@@ -13,7 +13,7 @@ uerror_t show_help(_UNUSED_ server_t *s, const int c, _UNUSED_ const char **av)
     uerror_t err;
 
     if (!IS_CONNECTED(s->client[c]))
-        return (send_reply(c, NOT_CONNECTED, NULL));
+        return (send_reply(c, FORBIDDEN, NULL));
     if ((err = send_reply(c, START_LISTING, "List of all commands:"))
         != ERR_NONE)
         return (err);

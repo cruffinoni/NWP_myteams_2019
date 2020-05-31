@@ -102,7 +102,7 @@ uerror_t get_infos(server_t *s, const int c, _UNUSED_ const char **av)
     };
 
     if (!IS_CONNECTED(s->client[c]))
-        return (send_reply(c, NOT_CONNECTED, NULL));
+        return (send_reply(c, FORBIDDEN, NULL));
     if (uuid_is_null(s->client[c]->context[TEAM]))
         return (send_reply(c, OK, "Client's data <%s:%s>", s->client[c]->name,
             uid_to_string(s->client[c]->id)));

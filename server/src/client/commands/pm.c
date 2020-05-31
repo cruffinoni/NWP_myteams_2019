@@ -40,7 +40,7 @@ uerror_t send_private_message(server_t *s, const int c, const char **av)
     uerror_t err;
 
     if (!IS_CONNECTED(s->client[c]))
-        return (send_reply(c, NOT_CONNECTED, NULL));
+        return (send_reply(c, FORBIDDEN, NULL));
     if ((err = check_local_uid(s, c, av)) != ERR_NONE)
         return (err != ERR_LOCAL ? err : ERR_NONE);
     if ((err = db_send_pm(s->client[c], av[1], av[2])) != ERR_NONE) {
@@ -61,7 +61,7 @@ uerror_t list_private_message(server_t *s, const int c, const char **av)
     char *str = NULL;
 
     if (!IS_CONNECTED(s->client[c]))
-        return (send_reply(c, NOT_CONNECTED, NULL));
+        return (send_reply(c, FORBIDDEN, NULL));
     if ((err = check_local_uid(s, c, av)) != ERR_NONE)
         return (err != 0);
     if ((err = db_get_all_message(s->client[c]->id, av[1], &str)) != ERR_NONE) {

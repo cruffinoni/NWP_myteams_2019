@@ -101,7 +101,7 @@ uerror_t list_cmd(server_t *server, const int client,
         &list_teams, &list_channel, &list_thread,
     };
     if (!IS_CONNECTED(server->client[client]))
-        return (send_reply(client, NOT_CONNECTED, NULL));
+        return (send_reply(client, FORBIDDEN, NULL));
     for (int i = 0; i < INVALID; ++i)
         if (uuid_is_null(server->client[client]->context[i]))
             return (ptr_list[i](server->client[client]));

@@ -9,5 +9,6 @@
 #define NWP_MYTEAMS_2019_LIST_H
 
 int list_users(char const *line, int start);
+int list_teams(char const *line, int start);
 
 #endif

@@ -15,7 +15,7 @@ uerror_t disconnect_client(server_t *server,
     const int client, _UNUSED_ const char **args)
 {
     if (!IS_CONNECTED(server->client[client]))
-        return (send_reply(client, NOT_CONNECTED, NULL));
+        return (send_reply(client, FORBIDDEN, NULL));
     _PRINT_SERVER("[%i] User <%s:%s> logged out\n", client,
         GET_CLIENT_NAME(server, client),
         uid_to_string(GET_CLIENT_ID(server, client)));

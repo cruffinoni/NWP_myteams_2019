@@ -104,7 +104,7 @@ uerror_t create_command(server_t *server, const int client, const char **args)
     };
 
     if (!IS_CONNECTED(server->client[client]))
-        return (send_reply(client, NOT_CONNECTED, NULL));
+        return (send_reply(client, FORBIDDEN, NULL));
     if (uuid_is_null(server->client[client]->context[THREAD]) &&
         tab_len((char **) args) != 3)
         return (send_reply(client, INVALID_ARG_COUNT, "2 arguments required"));

@@ -17,7 +17,7 @@ uerror_t show_user_info(server_t *server, const int client, const char **args)
     uerror_t err;
 
     if (!IS_CONNECTED(server->client[client]))
-        return (send_reply(client, NOT_CONNECTED, NULL));
+        return (send_reply(client, FORBIDDEN, NULL));
     memset(name, 0, MAX_NAME_LENGTH);
     if ((err = db_get_user_infos(args[1], name)) != ERR_NONE) {
         send_reply(client, INTERNAL_ERROR, NULL);
@@ -37,7 +37,7 @@ uerror_t show_all_users(server_t *server, const int client,
     db_listing_t *tmp = NULL;
 
     if (!IS_CONNECTED(server->client[client]))
-        return (send_reply(client, NOT_CONNECTED, NULL));
+        return (send_reply(client, FORBIDDEN, NULL));
     if ((err = db_list_users(&list)) != ERR_NONE) {
         send_reply(client, INTERNAL_ERROR, NULL);
         return (err);

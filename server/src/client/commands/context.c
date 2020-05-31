@@ -35,7 +35,7 @@ static bool check_existing_params(const client_context_type_t type,
 uerror_t set_context(server_t *s, const int c, const char **args)
 {
     if (!IS_CONNECTED(s->client[c]))
-        return (send_reply(c, NOT_CONNECTED, NULL));
+        return (send_reply(c, FORBIDDEN, NULL));
     if (tab_len((char **) args) == 1) {
         reset_client_context(s->client[c]);
         return (send_reply(c, CLIENT_CONTEXT_RESET, NULL));

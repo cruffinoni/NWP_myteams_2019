@@ -15,8 +15,7 @@ static char *set_uuid(const char *line, int *start)
     char *ret = NULL;
     int size = 0;
 
-    while (line[*start + size] != '>')
-        ++size;
+    for (int i = *start; line[i] != '>'; ++i, ++size);
     ret = malloc(sizeof(char) * (size + 1));
     if (ret == NULL)
         return (NULL);
@@ -32,8 +31,7 @@ static char *set_username(const char *line, int *start)
     char *ret = NULL;
     int size = 0;
 
-    while (line[*start + size] != ':')
-        ++size;
+    for (int i = *start; line[i] != ':'; ++i, ++size);
     ret = malloc(sizeof(char) * (size + 1));
     if (ret == NULL)
         return (NULL);
