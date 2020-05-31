@@ -9,38 +9,7 @@
 #include "error.h"
 #include "client/utils.h"
 #include "myteams/logging_client.h"
-
-static char *set_uuid(const char *line, int *start)
-{
-    char *ret = NULL;
-    int size = 0;
-
-    for (int i = *start; line[i] != '>'; ++i, ++size);
-    ret = malloc(sizeof(char) * (size + 1));
-    if (ret == NULL)
-        return (NULL);
-    for (int i = 0; line[*start] != '>'; ++i, ++*start)
-        ret[i] = line[*start];
-    ret[size] = '\0';
-    ++*start;
-    return (ret);
-}
-
-static char *set_username(const char *line, int *start)
-{
-    char *ret = NULL;
-    int size = 0;
-
-    for (int i = *start; line[i] != ':'; ++i, ++size);
-    ret = malloc(sizeof(char) * (size + 1));
-    if (ret == NULL)
-        return (NULL);
-    for (int i = 0; line[*start] != ':'; ++i, ++*start)
-        ret[i] = line[*start];
-    ret[size] = '\0';
-    ++*start;
-    return (ret);
-}
+#include "client/commands.h"
 
 static int get_user_status(const char *line, int *start)
 {
@@ -51,7 +20,7 @@ static int get_user_status(const char *line, int *start)
         return (-1);
     nbr[0] = line[*start];
     nbr[1] = '\0';
-    (*start) += 2;
+    *start += 2;
     to_ret = (int) get_status_code(nbr);
     free(nbr);
     return (to_ret);
@@ -60,8 +29,8 @@ static int get_user_status(const char *line, int *start)
 int list_users(char const *line, int start)
 {
     int user_status = get_user_status(line, &start);
-    char *username = set_username(line, &start);
-    char *s_uuid = set_uuid(line, &start);
+    char *username = set_data(line, &start, ':', 1);
+    char *s_uuid = set_data(line, &start, '>', 0);
 
     if (username == NULL || s_uuid == NULL || user_status == -1) {
         if (username != NULL)

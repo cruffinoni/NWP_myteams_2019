@@ -20,9 +20,9 @@ static int lib_interfacing(socket_t *params, char *buffer)
 {
     long status_code = get_status_code(buffer);
     long codes[] = {LOGIN_SUCCESSFUL, DISCONNECTED, START_LISTING, LISTING,
-        FORBIDDEN, -1};
+        FORBIDDEN, NOTIFICATION, -1};
     int (*log_list[])(socket_t *, char *) = {login_success, logout_success,
-        get_list_data, get_list_data, forbidden, NULL};
+        get_list_data, get_list_data, forbidden, notifications, NULL};
 
     for (int i = 0; codes[i] != -1; ++i) {
         if (status_code == codes[i] &&

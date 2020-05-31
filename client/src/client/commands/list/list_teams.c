@@ -9,7 +9,7 @@
 #include "error.h"
 #include "myteams/logging_client.h"
 
-static char *set_data(const char *line, int *start, char delim, int to_inc)
+char *set_data(const char *line, int *start, char delim, int to_inc)
 {
     char *ret = NULL;
     int size = 0;

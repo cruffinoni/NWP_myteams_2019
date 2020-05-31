@@ -11,24 +11,26 @@ INCLUDE_PATH		=	./include/
 INCLUDE_LIB_PATH	=	../libs/
 INCLUDE_SHARED_PATH	=	../shared
 
-UTILS				=	$(INCLUDE_SHARED_PATH)/uid.c					\
-						$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c	\
-						$(INCLUDE_SHARED_PATH)/utils/tab.c				\
-						$(INCLUDE_SHARED_PATH)/utils/string.c			\
+UTILS				=	$(INCLUDE_SHARED_PATH)/uid.c								\
+						$(INCLUDE_SHARED_PATH)/utils/str_to_array_ex.c				\
+						$(INCLUDE_SHARED_PATH)/utils/tab.c							\
+						$(INCLUDE_SHARED_PATH)/utils/string.c						\
 
-SRC					=	src/socket.c									\
-						src/client/parse_user_entry.c					\
-						src/client/shell.c								\
-						src/client/process_commands.c					\
-						src/client/commands/login.c						\
-						src/client/commands/logout.c					\
-						src/client/commands/list/list.c					\
-						src/client/commands/list/list_users.c			\
-						src/client/commands/list/list_teams.c			\
-						src/client/commands/forbidden.c					\
-						src/client/utils/get_server_response.c			\
-						src/client/utils/user_gestion.c					\
-						src/client/utils/send_server_message.c			\
+SRC					=	src/socket.c												\
+						src/client/parse_user_entry.c								\
+						src/client/shell.c											\
+						src/client/process_commands.c								\
+						src/client/commands/login.c									\
+						src/client/commands/logout.c								\
+						src/client/commands/list/list.c								\
+						src/client/commands/list/list_users.c						\
+						src/client/commands/list/list_teams.c						\
+						src/client/commands/notifications/notifications.c			\
+						src/client/commands/notifications/private_message.c			\
+						src/client/commands/forbidden.c								\
+						src/client/utils/get_server_response.c						\
+						src/client/utils/user_gestion.c								\
+						src/client/utils/send_server_message.c						\
 
 ALL_SRC				=	$(SRC) $(UTILS)
 
