@@ -5,20 +5,17 @@
 ** list.c
 */
 
-#include <stdlib.h>
+#include <stdio.h>
 #include "error.h"
 #include "client/commands.h"
 #include "client/utils.h"
 
-int list(socket_t *socket, char **args)
+static int get_listing_method(socket_t *params, char *buffer)
 {
-    char *server_response;
+    return (ERR_NONE);
+}
 
-    if (send_server_message(socket->sock_fd, args) == ERR_INIT)
-        return (ERR_INIT);
-    server_response = get_server_response(socket);
-    if (server_response == NULL)
-        return (ERR_INIT);
-    free(server_response);
+int get_list_data(socket_t *params, char *server_response)
+{
     return (ERR_NONE);
 }

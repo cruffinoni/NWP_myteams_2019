@@ -10,13 +10,13 @@
 
 #include "socket.h"
 
-#define LENGTH_UUID     36
-
-int init_user(socket_t *socket, char *server_response, char const *username);
 void free_user(socket_t *socket);
+void set_client_username(socket_t *socket, char const *username);
 
 int send_server_message(int sock_fd, char **args);
 long get_status_code(char *server_response);
 char *get_server_response(socket_t *params);
+
+#define _UNUSED_ __attribute__((unused))
 
 #endif

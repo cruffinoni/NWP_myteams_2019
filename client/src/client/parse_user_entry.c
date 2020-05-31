@@ -14,10 +14,9 @@
 void print_client_prompt(socket_t *params)
 {
     printf("\033[1;31m[%s:%ld] ", params->ip, params->port);
-    if (params->client != NULL)
+    if (params->client->flags == CLIENT_CONNECTED)
         printf("\033[1;34m%s ", params->client->name);
     printf("\033[1;33m➜ \033[1;37m");
-    fflush(stdout);
 }
 
 char *get_buffer(void)

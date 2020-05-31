@@ -5,38 +5,26 @@
 ** logout.c
 */
 
-#include <stdlib.h>
+#include <string.h>
+#include <uuid/uuid.h>
 #include "error.h"
 #include "socket.h"
 #include "client/utils.h"
-#include "communication/codes.h"
 #include "myteams/logging_client.h"
 
-static int log_lib(socket_t *socket)
+int logout_success(socket_t *socket, _UNUSED_ char *server_resonse)
 {
     char *user_id = uid_to_string(socket->client->id);
 
+    if (user_id == NULL)
+        return (ERR_INIT);
     if (client_event_loggedout(user_id, socket->client->name) == -1)
         return (ERR_INIT);
+    socket->client->flags = CLIENT_NONE;
+    memset(socket->client->name, 0, MAX_NAME_LENGTH);
+    uuid_clear(socket->client->id);
+    for (client_context_type_t t = 0; t < MAX; ++t)
+        uuid_clear(socket->client->context[t]);
     return (ERR_NONE);
 }
 
-int logout(socket_t *socket, char **args)
-{
-    char *server_response;
-
-    if (send_server_message(socket->sock_fd, args) == ERR_INIT)
-        return (ERR_INIT);
-    server_response = get_server_response(socket);
-    if (server_response == NULL)
-        return (ERR_INIT);
-    if (get_status_code(server_response) == DISCONNECTED) {
-        if (log_lib(socket) == ERR_INIT) {
-            free(server_response);
-            return (ERR_INIT);
-        }
-        free_user(socket);
-    }
-    free(server_response);
-    return (ERR_NONE);
-}

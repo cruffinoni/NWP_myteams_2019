@@ -83,10 +83,14 @@ int shell(socket_t *params)
 {
     int flag = fcntl(STDIN_FILENO, F_GETFL, 0);
     int activity;
+    long server_response;
     fd_set read;
 
     flag |= O_NONBLOCK;
     fcntl(STDIN_FILENO, F_SETFL, flag);
+    server_response = get_server_message(params);
+    if (server_response == ERR_INIT || server_response != SERVICE_READY)
+        return (ERR_INIT);
     while (ACTIVE_SERVER) {
         print_client_prompt(params);
         activity = get_select(params, &read);
