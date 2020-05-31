@@ -10,7 +10,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "client/shell.h"
-#include "utils.h"
 
 void print_client_prompt(socket_t *params)
 {
@@ -21,7 +20,7 @@ void print_client_prompt(socket_t *params)
     fflush(stdout);
 }
 
-static char *get_buffer(void)
+char *get_buffer(void)
 {
     char *buffer = NULL;
     size_t line_buf_size = 0;
@@ -33,16 +32,4 @@ static char *get_buffer(void)
         return (NULL);
     }
     return (buffer);
-}
-
-char **get_user_entry(void)
-{
-    char **args = NULL;
-    char *buff = get_buffer();
-
-    if (buff == NULL)
-        return (NULL);
-    args = str_to_array(buff);
-    free(buff);
-    return (args);
 }

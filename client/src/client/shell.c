@@ -30,13 +30,14 @@ static int check_connection_to_server(socket_t *socket)
     return (ERR_NONE);
 }
 
-static int fetch_stdin(socket_t *socket)
+static int fetch_stdin(socket_t *socket, char *buffer)
 {
     char **user_entry = NULL;
 
-    user_entry = get_user_entry();
+    user_entry = str_to_array(buffer);
+    free(buffer);
     if (user_entry == NULL)
-        return (errno == 0 ? ERR_NONE : ERR_INIT);
+        return (ERR_INIT);
     if (tab_len(user_entry) > 0)
         if (process_command(socket, user_entry)) {
             free_char_tab(user_entry);
@@ -48,9 +49,15 @@ static int fetch_stdin(socket_t *socket)
 
 static int check_activity(socket_t *params, fd_set *read)
 {
-    if (FD_ISSET(STDIN_FILENO, read))
-        if (fetch_stdin(params) == ERR_INIT)
-            return (ERR_INIT);
+    char *buffer = NULL;
+
+    if (FD_ISSET(STDIN_FILENO, read)) {
+        buffer = get_buffer();
+        if (buffer == NULL)
+            return (EOF_D);
+        if (fetch_stdin(params, buffer) == ERR_INIT)
+            return (errno == 0 ? ERR_NONE : ERR_INIT);
+    }
     if (FD_ISSET(params->sock_fd, read))
         if (check_connection_to_server(params) == ERR_INIT)
             return (ERR_INIT);
@@ -82,8 +89,11 @@ int shell(socket_t *params)
         activity = get_select(params, &read);
         if (activity < 0)
             return (ERR_INIT);
-        if (check_activity(params, &read) == ERR_INIT)
+        activity = check_activity(params, &read);
+        if (activity == ERR_INIT)
             return (ERR_INIT);
+        if (activity == EOF_D)
+            return (ERR_NONE);
     }
     return (ERR_NONE);
 }

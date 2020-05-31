@@ -11,6 +11,7 @@
 #include "socket.h"
 
 #define ERR_NONE    0
+#define EOF_D       1
 #define ERR_INIT    84
 
 void free_params(socket_t *params);

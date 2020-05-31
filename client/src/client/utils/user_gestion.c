@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <uuid/uuid.h>
 #include "error.h"
 #include "client/utils.h"
@@ -52,10 +53,20 @@ int init_user(socket_t *socket, char *server_response, char const *username)
     return (ERR_NONE);
 }
 
+static int disconnect_client(socket_t *params)
+{
+    if (write(params->sock_fd, "/logout", 7) < 0) {
+        printf("Error write\n");
+        return (ERR_INIT);
+    }
+    return (ERR_NONE);
+}
+
 void free_user(socket_t *socket)
 {
     if (socket == NULL || socket->client == NULL)
         return;
+    disconnect_client(socket);
     free(socket->client);
     socket->client = NULL;
 }
