@@ -19,6 +19,10 @@ static char *get_buffer(void)
     ssize_t rtn;
 
     rtn = getline(&buffer, &line_buf_size, stdin);
+    if (rtn == -1) {
+        free(buffer);
+        return (NULL);
+    }
     return (buffer);
 }
 
