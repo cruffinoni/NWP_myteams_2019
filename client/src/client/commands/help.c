@@ -5,11 +5,21 @@
 ** help.c
 */
 
+#include <stdlib.h>
 #include "error.h"
 #include "socket.h"
 #include "client/commands.h"
+#include "client/utils.h"
 
-int help(_UNUSED_ socket_t *socket, _UNUSED_ char **args)
+int help(socket_t *socket, char **args)
 {
+    char *server_response;
+
+    if (send_server_message(socket->sock_fd, args) == ERR_INIT)
+        return (ERR_INIT);
+    server_response = get_server_response(socket);
+    if (server_response == NULL)
+        return (ERR_INIT);
+    free(server_response);
     return (ERR_NONE);
 }

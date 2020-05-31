@@ -13,5 +13,6 @@
 int shell(socket_t *params);
 char **get_user_entry(void);
 int process_command(socket_t *socket, char **args);
+void print_client_prompt(socket_t *params);
 
 #endif

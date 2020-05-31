@@ -12,6 +12,15 @@
 #include "client/shell.h"
 #include "utils.h"
 
+void print_client_prompt(socket_t *params)
+{
+    printf("\033[1;31m[%s:%ld] ", params->ip, params->port);
+    if (params->client != NULL)
+        printf("\033[1;34m%s ", params->client->name);
+    printf("\033[1;33m➜ \033[1;37m");
+    fflush(stdout);
+}
+
 static char *get_buffer(void)
 {
     char *buffer = NULL;
