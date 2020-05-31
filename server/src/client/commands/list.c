@@ -6,7 +6,7 @@
 */
 
 #include <string.h>
-#include "server/database.h"
+#include "server/database/database.h"
 #include "client/commands.h"
 
 static uerror_t list_teams(const client_t *this)

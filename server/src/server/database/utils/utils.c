@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include "server/database.h"
+#include "server/database/database.h"
 #include "utils.h"
 
 static off_t get_file_size(const int fd)

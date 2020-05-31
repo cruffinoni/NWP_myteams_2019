@@ -9,7 +9,7 @@
 #include <string.h>
 #include <dirent.h>
 #include "error.h"
-#include "server/database.h"
+#include "server/database/database.h"
 #include <stdio.h>
 
 static uerror_t use_folder_name(db_listing_t **dest, const char d_name[256])

@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include "error.h"
 #include "client.h"
-#include "server/database.h"
+#include "server/database/database.h"
 
 uerror_t db_send_pm(const client_t *src, const char *dest_id, const char *msg)
 {

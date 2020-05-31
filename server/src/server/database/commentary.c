@@ -15,7 +15,7 @@
 #include "error.h"
 #include "client.h"
 #include "server/server.h"
-#include "server/database.h"
+#include "server/database/database.h"
 
 static uerror_t write_comment(const char *path, const char *comment)
 {

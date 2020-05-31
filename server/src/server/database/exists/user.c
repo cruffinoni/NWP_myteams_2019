@@ -6,7 +6,7 @@
 */
 
 #include "client.h"
-#include "server/database.h"
+#include "server/database/database.h"
 
 bool db_user_exists(const client_t *client)
 {

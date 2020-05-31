@@ -5,7 +5,7 @@
 ** TODO: CHANGE DESCRIPTION.
 */
 
-#include "server/database.h"
+#include "server/database/database.h"
 #include "client/commands.h"
 #include "utils.h"
 

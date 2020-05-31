@@ -6,7 +6,7 @@
 */
 
 #include <stdlib.h>
-#include "server/database.h"
+#include "server/database/database.h"
 #include "client/commands.h"
 
 static uerror_t get_user_infos(const client_t *this)

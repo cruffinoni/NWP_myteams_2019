@@ -19,7 +19,7 @@ struct commands_data_s {
 };
 
 uerror_t disconnect_client(server_t *server,
-                           const int client, const char **args);
+    const int client, const char **args);
 uerror_t login_client(server_t *server, const int client, const char **args);
 uerror_t show_user_info(server_t *server, const int client, const char **args);
 uerror_t show_all_users(server_t *server, const int client, const char **args);

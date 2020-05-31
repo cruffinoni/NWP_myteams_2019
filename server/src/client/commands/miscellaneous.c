@@ -9,7 +9,7 @@
 #include "server/server.h"
 #include "error.h"
 #include "client.h"
-#include "server/database.h"
+#include "server/database/database.h"
 
 uerror_t show_user_info(server_t *server, const int client, const char **args)
 {
@@ -46,7 +46,9 @@ uerror_t show_all_users(server_t *server, const int client,
     if ((err = send_reply(client, START_LISTING, NULL)) != ERR_NONE)
         return (err);
     while (tmp != NULL) {
-        send_reply(client, LISTING, "User <%s:%s>", tmp->name, tmp->id);
+        send_reply(client, LISTING, "User <%i:%s:%s>",
+            is_user_connected_str(tmp->name, server),
+            tmp->name, tmp->id);
         tmp = tmp->next;
     }
     db_destroy_listing(list);

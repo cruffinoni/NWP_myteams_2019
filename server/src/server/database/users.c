@@ -16,7 +16,7 @@
 #include <dirent.h>
 #include "error.h"
 #include "client.h"
-#include "server/database.h"
+#include "server/database/database.h"
 #include "myteams/logging_server.h"
 #include "utils.h"
 

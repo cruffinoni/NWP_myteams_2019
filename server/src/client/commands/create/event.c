@@ -6,7 +6,7 @@
 */
 
 #include <stdlib.h>
-#include "server/database.h"
+#include "server/database/database.h"
 #include "server/notification.h"
 #include "client/commands.h"
 #include "utils.h"

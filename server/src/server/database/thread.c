@@ -14,7 +14,7 @@
 #include "utils.h"
 #include "error.h"
 #include "client.h"
-#include "server/database.h"
+#include "server/database/database.h"
 
 bool db_thread_exists(const uuid_t team, const uuid_t channel,
     const uuid_t thread)

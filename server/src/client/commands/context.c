@@ -10,7 +10,7 @@
 #include "client.h"
 #include "client/users.h"
 #include "server/server.h"
-#include "server/database.h"
+#include "server/database/database.h"
 #include "utils.h"
 
 static bool check_existing_params(const client_context_type_t type,

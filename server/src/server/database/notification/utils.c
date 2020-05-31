@@ -10,7 +10,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdio.h>
-#include "server/database.h"
+#include "server/database/database.h"
 #include "utils.h"
 
 static bool check_teams(const int fd, const uuid_name_t team_name)

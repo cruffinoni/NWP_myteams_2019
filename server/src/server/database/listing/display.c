@@ -6,7 +6,7 @@
 */
 
 #include <string.h>
-#include "server/database.h"
+#include "server/database/database.h"
 #include "client/commands.h"
 
 uerror_t db_display_list(const int client, const char *title,

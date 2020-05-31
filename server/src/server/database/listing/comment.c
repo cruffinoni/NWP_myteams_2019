@@ -10,7 +10,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <errno.h>
-#include "server/database.h"
+#include "server/database/database.h"
 
 static int strfind(const char *s, const char c)
 {

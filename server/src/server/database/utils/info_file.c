@@ -12,7 +12,7 @@
 #include <errno.h>
 #include "error.h"
 #include "client.h"
-#include "server/database.h"
+#include "server/database/database.h"
 
 static void extract_part(const char *buffer, char *dest, const ulong size)
 {

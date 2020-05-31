@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "server/database.h"
+#include "server/database/database.h"
 #include "client/commands.h"
 #include "utils.h"
 

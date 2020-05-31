@@ -7,7 +7,7 @@
 
 #include <string.h>
 #include "client.h"
-#include "server/database.h"
+#include "server/database/database.h"
 
 bool db_team_exists(const uuid_t team)
 {

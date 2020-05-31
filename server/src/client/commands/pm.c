@@ -10,7 +10,7 @@
 #include "error.h"
 #include "client.h"
 #include "server/server.h"
-#include "server/database.h"
+#include "server/database/database.h"
 #include "server/notification.h"
 #include "utils.h"
 
@@ -49,8 +49,8 @@ uerror_t send_private_message(server_t *s, const int c, const char **av)
     }
     server_event_private_message_sended(uid_to_string(s->client[c]->id),
         av[1], av[2]);
-    if ((err = db_notify_user(s, av[1], "New PM from <%s>: <%s>",
-        s->client[c]->name, av[2])))
+    if ((err = db_notify_user(s, av[1], "New PM from <%s:%s>: <%s>",
+        s->client[c]->name, uid_to_string(s->client[c]->id), av[2])))
         return (err);
     return (send_reply(c, OK, NULL));
 }

@@ -5,7 +5,7 @@
 ** TODO: CHANGE DESCRIPTION.
 */
 
-#include "server/database.h"
+#include "server/database/database.h"
 #include "client/commands.h"
 
 uerror_t show_help(_UNUSED_ server_t *s, const int c, _UNUSED_ const char **av)

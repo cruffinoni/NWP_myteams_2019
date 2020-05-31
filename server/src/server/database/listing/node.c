@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "server/database.h"
+#include "server/database/database.h"
 
 uerror_t add_node(db_listing_t **list, const char name[MAX_NAME_LENGTH],
     const char description[MAX_DESCRIPTION_LENGTH])

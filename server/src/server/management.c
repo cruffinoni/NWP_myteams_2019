@@ -76,3 +76,11 @@ uerror_t create_server(server_t **server, const int ac, const char **av)
     _PRINT_SERVER("Server's port: %li\n", port);
     return (ERR_NONE);
 }
+
+bool is_user_connected_str(const char *name, const server_t *server)
+{
+    for (ushort i = 0; i < MAX_CONNECTION; ++i)
+        if (server->client[i] != NULL && !strcmp(name, server->client[i]->name))
+            return (true);
+    return (false);
+}

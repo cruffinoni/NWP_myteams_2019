@@ -17,7 +17,7 @@
 #include "utils.h"
 #include "error.h"
 #include "client.h"
-#include "server/database.h"
+#include "server/database/database.h"
 
 static uerror_t write_infos(const int fd, const char *name,
     const char description[MAX_DESCRIPTION_LENGTH])

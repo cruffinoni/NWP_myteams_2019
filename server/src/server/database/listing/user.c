@@ -12,7 +12,7 @@
 #include <dirent.h>
 #include "error.h"
 #include "client.h"
-#include "server/database.h"
+#include "server/database/database.h"
 
 uerror_t db_get_user_infos(const char *id, char dest[MAX_NAME_LENGTH])
 {

@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <dirent.h>
 #include "server/server.h"
-#include "server/database.h"
+#include "server/database/database.h"
 
 static uerror_t display_sub(const client_t *user, FILE *file)
 {

@@ -9,7 +9,7 @@
 #include "error.h"
 #include "client.h"
 #include "server/server.h"
-#include "server/database.h"
+#include "server/database/database.h"
 
 uerror_t disconnect_client(server_t *server,
     const int client, _UNUSED_ const char **args)
