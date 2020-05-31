@@ -14,19 +14,11 @@
 
 static char *get_buffer(void)
 {
-    char *buffer = malloc(sizeof(char) * MAX_REQUEST_LENGTH);
+    char *buffer = NULL;
+    size_t line_buf_size = 0;
     ssize_t rtn;
 
-    if (buffer == NULL)
-        return (NULL);
-    memset(buffer, 0, MAX_REQUEST_LENGTH);
-    rtn = read(STDIN_FILENO, buffer, MAX_REQUEST_LENGTH);
-    if (rtn <= 0) {
-        if (rtn == -1)
-            printf("Error read\n");
-        free(buffer);
-        return (NULL);
-    }
+    rtn = getline(&buffer, &line_buf_size, stdin);
     return (buffer);
 }
 
