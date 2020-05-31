@@ -50,7 +50,11 @@ int login(socket_t *socket, char **args)
         return (ERR_INIT);
     server_response = get_server_response(socket);
     status_code = get_status_code(server_response);
-    if (server_response == NULL || status_code != LOGIN_SUCCESSFUL ||
+    if (server_response == NULL || status_code == INTERNAL_ERROR) {
+        free(server_response);
+        return (ERR_INIT);
+    }
+    if (status_code == LOGIN_SUCCESSFUL &&
     compute_result(socket, args, server_response) == ERR_INIT) {
         free(server_response);
         return (ERR_INIT);
