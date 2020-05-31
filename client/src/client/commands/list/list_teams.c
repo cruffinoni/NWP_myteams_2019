@@ -46,7 +46,6 @@ int list_teams(char const *line, int start)
         free_elems(team_name, team_id, team_description);
         return (ERR_INIT);
     }
-    printf("teamName: '%s'\n", team_name);
     if (client_print_teams(team_id, team_name, team_description) == -1) {
         free_elems(team_name, team_id, team_description);
         return (ERR_INIT);
