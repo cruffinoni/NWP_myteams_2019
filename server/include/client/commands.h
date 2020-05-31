@@ -49,9 +49,9 @@ static const struct commands_data_s CLIENT_COMMANDS[] = {
     {"/subscribe",   1,  &subscribe},
     {"/unsubscribe", 1,  &unsubscribe},
     {"/subscribed",  -1, &subscription},
-    {"/info",  0, &get_infos},
-    {"/help", 0, &show_help},
-    {NULL,          0, NULL},
+    {"/info",        0,  &get_infos},
+    {"/help",        0,  &show_help},
+    {NULL,           0, NULL},
 };
 
 // Release event for create command
