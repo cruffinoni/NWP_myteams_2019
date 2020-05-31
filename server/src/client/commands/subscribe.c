@@ -77,7 +77,6 @@ uerror_t subscription(server_t *s, const int c, const char **av)
 
     if (!IS_CONNECTED(s->client[c]))
         return (send_reply(c, NOT_CONNECTED, NULL));
-
     if (tab_len((char **) av) == 1)
         return (db_list_user_subscription(s->client[c]));
     else {

@@ -41,15 +41,15 @@ uerror_t db_list_user_subscription(const client_t *user)
 
     if (asprintf(&path, DB_USER_PATH DB_SUB_FILE, uid_to_string(user->id)) < 0)
         return (_DISPLAY_PERROR("asprintf - db_user_add_sub"));
+    send_reply(user->socket, START_LISTING, NULL);
     if (!db_path_exists(path)) {
         free(path);
-        return (false);
+        return (send_reply(user->socket, END_LISTING, NULL));
     }
     if ((file = fopen(path, "r")) == NULL) {
         free(path);
         return (_DISPLAY_PERROR("open - db_user_add_sub"));
     }
-    send_reply(user->socket, START_LISTING, NULL);
     err = display_sub(user, file);
     if (err == ERR_NONE)
         send_reply(user->socket, END_LISTING, NULL);
