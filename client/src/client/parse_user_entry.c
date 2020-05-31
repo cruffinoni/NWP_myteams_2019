@@ -11,6 +11,30 @@
 #include <stdio.h>
 #include "client/shell.h"
 
+int get_line(char **dest, char const *server_response, int *i)
+{
+    int line_len = 0;
+
+    while (server_response[line_len + *i] &&
+    server_response[line_len + *i] != '\n')
+        ++line_len;
+    if (line_len == 0)
+        return (0);
+    *dest = malloc(sizeof(char) * (line_len + 1));
+    if (*dest == NULL)
+        return (-1);
+    for (int k = 0; k < line_len; ++k, ++*i) {
+        if (server_response[*i] == '\0') {
+            (*dest)[k] = '\0';
+            return (-2);
+        }
+        (*dest)[k] = server_response[*i];
+    }
+    (*dest)[line_len] = '\0';
+    ++*i;
+    return (line_len);
+}
+
 void print_client_prompt(socket_t *params)
 {
     printf("\033[1;31m[%s:%ld] ", params->ip, params->port);

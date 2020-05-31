@@ -90,6 +90,7 @@ out
 gen
 cmake-build-debug
 CMakeLists.txt
+err.log
 
 # Generated files
 a.out

@@ -22,7 +22,8 @@ SRC					=	src/socket.c									\
 						src/client/process_commands.c					\
 						src/client/commands/login.c						\
 						src/client/commands/logout.c					\
-						src/client/commands/list.c						\
+						src/client/commands/list/list.c					\
+						src/client/commands/list/list_users.c			\
 						src/client/utils/get_server_response.c			\
 						src/client/utils/user_gestion.c					\
 						src/client/utils/send_server_message.c			\

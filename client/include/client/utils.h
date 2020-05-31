@@ -12,7 +12,7 @@
 
 void free_user(socket_t *socket);
 void set_client_username(socket_t *socket, char const *username);
-
+int get_line(char **dest, char const *server_response, int *i);
 int send_server_message(int sock_fd, char **args);
 long get_status_code(char *server_response);
 char *get_server_response(socket_t *params);
