@@ -20,11 +20,11 @@ void free_params(socket_t *params)
 {
     if (params == NULL)
         return;
+    free_user(params);
     if (params->ip != NULL)
         free(params->ip);
     if (params->sock_fd > 0)
         close(params->sock_fd);
-    free_user(params);
     free(params);
 }
 
@@ -61,8 +61,13 @@ static int init_client(char **av)
 
 int main(int ac, char **av)
 {
-    if (ac == 3)
+    if (ac == 3) {
+        if (setvbuf(stdout, NULL, _IONBF, 0) != 0) {
+            printf("Error setvbuf\n");
+            return (ERR_INIT);
+        }
         return (init_client(av));
+    }
     if (ac == 2 && strcmp(av[1], "-help") == 0) {
         printf("USAGE: ./myteams_cli ip port\n");
         printf("\tip    is the server ip address on which ");

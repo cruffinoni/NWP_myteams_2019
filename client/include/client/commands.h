@@ -12,19 +12,12 @@
 
 #define _UNUSED_ __attribute__((unused))
 
-int help(socket_t *socket, char **args);
+//commands to send message to server
 int login(socket_t *socket, char **args);
-int logout(socket_t *socket, char **args);
-int users(socket_t *socket, char **args);
-int user(socket_t *socket, char **args);
-int send(socket_t *socket, char **args);
-int messages(socket_t *socket, char **args);
-int subscribe(socket_t *socket, char **args);
-int subscribed(socket_t *socket, char **args);
-int unsubscribe(socket_t *socket, char **args);
-int use(socket_t *socket, char **args);
-int create(socket_t *socket, char **args);
-int list(socket_t *socket, char **args);
-int info(socket_t *socket, char **args);
+
+//functions to handle lib print
+int get_list_data(socket_t *params, char *server_response);
+int login_success(socket_t *socket, char *server_response);
+int logout_success(socket_t *socket, char *server_resonse);
 
 #endif

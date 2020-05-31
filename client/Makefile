@@ -20,20 +20,9 @@ SRC					=	src/socket.c									\
 						src/client/parse_user_entry.c					\
 						src/client/shell.c								\
 						src/client/process_commands.c					\
-						src/client/commands/help.c						\
 						src/client/commands/login.c						\
 						src/client/commands/logout.c					\
-						src/client/commands/users.c						\
-						src/client/commands/create.c					\
-						src/client/commands/info.c						\
 						src/client/commands/list.c						\
-						src/client/commands/messages.c					\
-						src/client/commands/send.c						\
-						src/client/commands/subscribe.c					\
-						src/client/commands/subscribed.c				\
-						src/client/commands/unsubscribe.c				\
-						src/client/commands/use.c						\
-						src/client/commands/user.c						\
 						src/client/utils/get_server_response.c			\
 						src/client/utils/user_gestion.c					\
 						src/client/utils/send_server_message.c			\

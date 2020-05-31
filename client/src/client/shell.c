@@ -16,18 +16,16 @@
 #include "client/utils.h"
 #include "communication/codes.h"
 
-static int check_connection_to_server(socket_t *socket)
+static long get_server_message(socket_t *socket)
 {
     char *server_response = get_server_response(socket);
+    long status_code;
 
     if (server_response == NULL)
         return (ERR_INIT);
-    /*if (get_status_code(server_response) != SERVICE_READY) {
-        free(server_response);
-        return (ERR_INIT);
-    }*/
+    status_code = get_status_code(server_response);
     free(server_response);
-    return (ERR_NONE);
+    return (status_code);
 }
 
 static int fetch_stdin(socket_t *socket, char *buffer)
@@ -50,17 +48,22 @@ static int fetch_stdin(socket_t *socket, char *buffer)
 static int check_activity(socket_t *params, fd_set *read)
 {
     char *buffer = NULL;
+    long status_code;
 
     if (FD_ISSET(STDIN_FILENO, read)) {
         buffer = get_buffer();
-        if (buffer == NULL)
-            return (EOF_D);
+        if (buffer == NULL) {
+            ACTIVE_SERVER = false;
+            return (ERR_NONE);
+        }
         if (fetch_stdin(params, buffer) == ERR_INIT)
             return (errno == 0 ? ERR_NONE : ERR_INIT);
     }
-    if (FD_ISSET(params->sock_fd, read))
-        if (check_connection_to_server(params) == ERR_INIT)
-            return (ERR_INIT);
+    if (FD_ISSET(params->sock_fd, read)) {
+        status_code = get_server_message(params);
+        if (status_code == SERVICE_CLOSING)
+            ACTIVE_SERVER = false;
+    }
     return (ERR_NONE);
 }
 
@@ -80,20 +83,23 @@ int shell(socket_t *params)
 {
     int flag = fcntl(STDIN_FILENO, F_GETFL, 0);
     int activity;
+    long server_response;
     fd_set read;
 
     flag |= O_NONBLOCK;
     fcntl(STDIN_FILENO, F_SETFL, flag);
+    server_response = get_server_message(params);
+    if (server_response == ERR_INIT || server_response != SERVICE_READY)
+        return (ERR_INIT);
     while (ACTIVE_SERVER) {
         print_client_prompt(params);
         activity = get_select(params, &read);
         if (activity < 0)
             return (ERR_INIT);
-        activity = check_activity(params, &read);
-        if (activity == ERR_INIT)
-            return (ERR_INIT);
-        if (activity == EOF_D)
+        if (activity == 0)
             return (ERR_NONE);
+        if (check_activity(params, &read) == ERR_INIT)
+            return (ERR_INIT);
     }
     return (ERR_NONE);
 }

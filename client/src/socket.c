@@ -66,6 +66,21 @@ static int socket_creation(char **av, socket_t *params)
     return (ERR_NONE);
 }
 
+static client_t *init_client_struct()
+{
+    client_t *client = malloc(sizeof(client_t));
+
+    if (client == NULL)
+        return (NULL);
+    client->socket = 0;
+    client->flags = CLIENT_NONE;
+    memset(client->name, 0, MAX_NAME_LENGTH);
+    uuid_clear(client->id);
+    for (client_context_type_t t = 0; t < MAX; ++t)
+        uuid_clear(client->context[t]);
+    return (client);
+}
+
 socket_t *init_client_connection(char **av)
 {
     socket_t *params = malloc(sizeof(socket_t));
@@ -75,13 +90,11 @@ socket_t *init_client_connection(char **av)
     params->sock_fd = -1;
     params->port = -1;
     params->ip = NULL;
-    params->client = NULL;
-    FD_ZERO(&params->server_set);
-    if (socket_creation(av, params) == ERR_INIT) {
+    params->client = init_client_struct();
+    if (params->client == NULL || socket_creation(av, params) == ERR_INIT) {
         free_params(params);
         return (NULL);
     }
-    FD_SET(params->sock_fd, &params->server_set);
     ACTIVE_SERVER = true;
     return (params);
 }

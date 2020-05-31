@@ -5,60 +5,58 @@
 ** login.c
 */
 
+#include <uuid/uuid.h>
 #include <stdlib.h>
-#include <string.h>
 #include "socket.h"
 #include "error.h"
 #include "uid.h"
+#include "utils.h"
 #include "client/utils.h"
-#include "communication/codes.h"
 #include "myteams/logging_client.h"
 
-static int log_lib(socket_t *socket)
+static char *get_user_uuid(char const *server_response)
 {
-    char *user_id = uid_to_string(socket->client->id);
+    char *s_uuid = malloc(sizeof(char) * UUID_MAX_NAME);
+    int i = 0;
+    int k = 0;
 
-    if (client_event_loggedin(user_id, socket->client->name) == -1)
-        return (ERR_INIT);
-    return (ERR_NONE);
+    if (s_uuid == NULL)
+        return (NULL);
+    for (i = 0; server_response[i] != '<'; ++i);
+    ++i;
+    while (server_response[i] != '>') {
+        s_uuid[k] = server_response[i];
+        ++i;
+        ++k;
+    }
+    s_uuid[k] = '\0';
+    return (s_uuid);
 }
 
-static int compute_result(socket_t *socket, char **args, char *server_response)
+int login_success(socket_t *socket, char *server_response)
 {
-    long status_code;
+    char *user_id = get_user_uuid(server_response);
 
-    status_code = get_status_code(server_response);
-    if (status_code == LOGIN_SUCCESSFUL) {
-        if (init_user(socket, server_response, args[1]) == ERR_INIT) {
-            free(server_response);
-            return (ERR_INIT);
-        }
-    }
-    if (log_lib(socket) == ERR_INIT) {
-        free(server_response);
+    if (user_id == NULL)
+        return (ERR_INIT);
+    if (client_event_loggedin(user_id, socket->client->name) == -1) {
+        free(user_id);
         return (ERR_INIT);
     }
+    if (uuid_parse(user_id, socket->client->id) < 0) {
+        free(user_id);
+        return (ERR_INIT);
+    }
+    free(user_id);
+    socket->client->flags = CLIENT_CONNECTED;
     return (ERR_NONE);
 }
 
 int login(socket_t *socket, char **args)
 {
-    char *server_response;
-    long status_code;
-
     if (send_server_message(socket->sock_fd, args) == ERR_INIT)
         return (ERR_INIT);
-    server_response = get_server_response(socket);
-    status_code = get_status_code(server_response);
-    if (server_response == NULL || status_code == INTERNAL_ERROR) {
-        free(server_response);
-        return (ERR_INIT);
-    }
-    if (status_code == LOGIN_SUCCESSFUL &&
-    compute_result(socket, args, server_response) == ERR_INIT) {
-        free(server_response);
-        return (ERR_INIT);
-    }
-    free(server_response);
+    if (tab_len(args) == 2)
+        set_client_username(socket, args[1]);
     return (ERR_NONE);
 }
